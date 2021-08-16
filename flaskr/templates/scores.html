@@ -1,0 +1,27 @@
+{%extends "layout.html"%}
+{% block content %}
+<div class="table-wrapper">
+    <table class="fl-table">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Team</th>
+                <th>Average</th>
+                <th>League Average</th>
+                <th>Percent Diff</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for _key, value in result.items() %}
+            <tr>
+                    <td> {{ value["year"] }} </td>
+                    <td> {{ value["team_name"] }} </td>
+                    <td> {{ value["average"] }} </td>
+                    <td> {{ value["league_average"] }} </td>
+                    <td> {{ value["pct_diff"] }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}

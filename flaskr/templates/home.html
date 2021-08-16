@@ -1,0 +1,62 @@
+{%extends "layout.html"%}
+{% block content %}
+<div class="home">
+      <div id="forms" class="home">
+          <div id="records">
+               <h1>All Time Records</h1>
+               <form action="/records" method="post" name="records">
+                    <label for="startyear">Start Year</label>
+                    <input type="number" id="startyear" name="startyear" min="2005" max="2021"><br><br>
+                    <label for="endyear">End Year</label>
+                    <input type="number" id="endyear" name="endyear" min="2005" max="2021"><br><br>
+                    <p>
+                         <button class="button">Submit</button>
+                    </p>
+               </form>          
+          </div>
+          <div id="margins">
+               <h1>Win Margins</h1>
+               <form action="/matchups" method="post" name="biggestblowouts">
+                    <p>
+                         <label for="blowouts">Biggest Blowouts</label>
+                         <input type="radio" name="radioAnswer" value="blowouts" checked><br>
+                         <label for="close">Closest Matchups</label>
+                         <input type="radio" name="radioAnswer" value="close"><br>
+                    </p>
+                    <label for="startyear">Start Year</label>
+                    <input type="number" id="startyear" name="startyear" min="2005" max="2021"><br><br>
+                    <label for="endyear">End Year</label>
+                    <input type="number" id="endyear" name="endyear" min="2005" max="2021"><br><br>
+                    <label for="count">Number of records to display</label>
+                    <input type="number" id="count" name="count" min="1" max="500"><br><br>
+                    <label for="playoffs">Include playoffs?</label>
+                    <input type="checkbox" id="playoffs" name="playoffs"><br>
+                    <p>
+                         <button class="button">Submit</button>
+                    </p>
+               </form>          
+          </div>
+          <div id="averages">
+               <h1>Best or Worst Seasons</h1>
+               <form action="/scores" method="post" name="averageScores">
+                    <p>
+                         <p>Order by:</p>
+                         <label for="best">Best Seasons</label>
+                         <input type="radio" name="radioAnswer" value="best" checked><br>
+                         <label for="worst">Worst Seasons</label>
+                         <input type="radio" name="radioAnswer" value="worse"><br>
+                    </p>
+                   <label for="startyear">Start Year</label>
+                    <input type="number" id="startyear" name="startyear" min="2005" max="2021"><br><br>
+                    <label for="endyear">End Year</label>
+                    <input type="number" id="endyear" name="endyear" min="2005" max="2021"><br><br>
+                    <label for="playoffs">Include playoffs?</label>
+                    <input type="checkbox" id="playoffs" name="playoffs"><br>
+                    <p>
+                         <button class="button">Submit</button>
+                    </p>
+               </form>          
+          </div>
+     </div>
+<div>
+{%endblock%}
