@@ -7,8 +7,9 @@ def list(start_year, end_year):
     end_year = end_year or LatestSeason(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
-        teams = LoadData(year, LEAGUE_ID, 'mTeam')["teams"]
-        owners = LoadData(year, LEAGUE_ID, 'mNav')["members"]
+        team_details = LoadData(year, LEAGUE_ID, 'mTeam')
+        teams = team_details["teams"]
+        owners = team_details["members"]
 
         for team in teams:
             owner_id = team["primaryOwner"]

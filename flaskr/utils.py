@@ -13,7 +13,7 @@ def LoadData(year, league_id, uri):
         return requests.get(url).json()[0]
 
 def LoadMatchups(year, league_id):
-    matchups = LoadData(year, league_id, 'mMatchup')
+    matchups = LoadData(year, league_id, 'mMatchupScore')
     return matchups["schedule"]
 
 def NumberOfWeeks(year, league_id, playoffs):
@@ -46,13 +46,10 @@ def StartYear(only_current_scoring_rules, only_current_teams):
     else:
         return 2005
 
-def TeamName(team_id, year):
-    season = LoadData(year, LEAGUE_ID, 'mNav')
-
-    if season["seasonId"] == year:
-        for team in season["teams"]:
-            if team["id"] == team_id:
-                return str(team["location"] + " " + team["nickname"])
+def TeamName(team_id, year, season_obj):
+      for team in season_obj["teams"]:
+          if team["id"] == team_id:
+              return str(team["location"] + " " + team["nickname"])
 
 def PrintToFile(content, file):
     f = open( file, 'w' )
@@ -61,7 +58,7 @@ def PrintToFile(content, file):
 
 def LatestSeason(league_id):
     current = date.today().year
-    res = LoadData(current, league_id, 'modular')
+    res = LoadData(current, league_id, 'mStatus')
     if res["draftDetail"]["drafted"] == False:
         return current - 1
     else:

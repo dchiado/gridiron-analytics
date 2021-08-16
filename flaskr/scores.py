@@ -2,7 +2,7 @@ import collections
 from flaskr.utils import ByeWeek, LoadMatchups, NumberOfWeeks, LatestSeason, LoadData, TeamName
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 
-def best_and_worst(start_year, end_year, playoffs, highest):
+def best_and_worst_weeks(start_year, end_year, playoffs, highest):
     start_year = start_year or FIRST_SEASON
     end_year = end_year or LatestSeason(LEAGUE_ID)
     all_scores = {}
@@ -67,7 +67,7 @@ def highest_weeks(start_year, end_year, playoffs):
 def lowest_weeks(start_year, end_year, playoffs):
     return best_and_worst(start_year, end_year, playoffs, False)
 
-def yearly_league_wide(start_year, end_year, playoffs, best):
+def relative_to_league(start_year, end_year, playoffs, best):
     all_seasons_all_time = {}
 
     start_year = start_year or FIRST_SEASON
@@ -87,7 +87,7 @@ def yearly_league_wide(start_year, end_year, playoffs, best):
 
         for team in current_year_teams:
             team_id = team["id"]
-            team_name = TeamName(team_id, year)
+            team_name = TeamName(team_id, year, season)
 
             total_points = 0
 

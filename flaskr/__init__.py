@@ -31,7 +31,7 @@ def list_scores():
     end_year = request.form['endyear'] or None
     playoffs = 'playoffs' in request.form or None
     best = request.form["radioAnswer"] == 'best'
-    resp = scores.yearly_league_wide(start_year, end_year, playoffs, best)
+    resp = scores.relative_to_league(start_year, end_year, playoffs, best)
     return render_template("scores.html", result=resp)
 
 if __name__=="__main__":
