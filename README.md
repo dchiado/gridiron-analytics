@@ -1,4 +1,4 @@
-# GridironAnalytics
+# gridiron-analytics
 This program compiles data on an ESPN fantasy football league using the public ESPN API.
 The app uses python scripts to retrieve and organize the data and is built on [flask](https://flask.palletsprojects.com/en/2.0.x/).
 
