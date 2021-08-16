@@ -4,10 +4,14 @@ The app uses python scripts to retrieve and organize the data and is built on [f
 
 
 ## Prerequisites
-Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
+1. Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
+2. Install flask. If you are on a mac:
+```
+pip install flask
+```
 
 ## Use
-- Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`)
+- Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`). Add the id to the LEAGUE_ID variable in `flaskr/globals.py` if not already there.
 - Export flask environment variables
 ```
 export FLASK_APP=flaskr
@@ -21,7 +25,7 @@ flask run
 
 Alternatively, you can run the scripts from the command line like:
 ```
-$ python3 -c 'from flaskr import matchups; print(matchups.results(2009, 2011, False, 5, True))'
+python3 -c 'from flaskr import matchups; print(matchups.results(2009, 2011, False, 5, True))'
 ```
 
 ## ESPN API
