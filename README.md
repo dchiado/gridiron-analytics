@@ -1,12 +1,14 @@
 # GridironAnalytics
-This program compiles data on an ESPN fantasy football league using python and the public ESPN API. 
+This program compiles data on an ESPN fantasy football league using the public ESPN API.
+The app uses python scripts to retrieve and organize the data and is built on [flask](https://flask.palletsprojects.com/en/2.0.x/).
+
 
 ## Prerequisites
-This program requires Python 3, which can be obtained [here](https://www.python.org/downloads).
+Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
 
 ## Use
-- Obtain your league ID from any page in your league (`leagueId=166975`)
-- export flask environment variables
+- Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`)
+- Export flask environment variables
 ```
 export FLASK_APP=flaskr
 export FLASK_ENV=development
@@ -17,7 +19,7 @@ flask run
 ```
 - The web app will be available at `http://127.0.0.1:5000`
 
-Alternatively, you can run them from the command line like:
+Alternatively, you can run the scripts from the command line like:
 ```
 $ python3 -c 'from flaskr import matchups; print(matchups.results(2009, 2011, False, 5, True))'
 ```
