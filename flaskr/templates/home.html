@@ -8,10 +8,10 @@
                          <button type="button" class="collapsible"">All Time Records</button>
                          <div class="content">
                               <form action="/records" method="post" name="records">
-                                   <label for="startyear" class="inputLabel">Start Year</label>
-                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="inputText" placeholder="2005"><br>
-                                   <label for="endyear" class="inputLabel">End Year</label>
-                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="inputText" placeholder="2021"><br>
+                                   <label for="startyear" class="input-label">Start Year</label>
+                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
+                                   <label for="endyear" class="input-label">End Year</label>
+                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="input-text" placeholder="2021"><br>
                                    <button class="button">Submit</button>
                               </form>
                          </div>
@@ -20,18 +20,18 @@
                          <button type="button" class="collapsible"">Win Margins</button>
                          <div class="content">
                               <form action="/matchups" method="post" name="biggestblowouts">
-                                   <label for="blowouts" class="radioLabel">Biggest Blowouts</label>
+                                   <label for="blowouts" class="radio-label">Biggest Blowouts</label>
                                    <input type="radio" name="radioAnswer" value="blowouts" checked><br>
-                                   <label for="close"  class="radioLabel">Closest Matchups</label>
+                                   <label for="close"  class="radio-label">Closest Matchups</label>
                                    <input type="radio" name="radioAnswer" value="close"><br>
                                    <br><br>
-                                   <label for="startyear" class="inputLabel">Start Year</label>
-                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="inputText" placeholder="2005"><br>
-                                   <label for="endyear" class="inputLabel">End Year</label>
-                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="inputText" placeholder="2021"><br>
-                                   <label for="count" class="inputLabel">Number of records to display</label>
-                                   <input type="number" id="count" name="count" min="1" max="500" class="inputText" placeholder="10"><br>
-                                   <label for="playoffs" class="radioLabel">Include playoffs?</label>
+                                   <label for="startyear" class="input-label">Start Year</label>
+                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
+                                   <label for="endyear" class="input-label">End Year</label>
+                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="input-text" placeholder="2021"><br>
+                                   <label for="count" class="input-label">Number of records to display</label>
+                                   <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
+                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
                                    <input type="checkbox" id="playoffs" name="playoffs"><br>
                                    <p>
                                         <button class="button">Submit</button>
@@ -45,17 +45,17 @@
                          <div class="content">
                               <form action="/scores" method="post" name="averageScores">
                                    <p>
-                                        <p class="inputLabel">Order by:</p>
-                                        <label for="best" class="radioLabel">Best Seasons</label>
+                                        <p class="input-label">Order by:</p>
+                                        <label for="best" class="radio-label">Best Seasons</label>
                                         <input type="radio" name="radioAnswer" value="best" checked><br>
-                                        <label for="worst" class="radioLabel">Worst Seasons</label>
+                                        <label for="worst" class="radio-label">Worst Seasons</label>
                                         <input type="radio" name="radioAnswer" value="worse"><br>
                                    </p>
-                                   <label for="startyear" class="inputLabel">Start Year</label>
-                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="inputText" placeholder="2005"><br>
-                                   <label for="endyear" class="inputLabel">End Year</label>
-                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="inputText" placeholder="2021"><br>
-                                   <label for="playoffs" class="radioLabel">Include playoffs?</label>
+                                   <label for="startyear" class="input-label">Start Year</label>
+                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
+                                   <label for="endyear" class="input-label">End Year</label>
+                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="input-text" placeholder="2021"><br>
+                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
                                    <input type="checkbox" id="playoffs" name="playoffs"><br>
                                    <p>
                                         <button class="button">Submit</button>
