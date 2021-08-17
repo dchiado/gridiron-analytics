@@ -40,17 +40,58 @@
                               </div>
                          </form>          
                     </div><br>
-                    <div id="averages" class="form">
+                    <div id="week-scores" class="form">
+                         <button type="button" class="collapsible"">Individual Week Scores</button>
+                         <div class="content">
+                              <form action="/individual-weeks" method="post" name="weeks">
+                                   <p>
+                                        <label for="best" class="radio-label">Best Weeks</label>
+                                        <input type="radio" name="radioAnswer" value="best" checked><br>
+                                        <label for="worst" class="radio-label">Worst Weeks</label>
+                                        <input type="radio" name="radioAnswer" value="worse"><br>
+                                   </p>
+                                   <label for="startyear" class="input-label">Start Year</label>
+                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
+                                   <label for="endyear" class="input-label">End Year</label>
+                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="input-text" placeholder="2021"><br>
+                                   <label for="count" class="input-label">Number of records to display</label>
+                                   <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
+                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
+                                   <input type="checkbox" id="playoffs" name="playoffs"><br>
+                                   <p>
+                                        <button class="button">Submit</button>
+                                   </p>
+                              </form>    
+                         </div>      
+                    </div>
+                    <br>
+                    <div id="season-scores" class="form">
                          <button type="button" class="collapsible"">Individual Season Scores</button>
                          <div class="content">
-                              <form action="/scores" method="post" name="averageScores">
+                              <form action="/individual-seasons" method="post" name="averageScores">
                                    <p>
-                                        <p class="input-label">Order by:</p>
                                         <label for="best" class="radio-label">Best Seasons</label>
                                         <input type="radio" name="radioAnswer" value="best" checked><br>
                                         <label for="worst" class="radio-label">Worst Seasons</label>
                                         <input type="radio" name="radioAnswer" value="worse"><br>
                                    </p>
+                                   <label for="startyear" class="input-label">Start Year</label>
+                                   <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
+                                   <label for="endyear" class="input-label">End Year</label>
+                                   <input type="number" id="endyear" name="endyear" min="2005" max="2021" class="input-text" placeholder="2021"><br>
+                                   <label for="count" class="input-label">Number of records to display</label>
+                                   <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
+                                   <p>
+                                        <button class="button">Submit</button>
+                                   </p>
+                              </form>    
+                         </div>      
+                    </div>
+                    <br>
+                    <div id="blowouts" class="form">
+                         <button type="button" class="collapsible"">Blowouts by Season</button>
+                         <div class="content">
+                              <form action="/yearly-blowouts" method="post" name="yearlyBlowouts">
                                    <label for="startyear" class="input-label">Start Year</label>
                                    <input type="number" id="startyear" name="startyear" min="2005" max="2021" class="input-text" placeholder="2005"><br>
                                    <label for="endyear" class="input-label">End Year</label>

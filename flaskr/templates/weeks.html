@@ -1,0 +1,32 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Week</th>
+                        <th>Team Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _key, value in result.items() %}
+                    <tr>
+                            <td> {{ value["year"] }} </td>
+                            <td> {{ value["week"] }} </td>
+                            <td> {{ value["team_name"] }} </td>
+                            <td> {{ value["score"] }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+{%endblock%}

@@ -1,0 +1,30 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Blowout Count</th>
+                        <th>Average Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in result.items() %}
+                    <tr>
+                        <td> {{ key }} </td>
+                        <td> {{ value["blowout_count"] }} </td>
+                        <td> {{ value["average_score"] }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+{%endblock%}

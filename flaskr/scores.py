@@ -2,12 +2,12 @@ import collections
 from flaskr.utils import ByeWeek, LoadMatchups, NumberOfWeeks, LatestSeason, LoadData, TeamName
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 
-def best_and_worst_weeks(start_year, end_year, playoffs, highest):
+def best_and_worst_weeks(start_year, end_year, playoffs, count, highest):
+    all_scores = {}
     start_year = start_year or FIRST_SEASON
     end_year = end_year or LatestSeason(LEAGUE_ID)
-    all_scores = {}
 
-    for year in range(start_year, end_year):
+    for year in range(int(start_year), int(end_year) + 1):
         matchups = LoadMatchups(year, LEAGUE_ID)
         weeks = NumberOfWeeks(year, LEAGUE_ID, playoffs)
         season = LoadData(year, LEAGUE_ID, 'mNav')
@@ -56,18 +56,20 @@ def best_and_worst_weeks(start_year, end_year, playoffs, highest):
             }
             all_scores[f'{year} {week} {home_team_name}'] = home_game
 
-    print("Highest Scores (with current scoring settings)")
-    print("Year,Week,Team,Score")
     sorted_scores = collections.OrderedDict(sorted(all_scores.items(), key=lambda t:t[1]["score"], reverse=highest))
-    return list(sorted_scores.items())[:10]
+ 
+    resp = {}
+    for idx, x in enumerate(list(sorted_scores)[0:int(count)]):
+        resp[idx+1] = sorted_scores[x]
+    return resp
 
 def highest_weeks(start_year, end_year, playoffs):
-    return best_and_worst(start_year, end_year, playoffs, True)
+    return best_and_worst_weeks(start_year, end_year, playoffs, True)
 
 def lowest_weeks(start_year, end_year, playoffs):
-    return best_and_worst(start_year, end_year, playoffs, False)
+    return best_and_worst_weeks(start_year, end_year, playoffs, False)
 
-def relative_to_league(start_year, end_year, playoffs, best):
+def best_and_worst_seasons(start_year, end_year, count, best):
     all_seasons_all_time = {}
 
     start_year = start_year or FIRST_SEASON
@@ -83,7 +85,7 @@ def relative_to_league(start_year, end_year, playoffs, best):
             current_year_teams = season["teams"]
 
         matchups = LoadMatchups(year, LEAGUE_ID)
-        weeks = NumberOfWeeks(year, LEAGUE_ID, playoffs)
+        weeks = NumberOfWeeks(year, LEAGUE_ID, False)
 
         for team in current_year_teams:
             team_id = team["id"]
@@ -134,4 +136,8 @@ def relative_to_league(start_year, end_year, playoffs, best):
         )
 
     sorted_top_seasons = collections.OrderedDict(sorted(all_seasons_all_time.items(), key=lambda t:t[1]["pct_diff"], reverse=best))
-    return sorted_top_seasons
+ 
+    resp = {}
+    for idx, x in enumerate(list(sorted_top_seasons)[0:int(count)]):
+        resp[idx+1] = sorted_top_seasons[x]
+    return resp
