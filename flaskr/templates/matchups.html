@@ -1,27 +1,34 @@
 {%extends "layout.html"%}
 {% block content %}
-<div class="table-wrapper">
-    <table class="fl-table">
-        <thead>
-            <tr>
-                <th>Place</th>
-                <th>Year</th>
-                <th>Difference</th>
-                <th>Winner</th>
-                <th>Loser</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for key, value in result.items() %}
-            <tr>
-                    <th> {{ key }} </th>
-                    <td> {{ value["year"] }} </td>
-                    <td> {{ value["difference"] }} </td>
-                    <td> {{ value["winner"] }} </td>
-                    <td> {{ value["loser"] }} </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Place</th>
+                        <th>Year</th>
+                        <th>Difference</th>
+                        <th>Winner</th>
+                        <th>Loser</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in result.items() %}
+                    <tr>
+                            <th> {{ key }} </th>
+                            <td> {{ value["year"] }} </td>
+                            <td> {{ value["difference"] }} </td>
+                            <td> {{ value["winner"] }} </td>
+                            <td> {{ value["loser"] }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>    
 {%endblock%}

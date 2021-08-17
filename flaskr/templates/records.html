@@ -1,29 +1,36 @@
 {%extends "layout.html"%}
 {% block content %}
-<div class="table-wrapper">
-    <table class="fl-table">
-        <thead>
-            <tr>
-                <th>Owner</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Ties</th>
-                <th>Points For</th>
-                <th>Points Against</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for _key, value in result.items() %}
-            <tr>
-                    <td> {{ value["owner"] }} </td>
-                    <td> {{ value["wins"] }} </td>
-                    <td> {{ value["losses"] }} </td>
-                    <td> {{ value["ties"] }} </td>
-                    <td> {{ value["pointsFor"] }} </td>
-                    <td> {{ value["pointsAgainst"] }} </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="table-wrapper">
+            <table class="fl-table">
+                <thead>
+                    <tr>
+                        <th>Owner</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Ties</th>
+                        <th>Points For</th>
+                        <th>Points Against</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for _key, value in result.items() %}
+                    <tr>
+                            <td> {{ value["owner"] }} </td>
+                            <td> {{ value["wins"] }} </td>
+                            <td> {{ value["losses"] }} </td>
+                            <td> {{ value["ties"] }} </td>
+                            <td> {{ value["pointsFor"] }} </td>
+                            <td> {{ value["pointsAgainst"] }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
 {%endblock%}
