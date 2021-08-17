@@ -1,7 +1,11 @@
+import io
+import base64
 from flask import Flask, render_template, request
 from flaskr import records, matchups, scores, blowouts
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 
-app=Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -50,7 +54,21 @@ def list_blowouts():
     end_year = request.form['endyear'] or None
     playoffs = 'playoffs' in request.form or None
     resp = blowouts.by_year(start_year, end_year, playoffs)
-    return render_template("blowouts.html", result=resp)
+
+    plot_list = [sub["blowout_count"] for sub in resp.values() if "blowout_count" in sub.keys()]
+    years = list(resp.keys())
+    fig = Figure()
+    ax = fig.subplots()
+    ax.plot(years, plot_list)
+
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png")
+    pngImage = io.BytesIO()
+    FigureCanvas(fig).print_png(pngImage)
+    pngImageB64String = "data:image/png;base64,"
+    pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
+
+    return render_template("blowouts.html", result=resp, plot=pngImageB64String)
 
 if __name__=="__main__":
     app.run(debug=True)
