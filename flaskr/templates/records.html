@@ -10,6 +10,9 @@
                 <thead>
                     <tr>
                         <th>Owner</th>
+                        {% for value in result["seasons"] %}
+                        <th>{{ value }}</th>
+                        {% endfor %}
                         <th>Wins</th>
                         <th>Losses</th>
                         <th>Ties</th>
@@ -18,14 +21,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for _key, value in result.items() %}
+                    {% for key, value in result["teams"].items() %}
                     <tr>
-                            <td> {{ value["owner"] }} </td>
-                            <td> {{ value["wins"] }} </td>
-                            <td> {{ value["losses"] }} </td>
-                            <td> {{ value["ties"] }} </td>
-                            <td> {{ value["pointsFor"] }} </td>
-                            <td> {{ value["pointsAgainst"] }} </td>
+                        <td> {{ key }} </td>
+                        {% for season in result["seasons"] %}
+                            <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
+                        {% endfor %}
+                        <td> {{ value["total"]["wins"] }} </td>
+                        <td> {{ value["total"]["losses"] }} </td>
+                        <td> {{ value["total"]["ties"] }} </td>
+                        <td> {{ value["total"]["pointsFor"] }} </td>
+                        <td> {{ value["total"]["pointsAgainst"] }} </td>
                     </tr>
                     {% endfor %}
                 </tbody>

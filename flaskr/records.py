@@ -2,11 +2,15 @@ from flaskr.utils import LoadData, LatestSeason
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 
 def list(start_year, end_year):
-    all_records = {}
+    all_records = {
+        "seasons": [],
+        "teams": {}
+    }
     start_year = start_year or FIRST_SEASON
     end_year = end_year or LatestSeason(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
+        all_records["seasons"].append(year)
         team_details = LoadData(year, LEAGUE_ID, 'mTeam')
         teams = team_details["teams"]
         owners = team_details["members"]
@@ -14,30 +18,41 @@ def list(start_year, end_year):
         for team in teams:
             owner_id = team["primaryOwner"]
             team_info = next((owner for owner in owners if owner["id"] == owner_id))
-            lname = team_info["lastName"].capitalize()
-            owner = f'{team_info["firstName"].capitalize()} {lname}'
+            fname = team_info["firstName"].strip().capitalize()
+            lname = team_info["lastName"].strip().capitalize()
+            owner = f'{fname} {lname}'
 
             season_wins = team["record"]["overall"]["wins"]
             season_losses = team["record"]["overall"]["losses"]
             season_ties = team["record"]["overall"]["ties"]
-            season_pf = round(team["record"]["overall"]["pointsFor"], 2)
-            season_pa = round(team["record"]["overall"]["pointsAgainst"], 2)
+            season_record = f'{season_wins}-{season_losses}-{season_ties}'
+            season_pf = int(team["record"]["overall"]["pointsFor"])
+            season_pa = int(team["record"]["overall"]["pointsAgainst"])
 
-            if lname in all_records:
-                all_records[lname]["wins"] += season_wins
-                all_records[lname]["losses"] += season_losses
-                all_records[lname]["ties"] += season_ties
-                all_records[lname]["pointsFor"] += season_pf
-                all_records[lname]["pointsAgainst"] += season_pa
+            if owner in all_records["teams"]:
+                obj = all_records["teams"][owner]
+                obj["seasons"][year] = {
+                    "record": season_record
+                }
+                obj["total"]["wins"] += season_wins
+                obj["total"]["losses"] += season_losses
+                obj["total"]["ties"] += season_ties
+                obj["total"]["pointsFor"] += season_pf
+                obj["total"]["pointsAgainst"] += season_pa
             else:
-                all_records[lname] = {
-                    "id": team["id"],
-                    "owner": owner,
-                    "wins": season_wins,
-                    "losses": season_losses,
-                    "ties": season_ties,
-                    "pointsFor": season_pf,
-                    "pointsAgainst": season_pa
+                all_records["teams"][owner] = {
+                    "seasons": {
+                        year: {
+                            "record": season_record
+                        }
+                    },
+                    "total": {
+                        "wins": season_wins,
+                        "losses": season_losses,
+                        "ties": season_ties,
+                        "pointsFor": season_pf,
+                        "pointsAgainst": season_pa
+                    }
                 }
 
     return all_records
