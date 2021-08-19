@@ -28,12 +28,30 @@ def list(start_year, end_year):
             season_record = f'{season_wins}-{season_losses}-{season_ties}'
             season_pf = int(team["record"]["overall"]["pointsFor"])
             season_pa = int(team["record"]["overall"]["pointsAgainst"])
+            poop = " \U0001F4A9"
+            trophy = " \U0001F3C6"
+            medal = " \U0001F3C5"
+            emoji = ''
+            if team["playoffSeed"] == team_details["status"]["teamsJoined"]:
+                emoji = poop
+            elif team["rankCalculatedFinal"] == 1 and team["playoffSeed"] == 1:
+                emoji = trophy + medal
+            elif team["rankCalculatedFinal"] == 1:
+                emoji = trophy
+            elif team["playoffSeed"] == 1:
+                emoji = medal
+            
+            season_summary = {
+                "record": season_record + emoji,
+                "reg_season_champ": team["rankCalculatedFinal"] == 1,
+                "playoff_champ": team["playoffSeed"] == 1,
+                "toilet_bowl": team["playoffSeed"] == team_details["status"]["teamsJoined"]
+            }
 
             if owner in all_records["teams"]:
                 obj = all_records["teams"][owner]
-                obj["seasons"][year] = {
-                    "record": season_record
-                }
+                obj["seasons"][year] = season_summary
+
                 obj["total"]["wins"] += season_wins
                 obj["total"]["losses"] += season_losses
                 obj["total"]["ties"] += season_ties
@@ -42,9 +60,7 @@ def list(start_year, end_year):
             else:
                 all_records["teams"][owner] = {
                     "seasons": {
-                        year: {
-                            "record": season_record
-                        }
+                        year: season_summary
                     },
                     "total": {
                         "wins": season_wins,

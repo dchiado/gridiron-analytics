@@ -5,9 +5,10 @@ The app uses python scripts to retrieve and organize the data and is built on [f
 
 ## Prerequisites
 1. Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
-2. Install flask. If you are on a mac:
+2. Install flask and matplotlib. If you are on a mac:
 ```
 pip install flask
+pip install matplotlib
 ```
 
 ## Use

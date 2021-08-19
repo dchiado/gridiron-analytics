@@ -6,9 +6,10 @@
 }
 
 .table-wrapper {
-    width: 75%;
+    width: 100%;
     margin: 20px 0 40px 0;
     box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+    overflow: scroll;
 }
 
 .fl-table {
@@ -25,7 +26,8 @@
 
 .fl-table td, .fl-table th {
     text-align: center;
-    padding: 8px;
+    padding: 6px;
+    min-width: 70px;
 }
 
 .fl-table td {
