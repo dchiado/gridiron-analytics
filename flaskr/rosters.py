@@ -1,5 +1,5 @@
 import os
-from utils import LoadData
+from utils import load_data
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,9 +8,9 @@ league_id = os.getenv('LEAGUE_ID')
 year = 2020
 next_year_rounds = 16
 
-rosters = LoadData(year, league_id, 'mRoster')
-draft = LoadData(year, league_id, 'mDraftDetail')
-teams = LoadData(year, league_id, 'mTeam')
+rosters = load_data(year, league_id, 'mRoster')
+draft = load_data(year, league_id, 'mDraftDetail')
+teams = load_data(year, league_id, 'mTeam')
 
 all_rosters = []
 
@@ -32,7 +32,9 @@ for team in teams["teams"]:
         draft_round = 'FA'
         player_id = player["playerPoolEntry"]["player"]["id"]
 
-        player_details["name"] = player["playerPoolEntry"]["player"]["fullName"]
+        player_details["name"] = (
+            player["playerPoolEntry"]["player"]["fullName"]
+        )
         player_details["acq_type"] = player["acquisitionType"]
 
         for pick in draft["draftDetail"]["picks"]:
@@ -48,7 +50,7 @@ for team in teams["teams"]:
             player_details["keeper_round"] = draft_round - 2
 
         team_roster_details["players"].append(player_details)
-    
+
     all_rosters.append(team_roster_details)
 
 
@@ -59,4 +61,10 @@ for team in all_rosters:
     print(team["team_name"])
     print()
     for player in team["players"]:
-        print(player["name"] + ", " + player["acq_type"] + ", " + str(player["keeper_round"]))
+        print(
+            player["name"] + ", " + (
+                player["acq_type"] + ", " + (
+                    str(player["keeper_round"])
+                )
+            )
+        )

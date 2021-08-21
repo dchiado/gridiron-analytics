@@ -2,14 +2,15 @@
 This program compiles data on an ESPN fantasy football league using the public ESPN API.
 The app uses python scripts to retrieve and organize the data and is built on [flask](https://flask.palletsprojects.com/en/2.0.x/).
 
-
 ## Prerequisites
 1. Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
-2. Install flask and matplotlib. If you are on a mac:
+2. Install all dependencies:
 ```
-pip install flask
-pip install matplotlib
+pip install -r requirements.txt
 ```
+
+## Linting
+flake8 is used for linting and code style. Configuration for the linter is stored in `.flake8`. To run the linter just run `flake8` from the project root. 
 
 ## Use
 - Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`). Add the id to the LEAGUE_ID variable in `flaskr/globals.py` if not already there.

@@ -1,5 +1,6 @@
-from flaskr.utils import LoadData, LatestSeason
+from flaskr.utils import load_data, latest_season
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+
 
 def list(start_year, end_year):
     all_records = {
@@ -7,45 +8,54 @@ def list(start_year, end_year):
         "teams": {}
     }
     start_year = start_year or FIRST_SEASON
-    end_year = end_year or LatestSeason(LEAGUE_ID)
+    end_year = end_year or latest_season(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
         all_records["seasons"].append(year)
-        team_details = LoadData(year, LEAGUE_ID, 'mTeam')
+        team_details = load_data(year, LEAGUE_ID, 'mTeam')
         teams = team_details["teams"]
         owners = team_details["members"]
 
         for team in teams:
+            record = team["record"]["overall"]
+            reg_season_place = team["playoffSeed"]
+            playoff_place = team["rankCalculatedFinal"]
+            total_teams = team_details["status"]["teamsJoined"]
+
             owner_id = team["primaryOwner"]
-            team_info = next((owner for owner in owners if owner["id"] == owner_id))
+            team_info = next(
+                (owner for owner in owners if owner["id"] == owner_id)
+                )
             fname = team_info["firstName"].strip().capitalize()
             lname = team_info["lastName"].strip().capitalize()
             owner = f'{fname} {lname}'
 
-            season_wins = team["record"]["overall"]["wins"]
-            season_losses = team["record"]["overall"]["losses"]
-            season_ties = team["record"]["overall"]["ties"]
+            season_wins = record["wins"]
+            season_losses = record["losses"]
+            season_ties = record["ties"]
             season_record = f'{season_wins}-{season_losses}-{season_ties}'
-            season_pf = int(team["record"]["overall"]["pointsFor"])
-            season_pa = int(team["record"]["overall"]["pointsAgainst"])
+            season_pf = int(record["pointsFor"])
+            season_pa = int(record["pointsAgainst"])
+
+            emoji = ''
             poop = " \U0001F4A9"
             trophy = " \U0001F3C6"
             medal = " \U0001F3C5"
-            emoji = ''
-            if team["playoffSeed"] == team_details["status"]["teamsJoined"]:
+
+            if reg_season_place == total_teams:
                 emoji = poop
-            elif team["rankCalculatedFinal"] == 1 and team["playoffSeed"] == 1:
+            elif playoff_place == 1 and reg_season_place == 1:
                 emoji = trophy + medal
-            elif team["rankCalculatedFinal"] == 1:
+            elif playoff_place == 1:
                 emoji = trophy
-            elif team["playoffSeed"] == 1:
+            elif reg_season_place == 1:
                 emoji = medal
-            
+
             season_summary = {
                 "record": season_record + emoji,
-                "reg_season_champ": team["rankCalculatedFinal"] == 1,
-                "playoff_champ": team["playoffSeed"] == 1,
-                "toilet_bowl": team["playoffSeed"] == team_details["status"]["teamsJoined"]
+                "reg_season_champ": reg_season_place == 1,
+                "playoff_champ": playoff_place == 1,
+                "toilet_bowl": reg_season_place == total_teams
             }
 
             if owner in all_records["teams"]:

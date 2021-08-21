@@ -23,7 +23,7 @@
                 <tbody>
                     {% for key, value in result["teams"].items() %}
                     <tr>
-                        <td> {{ key }} </td>
+                        <th> {{ key }} </th>
                         {% for season in result["seasons"] %}
                             <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
                         {% endfor %}

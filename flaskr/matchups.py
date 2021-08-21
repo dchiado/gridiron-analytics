@@ -1,16 +1,24 @@
 import collections
-from flaskr.utils import ByeWeek, LoadMatchups, NumberOfWeeks, LatestSeason, LoadData
+from flaskr.utils import (
+    is_bye_week,
+    load_matchups,
+    number_of_weeks,
+    latest_season,
+    load_data,
+    team_name
+)
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+
 
 def results(start_year, end_year, playoffs, count, blowouts):
     all_matchups = {}
     start_year = start_year or FIRST_SEASON
-    end_year = end_year or LatestSeason(LEAGUE_ID)
+    end_year = end_year or latest_season(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
-        season = LoadData(year, LEAGUE_ID, 'mNav')
-        matchups = LoadMatchups(year, LEAGUE_ID)
-        weeks = NumberOfWeeks(year, LEAGUE_ID, playoffs)
+        season = load_data(year, LEAGUE_ID, 'mNav')
+        matchups = load_matchups(year, LEAGUE_ID)
+        weeks = number_of_weeks(year, LEAGUE_ID, playoffs)
 
         for idx, matchup in enumerate(matchups):
             matchup_id = f'{year}_{idx}'
@@ -18,7 +26,7 @@ def results(start_year, end_year, playoffs, count, blowouts):
             if matchup["matchupPeriodId"] > weeks:
                 break
 
-            if ByeWeek(matchup):
+            if is_bye_week(matchup):
                 continue
 
             away_dict = matchup["away"]["pointsByScoringPeriod"]
@@ -26,20 +34,14 @@ def results(start_year, end_year, playoffs, count, blowouts):
             away_team_id = matchup["away"]["teamId"]
 
             if season["seasonId"] == year:
-                for team in season["teams"]:
-                    if team["id"] == away_team_id:
-                        away_team_name = str(team["location"] + " " + team["nickname"])
-                        break
+                away_team_name = team_name(away_team_id, season)
 
             home_dict = matchup["home"]["pointsByScoringPeriod"]
             home_score = next(iter(home_dict.values()))
             home_team_id = matchup["home"]["teamId"]
 
             if season["seasonId"] == year:
-                for team in season["teams"]:
-                    if team["id"] == home_team_id:
-                        home_team_name = str(team["location"] + " " + team["nickname"])
-                        break
+                home_team_name = team_name(home_team_id, season)
 
             difference = 0
             if away_score > home_score:
@@ -58,7 +60,13 @@ def results(start_year, end_year, playoffs, count, blowouts):
 
             all_matchups[matchup_id] = matchup_result
 
-    sorted_blowouts = collections.OrderedDict(sorted(all_matchups.items(), key=lambda t:t[1]["difference"], reverse=blowouts))
+    sorted_blowouts = collections.OrderedDict(
+        sorted(
+            all_matchups.items(),
+            key=lambda t: t[1]["difference"],
+            reverse=blowouts
+            )
+        )
 
     resp = {}
     for idx, x in enumerate(list(sorted_blowouts)[0:int(count)]):
