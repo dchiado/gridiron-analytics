@@ -1,0 +1,17 @@
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.team {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+}
+
+.pick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+}

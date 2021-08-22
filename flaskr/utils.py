@@ -88,3 +88,62 @@ def latest_season(league_id):
         return current - 1
     else:
         return current
+
+
+def headshot(player_id):
+    return ("https://a.espncdn.com/i/headshots/nfl/players/full/" +
+            str(player_id) + ".png")
+
+
+def team_logo(team):
+    if "D/ST" in team:
+        team = team.split()[0]
+    abrev = team_abbreviation(team)
+    return "https://a.espncdn.com/i/teamlogos/nfl/500/" + abrev + ".png"
+
+
+def team_abbreviation(team):
+    abbreviations = {
+        "49ers": "sf",
+        "Bears": "chi",
+        "Bengals": "cin",
+        "Bills": "buf",
+        "Broncos": "den",
+        "Browns": "cle",
+        "Buccaneers": "tb",
+        "Cardinals": "ari",
+        "Chargers": "lac",
+        "Chiefs": "kc",
+        "Colts": "ind",
+        "Cowboys": "dal",
+        "Dolphins": "mia",
+        "Eagles": "phi",
+        "Falcons": "atl",
+        "Football Team": "was",
+        "Giants": "nyg",
+        "Jaguars": "jax",
+        "Jets": "nyj",
+        "Lions": "det",
+        "Packers": "gb",
+        "Panthers": "car",
+        "Patriots": "ne",
+        "Raiders": "lv",
+        "Rams": "lar",
+        "Ravens": "bal",
+        "Redskins": "was",
+        "Saints": "no",
+        "Seahawks": "sea",
+        "Steelers": "pit",
+        "Texans": "hou",
+        "Titans": "ten",
+        "Vikings": "min",
+    }
+    return abbreviations[team]
+
+
+def active_teams(year, league_id):
+    active_teams_data = load_data(year, league_id, 'mTeam')
+    active_teams = []
+    for team in active_teams_data["teams"]:
+        active_teams.append(team["id"])
+    return active_teams

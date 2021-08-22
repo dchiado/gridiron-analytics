@@ -1,0 +1,48 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='favorites.css')}}">
+    </head>
+    <body>
+        {% for team in result %}
+            {% if team["favorite_picks"][1]["picked"] > 1 %}
+            <div class="team">
+                <div class="pick">
+                    <img src="{{ team['logo'] }}" width="160">
+                    <div>{{ team["team_name"] }}</div>
+                </div>
+                <div class="pick">
+                    {% if team["favorite_picks"][1]["picked"] > 1 %}
+                    <img src="{{ team['favorite_picks'][1]['image'] }}" width="160">
+                        {{ team["favorite_picks"][1]["player_name"] }} 
+                        ({{ team["favorite_picks"][1]["picked"] }})
+                        <br>
+                        <div>{{ team["favorite_picks"][1]["years"] }}</div>
+                    {% endif %}
+                </div>
+                <div class="pick">
+                    {% if team["favorite_picks"][2]["picked"] > 1 %}
+                    <img src="{{ team['favorite_picks'][2]['image'] }}" width="160">
+                        {{ team["favorite_picks"][2]["player_name"] }} 
+                        ({{ team["favorite_picks"][2]["picked"] }})
+                        <div>{{ team["favorite_picks"][2]["years"] }}</div>
+                    {% endif %}
+                </div>
+                <div class="pick">
+                    {% if team["favorite_picks"][3]["picked"] > 1 %}
+                    <img src="{{ team['favorite_picks'][3]['image'] }}" width="160">
+
+                        {{ team["favorite_picks"][3]["player_name"] }} 
+                        ({{ team["favorite_picks"][3]["picked"] }})
+                        <br>
+                        <div>{{ team["favorite_picks"][3]["years"] }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        <br>
+        {% endfor %}
+    </body>
+</html>    
+{%endblock%}

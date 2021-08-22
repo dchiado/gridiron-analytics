@@ -1,7 +1,7 @@
 import io
 import base64
 from flask import Flask, render_template, request
-from flaskr import records, matchups, scores, blowouts
+from flaskr import records, matchups, scores, blowouts, favorite_players
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
@@ -82,6 +82,14 @@ def list_blowouts():
     return render_template(
         "blowouts.html", result=resp, plot=pngImageB64String
     )
+
+
+@app.route('/favorite-picks', methods=['POST'])
+def list_picks():
+    start_year = request.form['startyear'] or None
+    end_year = request.form['endyear'] or None
+    resp = favorite_players.top_drafted(start_year, end_year)
+    return render_template("favorites.html", result=resp)
 
 
 if __name__ == "__main__":
