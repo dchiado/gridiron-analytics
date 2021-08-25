@@ -6,6 +6,7 @@ cycler==0.10.0
 Cython==0.29.24
 flake8==3.9.2
 Flask==2.0.1
+Flask-Material==0.1.1
 idna==2.10
 isort==5.8.0
 itsdangerous==2.0.1

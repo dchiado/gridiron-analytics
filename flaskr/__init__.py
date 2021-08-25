@@ -1,11 +1,13 @@
 import io
 import base64
+from flask_material import Material
 from flask import Flask, render_template, request
 from flaskr import records, matchups, scores, blowouts, favorite_players
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 app = Flask(__name__)
+Material(app)
 
 
 @app.route('/')

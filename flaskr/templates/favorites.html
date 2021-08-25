@@ -8,37 +8,69 @@
         {% for team in result %}
             {% if team["favorite_picks"][1]["picked"] > 1 %}
             <div class="team">
-                <div class="pick">
-                    <img src="{{ team['logo'] }}" width="160">
-                    <div>{{ team["team_name"] }}</div>
+                <div class="row">
+                    <div class="col s12 m6">
+                        <div class="card darken-1">
+                            <div class="card-content white-text">
+                                <img src="{{ team['logo'] }}" width="120" referrerpolicy="no-referrer">
+                            </div>
+                            <div class="team-name card-action">
+                                <a>{{ team["team_name"] }}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pick">
+                <div class="row pick">
                     {% if team["favorite_picks"][1]["picked"] > 1 %}
-                    <img src="{{ team['favorite_picks'][1]['image'] }}" width="160">
-                        {{ team["favorite_picks"][1]["player_name"] }} 
-                        ({{ team["favorite_picks"][1]["picked"] }})
-                        <br>
-                        <div>{{ team["favorite_picks"][1]["years"] }}</div>
+                    <div class="col s12 m6">
+                        <div class="card darken-1">
+                            <div class="card-content white-text">
+                                <img src="{{ team['favorite_picks'][1]['image'] }}" width="160">
+                            </div>
+                            <div class="team-name card-action">
+                                <a>
+                                    {{ team["favorite_picks"][1]["player_name"] }} ({{ team["favorite_picks"][1]["picked"] }})
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="pick">
+                <div class="row pick">
                     {% if team["favorite_picks"][2]["picked"] > 1 %}
-                    <img src="{{ team['favorite_picks'][2]['image'] }}" width="160">
-                        {{ team["favorite_picks"][2]["player_name"] }} 
-                        ({{ team["favorite_picks"][2]["picked"] }})
-                        <div>{{ team["favorite_picks"][2]["years"] }}</div>
+                    <div class="col s12 m6">
+                        <div class="card darken-1">
+                            <div class="card-content white-text">
+                                <img src="{{ team['favorite_picks'][2]['image'] }}" width="160">
+                            </div>
+                            <div class="team-name card-action">
+                                <a>
+                                    {{ team["favorite_picks"][2]["player_name"] }}
+                                    ({{ team["favorite_picks"][2]["picked"] }})
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="pick">
+                <div class="row pick">
                     {% if team["favorite_picks"][3]["picked"] > 1 %}
-                    <img src="{{ team['favorite_picks'][3]['image'] }}" width="160">
-
-                        {{ team["favorite_picks"][3]["player_name"] }} 
-                        ({{ team["favorite_picks"][3]["picked"] }})
-                        <br>
-                        <div>{{ team["favorite_picks"][3]["years"] }}</div>
+                    <div class="col s12 m6">
+                        <div class="card darken-1">
+                            <div class="card-content white-text">
+                                <img src="{{ team['favorite_picks'][3]['image'] }}" width="160">
+                            </div>
+                            <div class="team-name card-action">
+                                <a>
+                                    {{ team["favorite_picks"][3]["player_name"] }}
+                                    ({{ team["favorite_picks"][3]["picked"] }})
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     {% endif %}
                 </div>
+
             </div>
             {% endif %}
         <br>

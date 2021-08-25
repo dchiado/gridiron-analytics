@@ -46,6 +46,23 @@
     background: #316879;
 }
 
+.fl-table tbody tr th {
+    background: #f8f8f8;
+    opacity: 1;
+}
+
+.fl-table tbody tr:nth-child(odd) th {
+    background: #ffffff;
+    opacity: 1;
+}
+
 .fl-table tr:nth-child(even) {
     background: #F8F8F8;
+    opacity: 1;
+}
+
+.sticky-col {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
 }

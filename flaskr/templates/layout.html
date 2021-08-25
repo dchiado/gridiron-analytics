@@ -1,3 +1,4 @@
+{% include "nav.html" %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,16 +6,14 @@
       <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1 class="logo">Fantasy Football Data</h1>
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-          </ul>
-        </nav></strong>
+    <nav>
+      <div class="nav-wrapper nav-title">
+        <a href="{{ url_for('home') }}" class="brand-logo">Gridiron League History</div>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+        </ul>
       </div>
-    </header>
+    </nav>
     <div class="container">
         {%block content%}
         {%endblock%}

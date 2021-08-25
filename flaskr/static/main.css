@@ -1,29 +1,22 @@
+@font-face{
+  font-family: OpenSans;
+  src: url('OpenSans-Regular.ttf');
+  font-weight: bold;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: OpenSans;
   color: #316879;
 }
 
-header {
+nav {
+  font-family: OpenSans;
   background-color: #316879;
-  height: 35px;
   width: 100%;
   opacity: .9;
   margin-bottom: 10px;
-}
-
-header h1.logo {
-  margin: 0;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
-  float: left;
-}
-
-header h1.logo:hover {
-  color: #fff;
-  text-decoration: none;
 }
 
 .container {
@@ -82,6 +75,11 @@ h3 {
   text-decoration: none;
 }
 
+.nav-title {
+  margin-left: 25px;
+  font-weight: 500;
+}
+
 .form {
   width: 100%;
 }
@@ -111,7 +109,9 @@ h3 {
 
 .input-label {
   display: block;
+  background-color: transparent;
   font-size: 12px;
+  color: #737373;
   bottom: 50%;
   left: 1rem;
   padding-bottom: 4px;
@@ -151,6 +151,7 @@ h3 {
   color: #FFFFFF;
   cursor: pointer;
   padding: 18px;
+  margin: 0;
   width: 100%;
   border: none;
   border-radius: 8px;
@@ -164,7 +165,7 @@ h3 {
   background-color: #61B6D0;
 }
 
-.active {
+button.active {
   background-color: #61B6D0;
   border-radius: 8px 8px 0 0;
 }

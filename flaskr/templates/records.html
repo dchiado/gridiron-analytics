@@ -9,7 +9,7 @@
             <table class="fl-table">
                 <thead>
                     <tr>
-                        <th>Owner</th>
+                        <th class="sticky-col">Owner</th>
                         {% for value in result["seasons"] %}
                         <th>{{ value }}</th>
                         {% endfor %}
@@ -23,7 +23,7 @@
                 <tbody>
                     {% for key, value in result["teams"].items() %}
                     <tr>
-                        <th> {{ key }} </th>
+                        <th class="sticky-col"> {{ key }} </th>
                         {% for season in result["seasons"] %}
                             <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
                         {% endfor %}
