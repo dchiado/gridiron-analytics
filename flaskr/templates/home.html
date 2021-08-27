@@ -20,19 +20,25 @@
                          <button type="button" class="collapsible"">Win Margins</button>
                          <div class="content">
                               <form action="/matchups" method="post" name="biggestblowouts">
-                                   <label for="blowouts" class="radio-label">Biggest Blowouts</label>
-                                   <input type="radio" name="radioAnswer" value="blowouts" checked><br>
-                                   <label for="close"  class="radio-label">Closest Matchups</label>
-                                   <input type="radio" name="radioAnswer" value="close"><br>
-                                   <br><br>
+                                   <p>
+                                        <input id="blowouts" class="with-gap" name="radio" type="radio"/>
+                                        <label for="blowouts">Biggest Blowouts</label>
+                                   </p>
+                                   <p>
+                                        <input id="close" class="with-gap" name="radio" type="radio"/>
+                                        <label for="close">Closest Matchups</label>
+                                   </p>
+                                   <br>
                                    <label for="startyear" class="input-label">Start Year</label>
                                    <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
                                    <label for="endyear" class="input-label">End Year</label>
                                    <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
                                    <label for="count" class="input-label">Number of records to display</label>
                                    <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
-                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
-                                   <input type="checkbox" id="playoffs" name="playoffs"><br>
+                                   <p>
+                                        <input type="checkbox" id="margins-playoffs" name="margins-playoffs"/>
+                                        <label for="margins-playoffs">Include playoffs?</label>
+                                   </p>
                                    <p>
                                         <button class="button">Submit</button>
                                    </p>
@@ -45,19 +51,29 @@
                          <div class="content">
                               <form action="/individual-weeks" method="post" name="weeks">
                                    <p>
-                                        <label for="best" class="radio-label">Best Weeks</label>
-                                        <input type="radio" name="radioAnswer" value="best" checked><br>
-                                        <label for="worst" class="radio-label">Worst Weeks</label>
-                                        <input type="radio" name="radioAnswer" value="worse"><br>
+                                        <input id="best-weeks" class="with-gap" name="radio" type="radio"/>
+                                        <label for="best-weeks">Best Weeks</label>
                                    </p>
-                                   <label for="startyear" class="input-label">Start Year</label>
-                                   <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
-                                   <label for="endyear" class="input-label">End Year</label>
-                                   <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
-                                   <label for="count" class="input-label">Number of records to display</label>
-                                   <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
-                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
-                                   <input type="checkbox" id="playoffs" name="playoffs"><br>
+                                   <p>
+                                        <input id="worst-weeks" class="with-gap" name="radio" type="radio"/>
+                                        <label for="worst-weeks">Worst Weeks</label>
+                                   </p>
+                                   <p>
+                                        <label for="startyear" class="input-label">Start Year</label>
+                                        <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005">
+                                   </p>
+                                   <p>
+                                        <label for="endyear" class="input-label">End Year</label>
+                                        <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020">
+                                   </p>
+                                   <p>
+                                        <label for="count" class="input-label">Number of records to display</label>
+                                        <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10">
+                                   </p>
+                                   <p>
+                                        <input type="checkbox" id="weeks-playoffs" name="weeks-playoffs"/>
+                                        <label for="weeks-playoffs">Include playoffs?</label>
+                                   </p>
                                    <p>
                                         <button class="button">Submit</button>
                                    </p>
@@ -70,10 +86,12 @@
                          <div class="content">
                               <form action="/individual-seasons" method="post" name="averageScores">
                                    <p>
-                                        <label for="best" class="radio-label">Best Seasons</label>
-                                        <input type="radio" name="radioAnswer" value="best" checked><br>
-                                        <label for="worst" class="radio-label">Worst Seasons</label>
-                                        <input type="radio" name="radioAnswer" value="worse"><br>
+                                        <input id="best-seasons" class="with-gap" name="radio" type="radio"/>
+                                        <label for="best-seasons">Best Seasons</label>
+                                   </p>
+                                   <p>
+                                        <input id="worst-seasons" class="with-gap" name="radio" type="radio"/>
+                                        <label for="worst-seasons">Worst Seasons</label>
                                    </p>
                                    <label for="startyear" class="input-label">Start Year</label>
                                    <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
@@ -96,8 +114,10 @@
                                    <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
                                    <label for="endyear" class="input-label">End Year</label>
                                    <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
-                                   <label for="playoffs" class="radio-label">Include playoffs?</label>
-                                   <input type="checkbox" id="playoffs" name="playoffs"><br>
+                                   <p>
+                                        <input type="checkbox" id="blowouts-playoffs" name="blowouts-playoffs"/>
+                                        <label for="blowouts-playoffs">Include playoffs?</label>
+                                   </p>
                                    <p>
                                         <button class="button">Submit</button>
                                    </p>
