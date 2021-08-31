@@ -3,7 +3,7 @@ import base64
 from flask_material import Material
 from flask_scss import Scss
 from flask import Flask, render_template, request
-from flaskr import records, matchups, scores, blowouts, favorite_players
+from flaskr import standings, matchups, scores, blowouts, favorite_players
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import numpy as np
@@ -20,30 +20,22 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/seasons-form')
-def seasons_form():
-    app.route('/seasons-form')
-    return render_template("seasons-form.html")
+@app.route('/bests-and-worsts')
+def bests_and_worsts_form():
+    app.route('/bests-and-worsts')
+    return render_template("bests-worsts-form.html")
 
 
-@app.route('/matchups-form')
-def matchups_form():
-    app.route('/matchups-form')
-    return render_template("matchups-form.html")
+@app.route('/standings', methods=['POST', 'GET'])
+def all_time_standings():
+    resp = standings.list()
+    return render_template("standings.html", result=resp)
 
 
-@app.route('/drafts-form')
-def drafts_form():
-    app.route('/drafts-form')
-    return render_template("drafts-form.html")
-
-
-@app.route('/records', methods=['POST'])
-def list_records():
-    start_year = request.form['startyear']
-    end_year = request.form['endyear']
-    resp = records.list(start_year, end_year)
-    return render_template("records.html", result=resp)
+@app.route('/favorite-picks', methods=['POST', 'GET'])
+def favorite_picks():
+    resp = favorite_players.top_drafted()
+    return render_template("favorites.html", result=resp)
 
 
 @app.route('/matchups', methods=['POST'])
@@ -52,7 +44,7 @@ def list_matchups():
     end_year = request.form['endyear'] or None
     playoffs = 'margins-playoffs' in request.form or None
     print(request.form)
-    blowouts = request.form["radio"] == 'blowouts'
+    blowouts = request.form["matchup-radio"] == 'blowouts'
     count = request.form['count'] or 10
     resp = matchups.results(start_year, end_year, playoffs, count, blowouts)
     return render_template("matchups.html", result=resp)
@@ -63,9 +55,9 @@ def list_seasons():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     count = request.form['count'] or 10
-    best = request.form["radio"] == 'best-seasons'
+    best = request.form['seasons-radio'] == 'best-seasons'
     resp = scores.best_and_worst_seasons(start_year, end_year, count, best)
-    return render_template("seasons.html", result=resp)
+    return render_template('seasons.html', result=resp)
 
 
 @app.route('/individual-weeks', methods=['POST'])
@@ -74,7 +66,7 @@ def list_weeks():
     end_year = request.form['endyear'] or None
     playoffs = 'weeks-playoffs' in request.form or None
     count = request.form['count'] or 10
-    best = request.form["radio"] == 'best-weeks'
+    best = request.form["week-scores-radio"] == 'best-weeks'
     resp = scores.best_and_worst_weeks(
         start_year, end_year, playoffs, count, best
     )
@@ -120,12 +112,6 @@ def list_blowouts():
     return render_template(
         "blowouts.html", result=resp, plot=pngImageB64String
     )
-
-
-@app.route('/favorite-picks', methods=['POST', 'GET'])
-def favorite_picks():
-    resp = favorite_players.top_drafted()
-    return render_template("favorites.html", result=resp)
 
 
 if __name__ == "__main__":
