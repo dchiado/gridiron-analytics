@@ -147,3 +147,8 @@ def active_teams(year, league_id):
     for team in active_teams_data["teams"]:
         active_teams.append(team["id"])
     return active_teams
+
+
+def win_pct(w, l):
+    pct = round((w / (w + l))*100, 2)
+    return str(pct) + '%'

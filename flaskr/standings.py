@@ -1,14 +1,14 @@
-from flaskr.utils import load_data, latest_season
+from flaskr.utils import load_data, latest_season, win_pct
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 
 
-def list(start_year, end_year):
+def list():
     all_records = {
         "seasons": [],
         "teams": {}
     }
-    start_year = start_year or FIRST_SEASON
-    end_year = end_year or latest_season(LEAGUE_ID)
+    start_year = FIRST_SEASON
+    end_year = latest_season(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
         all_records["seasons"].append(year)
@@ -62,9 +62,15 @@ def list(start_year, end_year):
                 obj = all_records["teams"][owner]
                 obj["seasons"][year] = season_summary
 
-                obj["total"]["wins"] += season_wins
-                obj["total"]["losses"] += season_losses
-                obj["total"]["ties"] += season_ties
+                new_wins = obj["total"]["wins"] + season_wins
+                new_losses = obj["total"]["losses"] + season_losses
+                new_ties = obj["total"]["ties"] + season_ties
+                new_win_pct = win_pct(new_wins, new_losses)
+
+                obj["total"]["wins"] = new_wins
+                obj["total"]["losses"] = new_losses
+                obj["total"]["ties"] = new_ties
+                obj["total"]["winPct"] = new_win_pct
                 obj["total"]["pointsFor"] += season_pf
                 obj["total"]["pointsAgainst"] += season_pa
             else:
@@ -76,6 +82,7 @@ def list(start_year, end_year):
                         "wins": season_wins,
                         "losses": season_losses,
                         "ties": season_ties,
+                        "winPct": win_pct(season_wins, season_losses),
                         "pointsFor": season_pf,
                         "pointsAgainst": season_pa
                     }
