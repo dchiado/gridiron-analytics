@@ -184,15 +184,23 @@ button:focus {
   border-radius: 0 0 8px 8px;
 }
 
-div#loading {
+.rotate {
   position: absolute;
   top: 30%;
   left: 50%;
-  width: 35px;
-  height: 35px;
   display: none;
-  background: url(/static/loader.gif) no-repeat;
   cursor: wait;
+  animation: rotation 1s infinite cubic-bezier(.55,.09,.44,.91);
+  z-index: 1000;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 .grayout {
