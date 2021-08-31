@@ -10,10 +10,10 @@ from flaskr.utils import (
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 
 
-def top_drafted(start_year, end_year):
+def top_drafted():
     all_picks = {}
-    start_year = start_year or FIRST_SEASON
-    end_year = end_year or latest_season(LEAGUE_ID)
+    start_year = FIRST_SEASON
+    end_year = latest_season(LEAGUE_ID)
 
     active_team_ids = active_teams(int(end_year), LEAGUE_ID)
 

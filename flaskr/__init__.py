@@ -20,6 +20,24 @@ def home():
     return render_template("home.html")
 
 
+@app.route('/seasons-form')
+def seasons_form():
+    app.route('/seasons-form')
+    return render_template("seasons-form.html")
+
+
+@app.route('/matchups-form')
+def matchups_form():
+    app.route('/matchups-form')
+    return render_template("matchups-form.html")
+
+
+@app.route('/drafts-form')
+def drafts_form():
+    app.route('/drafts-form')
+    return render_template("drafts-form.html")
+
+
 @app.route('/records', methods=['POST'])
 def list_records():
     start_year = request.form['startyear']
@@ -33,6 +51,7 @@ def list_matchups():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'margins-playoffs' in request.form or None
+    print(request.form)
     blowouts = request.form["radio"] == 'blowouts'
     count = request.form['count'] or 10
     resp = matchups.results(start_year, end_year, playoffs, count, blowouts)
@@ -103,11 +122,9 @@ def list_blowouts():
     )
 
 
-@app.route('/favorite-picks', methods=['POST'])
-def list_picks():
-    start_year = request.form['startyear'] or None
-    end_year = request.form['endyear'] or None
-    resp = favorite_players.top_drafted(start_year, end_year)
+@app.route('/favorite-picks', methods=['POST', 'GET'])
+def favorite_picks():
+    resp = favorite_players.top_drafted()
     return render_template("favorites.html", result=resp)
 
 

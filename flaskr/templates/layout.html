@@ -8,9 +8,12 @@
   <body>
     <nav>
       <div class="nav-wrapper nav-title">
-        <a href="{{ url_for('home') }}" class="brand-logo">Gridiron League History</div>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <a href="{{ url_for('home') }}" class="brand-logo right">Gridiron League History</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
           <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('seasons_form') }}">Seasons</a></li>
+          <li><a href="{{ url_for('matchups_form') }}">Matchups</a></li>
+          <li><a href="{{ url_for('favorite_picks') }}">Draft Picks</a></li>
         </ul>
       </div>
     </nav>

@@ -1,0 +1,83 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <body>
+        <div class="home">
+            <div id="forms" class="home">
+                <div id="records" class="form">
+                    <button type="button" class="collapsible">All Time Standings</button>
+                    <div class="content">
+                        <form action="/records" method="post" name="records">
+                            <label for="startyear" class="input-label">Start Year</label>
+                            <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
+                            <label for="endyear" class="input-label">End Year</label>
+                            <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
+                            <button class="button">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div id="season-scores" class="form">
+                    <button type="button" class="collapsible">Individual Season Scores</button>
+                    <div class="content">
+                        <form action="/individual-seasons" method="post" name="averageScores">
+                            <p>
+                                <input id="best-seasons" class="with-gap" name="radio" type="radio"/>
+                                <label for="best-seasons">Best Seasons</label>
+                            </p>
+                            <p>
+                                <input id="worst-seasons" class="with-gap" name="radio" type="radio"/>
+                                <label for="worst-seasons">Worst Seasons</label>
+                            </p>
+                            <label for="startyear" class="input-label">Start Year</label>
+                            <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
+                            <label for="endyear" class="input-label">End Year</label>
+                            <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
+                            <label for="count" class="input-label">Number of records to display</label>
+                            <input type="number" id="count" name="count" min="1" max="500" class="input-text" placeholder="10"><br>
+                            <p>
+                                <button class="button">Submit</button>
+                            </p>
+                        </form>    
+                    </div>      
+                </div>
+                <br>
+                <div id="blowouts" class="form">
+                    <button type="button" class="collapsible">Blowouts by Season</button>
+                    <div class="content">
+                          <form action="/yearly-blowouts" method="post" name="yearlyBlowouts">
+                              <label for="startyear" class="input-label">Start Year</label>
+                              <input type="number" id="startyear" name="startyear" min="2005" max="2020" class="input-text" placeholder="2005"><br>
+                              <label for="endyear" class="input-label">End Year</label>
+                              <input type="number" id="endyear" name="endyear" min="2005" max="2020" class="input-text" placeholder="2020"><br>
+                              <p>
+                                    <input type="checkbox" id="blowouts-playoffs" name="blowouts-playoffs"/>
+                                    <label for="blowouts-playoffs">Include playoffs?</label>
+                              </p>
+                              <p>
+                                    <button class="button">Submit</button>
+                              </p>
+                          </form>    
+                    </div>      
+                </div>
+            </div>
+        </div>
+        <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                  this.classList.toggle("active");
+                  var content = this.nextElementSibling;
+                  if (content.style.display === "block") {
+                      content.style.display = "none";
+                  } else {
+                      content.style.display = "block";
+                  }
+                  });
+            }
+        </script>
+    </body>
+</html>
+{%endblock%}

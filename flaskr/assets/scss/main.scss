@@ -70,7 +70,7 @@ h3 {
 }
 
 .nav-title {
-  margin-left: 25px;
+  margin-right: 25px;
   font-weight: 500;
 }
 
@@ -182,4 +182,20 @@ button:focus {
   overflow: hidden;
   background-color: $white;
   border-radius: 0 0 8px 8px;
+}
+
+div#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+  height: 35px;
+  display: none;
+  background: url(/static/loader.gif) no-repeat;
+  cursor: wait;
+}
+
+.grayout {
+  pointer-events: none;
+  opacity: 0.6;
 }
