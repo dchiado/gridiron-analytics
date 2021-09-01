@@ -43,7 +43,6 @@ def list_matchups():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'margins-playoffs' in request.form or None
-    print(request.form)
     blowouts = request.form["matchup-radio"] == 'blowouts'
     count = request.form['count'] or 10
     resp = matchups.results(start_year, end_year, playoffs, count, blowouts)

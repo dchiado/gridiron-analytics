@@ -54,3 +54,11 @@
                       position: -webkit-sticky;
                       position: sticky;
                       left: 0; }
+
+                      .tabs .tab a {
+                        color: #f47a60; }
+
+                        .chart {
+                          display: flex;
+                          flex-direction: row;
+                          justify-content: space-around; }

@@ -11,8 +11,11 @@ def list():
     end_year = latest_season(LEAGUE_ID)
 
     for year in range(int(start_year), int(end_year) + 1):
-        all_records["seasons"].append(year)
         team_details = load_data(year, LEAGUE_ID, 'mTeam')
+        if team_details["status"]["currentMatchupPeriod"] == 1:
+            continue
+
+        all_records["seasons"].append(year)
         teams = team_details["teams"]
         owners = team_details["members"]
 

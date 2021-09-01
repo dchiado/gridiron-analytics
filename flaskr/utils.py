@@ -103,6 +103,7 @@ def team_logo(team):
 
 
 def team_abbreviation(team):
+    print(team)
     abbreviations = {
         "49ers": "sf",
         "Bears": "chi",
@@ -137,6 +138,7 @@ def team_abbreviation(team):
         "Texans": "hou",
         "Titans": "ten",
         "Vikings": "min",
+        "Washington": "was"
     }
     return abbreviations[team]
 
