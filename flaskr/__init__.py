@@ -6,7 +6,6 @@ from flask import Flask, render_template, request
 from flaskr import standings, matchups, scores, blowouts, favorite_players
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-import numpy as np
 
 app = Flask(__name__)
 Material(app)
