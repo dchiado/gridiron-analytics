@@ -59,6 +59,7 @@ def list_matchups():
 
 @app.route('/individual-seasons', methods=['POST'])
 def list_seasons():
+    print(request.form)
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     count = request.form['count'] or 10
