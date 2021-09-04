@@ -1,11 +1,13 @@
 import io
 import base64
+import os
 from flask_material import Material
 from flask_scss import Scss
 from flask import Flask, render_template, request
 from flaskr import standings, matchups, scores, blowouts, favorite_players
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from flask import send_from_directory
 
 app = Flask(__name__)
 Material(app)
@@ -17,6 +19,13 @@ app.debug = True
 def home():
     app.route('/')
     return render_template("home.html")
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico',
+                               mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/bests-and-worsts')
@@ -60,6 +69,7 @@ def list_seasons():
 
 @app.route('/individual-weeks', methods=['POST'])
 def list_weeks():
+    print('request', request.form)
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'weeks-playoffs' in request.form or None

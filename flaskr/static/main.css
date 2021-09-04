@@ -6,12 +6,10 @@
   body {
     margin: 0;
     padding: 0;
-    font-family: OpenSans;
-    color: #316879; }
+    font-family: OpenSans; }
 
     nav {
       font-family: OpenSans;
-      background-color: #316879;
       width: 100%;
       opacity: 0.9;
       margin-bottom: 10px; }
@@ -53,7 +51,6 @@
                     margin-left: 35px; }
 
                     .menu li a {
-                      color: #FFFFFF;
                       text-decoration: none; }
 
                       .nav-title {
@@ -76,102 +73,68 @@
                             border-radius: 0.4rem;
                             transition: box-shadow var("--transitionDuration"); }
 
-                            .input-text::placeholder {
-                              color: #B0BEC5; }
+                            .input-text:focus {
+                              outline: none;
+                              box-shadow: 0.2rem 0.8rem 1.6rem var("--colorPrimary600"); }
 
-                              .input-text:focus {
-                                outline: none;
-                                box-shadow: 0.2rem 0.8rem 1.6rem var("--colorPrimary600"); }
+                              .input-label {
+                                display: block;
+                                background-color: transparent;
+                                font-size: 12px;
+                                bottom: 50%;
+                                left: 1rem;
+                                padding-bottom: 4px; }
 
-                                .input-label {
-                                  display: block;
-                                  background-color: transparent;
-                                  font-size: 12px;
-                                  color: #737373;
-                                  bottom: 50%;
-                                  left: 1rem;
-                                  padding-bottom: 4px; }
+                                ::placeholder {
+                                  color: #B0BEC5;
+                                  opacity: 1; }
 
-                                  [type="radio"]:not(:checked) + label:before {
-                                    border: 2px solid #316879;
-                                    color: #316879; }
+                                  .button {
+                                    border-radius: 0.3em;
+                                    color: #FFFFFF;
+                                    transition: all 0.2s; }
 
-                                    [type="radio"].with-gap:checked + label:after {
-                                      border: 2px solid #316879;
-                                      background-color: #316879; }
+                                    .collapsible {
+                                      background-color: #607d8b;
+                                      color: #FFFFFF;
+                                      cursor: pointer;
+                                      padding: 18px;
+                                      margin: 0;
+                                      width: 100%;
+                                      border: none;
+                                      border-radius: 8px;
+                                      text-align: left;
+                                      outline: none;
+                                      font-size: 16px; }
 
-                                      [type="radio"].with-gap:checked + label:before {
-                                        border: 2px solid #316879; }
+                                      .content {
+                                        padding: 20px 18px;
+                                        display: none;
+                                        overflow: hidden;
+                                        background-color: #FFFFFF;
+                                        color: #607d8b;
+                                        border-radius: 0 0 8px 8px; }
 
-                                        .button {
-                                          display: inline-block;
-                                          padding: 0.5em 1.2em;
-                                          border: 0.1em solid #FFFFFF;
-                                          cursor: pointer;
-                                          margin: 0 0.3em 0.3em 0;
-                                          border-radius: 1.5em;
-                                          box-sizing: border-box;
-                                          text-decoration: none;
-                                          font-weight: 300;
-                                          background-color: #316879;
-                                          color: #FFFFFF;
-                                          text-align: center;
-                                          transition: all 0.2s; }
+                                        .page-content {
+                                          color: #607d8b; }
 
-                                          .button:hover {
-                                            color: #316879;
-                                            ;
-background-color: #FFFFFF;
-                                            border: 0.1em solid #316879; }
+                                          .loader {
+                                            position: absolute !important;
+                                            top: 30%;
+                                            left: 50%;
+                                            display: block;
+                                            z-index: 1000; }
 
-                                            .collapsible {
-                                              background-color: #316879;
-                                              color: #FFFFFF;
-                                              cursor: pointer;
-                                              padding: 18px;
-                                              margin: 0;
-                                              width: 100%;
-                                              border: none;
-                                              border-radius: 8px;
-                                              text-align: left;
-                                              outline: none;
-                                              font-size: 16px;
-                                              font-weight: 600; }
+                                            .grayout {
+                                              pointer-events: none;
+                                              opacity: 0.6; }
 
-                                              .collapsible:hover {
-                                                background-color: #61B6D0; }
+                                              .mdl-layout--fixed-header {
+                                                color: white;
+                                                margin-bottom: 20px; }
 
-                                                button.active {
-                                                  background-color: #61B6D0;
-                                                  border-radius: 8px 8px 0 0; }
+                                                .mdl-layout-title {
+                                                  padding-right: 40px; }
 
-                                                  button:focus {
-                                                    outline: none;
-                                                    background-color: none !important; }
-
-                                                    .content {
-                                                      padding: 20px 18px;
-                                                      display: none;
-                                                      overflow: hidden;
-                                                      background-color: #FFFFFF;
-                                                      border-radius: 0 0 8px 8px; }
-
-                                                      .rotate {
-                                                        position: absolute;
-                                                        top: 30%;
-                                                        left: 50%;
-                                                        display: none;
-                                                        cursor: wait;
-                                                        animation: rotation 1s infinite cubic-bezier(0.55, 0.09, 0.44, 0.91);
-                                                        z-index: 1000; }
-
-                                                        @keyframes rotation {
-                                                          from {
-                                                            transform: rotate(0deg);   }
-                                                            to {
-                                                              transform: rotate(359deg);   }
-}
-
-.grayout {
-  pointer-events: none;
-  opacity: 0.6; }
+                                                  .mdl-layout__header-row {
+                                                    padding: 0 20px 0 20px !important; }

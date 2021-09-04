@@ -10,12 +10,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: OpenSans;
-  color: $primary-blue;
 }
 
 nav {
   font-family: OpenSans;
-  background-color: $primary-blue;
   width: 100%;
   opacity: .9;
   margin-bottom: 10px;
@@ -65,7 +63,6 @@ h3 {
 }
 
 .menu li a {
-  color: $white;
   text-decoration: none;
 }
 
@@ -92,10 +89,6 @@ h3 {
   transition: box-shadow var(--transitionDuration);
 }
 
-.input-text::placeholder {
-  color: $placeholder-gray;
-}
-
 .input-text:focus {
   outline: none;
   box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
@@ -105,50 +98,24 @@ h3 {
   display: block;
   background-color: transparent;
   font-size: 12px;
-  color: $label-gray;
   bottom: 50%;
   left: 1rem;
   padding-bottom: 4px;
 }
 
-[type="radio"]:not(:checked)+label:before {
-    border: 2px solid $primary-blue;
-    color: $primary-blue;
-}
-
-[type="radio"].with-gap:checked+label:after {
-  border: 2px solid $primary-blue;
-  background-color: $primary-blue;
-}
-
-[type="radio"].with-gap:checked+label:before {
-  border: 2px solid $primary-blue;
+::placeholder {
+  color: $placeholder-gray;
+  opacity: 1;
 }
 
 .button {
-  display: inline-block;
-  padding: 0.5em 1.2em;
-  border: 0.1em solid $white;
-  cursor: pointer;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 1.5em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-weight: 300;
-  background-color: $primary-blue;
+  border-radius: 0.3em;
   color: $white;
-  text-align: center;
   transition: all 0.2s;
 }
 
-.button:hover{
-  color: $primary-blue;;
-  background-color: $white;
-  border: 0.1em solid $primary-blue;
-}
-
 .collapsible {
-  background-color: $primary-blue;
+  background-color: $primary-gray;
   color: $white;
   cursor: pointer;
   padding: 18px;
@@ -159,21 +126,6 @@ h3 {
   text-align: left;
   outline: none;
   font-size: 16px;
-  font-weight: 600;
-}
-
-.collapsible:hover {
-  background-color: $secondary-light-blue;
-}
-
-button.active {
-  background-color: $secondary-light-blue;
-  border-radius: 8px 8px 0 0;
-}
-
-button:focus {
-  outline: none;
-  background-color: none !important;
 }
 
 .content {
@@ -181,29 +133,36 @@ button:focus {
   display: none;
   overflow: hidden;
   background-color: $white;
+  color: $primary-gray;
   border-radius: 0 0 8px 8px;
 }
 
-.rotate {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  display: none;
-  cursor: wait;
-  animation: rotation 1s infinite cubic-bezier(.55,.09,.44,.91);
-  z-index: 1000;
+.page-content {
+  color: $primary-gray;
 }
 
-@keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
+.loader {
+  position: absolute !important;
+  top: 30%;
+  left: 50%;
+  display: block;
+  z-index: 1000;
 }
 
 .grayout {
   pointer-events: none;
   opacity: 0.6;
+}
+
+.mdl-layout--fixed-header {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.mdl-layout-title {
+  padding-right: 40px;
+}
+
+.mdl-layout__header-row {
+  padding: 0 20px 0 20px !important;
 }

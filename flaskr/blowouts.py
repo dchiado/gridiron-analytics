@@ -2,15 +2,16 @@ from flaskr.utils import (
     is_bye_week,
     load_matchups,
     number_of_weeks,
-    latest_season
+    check_start_year,
+    check_end_year
 )
-from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+from flaskr.globals import LEAGUE_ID
 
 
 def by_year(start_year, end_year, playoffs):
     all_records = {}
-    start_year = start_year or FIRST_SEASON
-    end_year = end_year or latest_season(LEAGUE_ID)
+    start_year = check_start_year(start_year)
+    end_year = check_end_year(end_year)
 
     for year in range(int(start_year), int(end_year) + 1):
         matchups = load_matchups(year, LEAGUE_ID)

@@ -15,10 +15,11 @@ def top_drafted():
     start_year = FIRST_SEASON
     end_year = latest_season(LEAGUE_ID)
 
-    active_team_ids = active_teams(int(end_year), LEAGUE_ID)
+    mTeam = load_data(int(end_year), LEAGUE_ID, 'mTeam')
+    active_team_ids = active_teams(mTeam)
+    teams = mTeam["teams"]
 
     for year in range(int(start_year), int(end_year) + 1):
-        teams = load_data(year, LEAGUE_ID, 'mTeam')["teams"]
         players = player_info(year, LEAGUE_ID)
         draft_detail = load_data(year, LEAGUE_ID, 'mDraftDetail')
         picks = draft_detail["draftDetail"]["picks"]

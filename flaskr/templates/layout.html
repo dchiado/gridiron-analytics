@@ -1,36 +1,50 @@
-{% include "nav.html" %}
 <!DOCTYPE html>
 <html>
   <head>
-      <title>Gridiron Analytics</title>
+      <title>Gridiron Almanac</title>
+      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
-  </head>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_blue.min.css" />
+    </head>
   <body>
-    <nav>
-      <div class="nav-wrapper nav-title">
-        <a href="{{ url_for('home') }}" class="brand-logo right">Gridiron League History</a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
-          <li><a href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a></li>
-          <li><a href="{{ url_for('bests_and_worsts_form') }}" onclick="loading();">Bests and Worsts</a></li>
-          <li><a href="{{ url_for('favorite_picks') }}" onclick="loading();">Favorite Draft Picks</a></li>
-        </ul>
-      </div>
-    </nav>
-    <div>
-      <img id="loading" src="/static/trophy.png" class="rotate" height="100"/>
-    </div>
-    <div id="content">
-      <div class="container">
-        {%block content%}
-        {%endblock%}
-      </div>
+    <div id="loading" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner loader"></div>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
+            <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
+            <a class="mdl-navigation__link" href="{{ url_for('bests_and_worsts_form') }}" onclick="loading();">Bests and Worsts</a>
+            <a class="mdl-navigation__link" href="{{ url_for('favorite_picks') }}" onclick="loading();">Draft Picks</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
+          <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
+          <a class="mdl-navigation__link" href="{{ url_for('bests_and_worsts_form') }}" onclick="loading();">Bests and Worsts</a>
+          <a class="mdl-navigation__link" href="{{ url_for('favorite_picks') }}" onclick="loading();">Draft Picks</a>
+        </nav>
+      </div>    
+      <main id="content" class="mdl-layout__content">
+        <div class="page-content">      
+          <div class="container">
+            {%block content%}
+            {%endblock%}
+          </div>
+        </div>
+      </main>
     </div>
     <script type="text/javascript">
       function loading(){
-          $("#loading").show();
-          document.getElementById("content").classList.add("grayout");
+        console.log('doing it')
+        document.getElementById("loading").classList.add("is-active");
+        document.getElementById("content").classList.add("grayout");
       }
     </script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   </body>
 </html>

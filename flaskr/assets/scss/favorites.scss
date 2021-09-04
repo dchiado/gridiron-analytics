@@ -10,6 +10,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.owner {
+    padding-right: 40px;
 }
 
 .pick {
@@ -30,6 +35,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     padding: 5px !important;
 }
 
@@ -41,3 +47,13 @@
     font-weight: 500;
     padding: 5px !important;
 }
+
+.demo-card-square.mdl-card {
+    width: 240px;
+    height: 210px;
+}
+
+.demo-card-square > .mdl-card__title {
+    color: #fff;
+}
+  

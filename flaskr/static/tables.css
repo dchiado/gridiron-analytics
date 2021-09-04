@@ -6,9 +6,10 @@
 
   .table-wrapper {
     width: 100%;
-    margin: 20px 0 40px 0;
+    margin: 20px;
     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
-    overflow: scroll; }
+    overflow: scroll;
+    color: #607d8b; }
 
     .fl-table {
       border-radius: 5px;
@@ -36,7 +37,7 @@
 
             .fl-table thead th:nth-child(odd) {
               color: #FFFFFF;
-              background: #316879; }
+              background: #607d8b; }
 
               .fl-table tbody tr th {
                 background: #f8f8f8;

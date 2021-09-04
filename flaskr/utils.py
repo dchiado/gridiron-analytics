@@ -1,6 +1,7 @@
 import requests
 import json
 from datetime import date
+from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 
 
 def load_data(year, league_id, uri, headers=None):
@@ -103,7 +104,6 @@ def team_logo(team):
 
 
 def team_abbreviation(team):
-    print(team)
     abbreviations = {
         "49ers": "sf",
         "Bears": "chi",
@@ -143,14 +143,28 @@ def team_abbreviation(team):
     return abbreviations[team]
 
 
-def active_teams(year, league_id):
-    active_teams_data = load_data(year, league_id, 'mTeam')
+def active_teams(mTeam):
     active_teams = []
-    for team in active_teams_data["teams"]:
+    for team in mTeam["teams"]:
         active_teams.append(team["id"])
     return active_teams
 
 
-def win_pct(w, l):
-    pct = round((w / (w + l))*100, 2)
+def win_pct(win, loss):
+    pct = round((win / (win + loss))*100, 2)
     return str(pct) + '%'
+
+
+def check_start_year(year):
+    if year is None or int(year) < FIRST_SEASON:
+        return FIRST_SEASON
+    else:
+        return int(year)
+
+
+def check_end_year(year):
+    latest = latest_season(LEAGUE_ID)
+    if year is None or int(year) > latest:
+        return latest
+    else:
+        return int(year)
