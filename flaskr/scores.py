@@ -8,7 +8,6 @@ from flaskr.utils import (
     team_name,
     check_start_year
 )
-from flaskr.globals import LEAGUE_ID
 
 
 def best_and_worst_weeks(start_year, end_year, playoffs, count, highest):
@@ -17,12 +16,12 @@ def best_and_worst_weeks(start_year, end_year, playoffs, count, highest):
     end_year = check_end_year(end_year)
 
     for year in range(start_year, end_year + 1):
-        weeks = number_of_weeks(year, LEAGUE_ID, playoffs)
+        weeks = number_of_weeks(year, playoffs)
         if weeks == 0:
             continue
 
-        matchups = load_matchups(year, LEAGUE_ID)
-        season = load_data(year, LEAGUE_ID, 'mNav')
+        matchups = load_matchups(year)
+        season = load_data(year, 'mNav')
 
         for matchup in matchups:
             week = 0
@@ -92,11 +91,11 @@ def best_and_worst_seasons(start_year, end_year, count, best):
         all_averages_this_year = []
         all_seasons_this_year = []
 
-        season = load_data(year, LEAGUE_ID, 'mNav')
+        season = load_data(year, 'mNav')
         current_year_teams = season["teams"]
 
-        matchups = load_matchups(year, LEAGUE_ID)
-        weeks = number_of_weeks(year, LEAGUE_ID, False)
+        matchups = load_matchups(year)
+        weeks = number_of_weeks(year, False)
         if weeks == 0:
             continue
 

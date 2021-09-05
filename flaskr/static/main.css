@@ -108,47 +108,50 @@
                                       outline: none;
                                       font-size: 16px; }
 
-                                      .content {
-                                        padding: 20px 18px;
-                                        display: none;
-                                        overflow: hidden;
-                                        background-color: #FFFFFF;
-                                        color: #607d8b;
-                                        border-radius: 0 0 8px 8px; }
+                                      .collapsible.active {
+                                        border-radius: 8px 8px 0 0; }
 
-                                        .page-content {
-                                          color: #607d8b; }
+                                        .content {
+                                          padding: 20px 18px;
+                                          display: none;
+                                          overflow: hidden;
+                                          background-color: #FFFFFF;
+                                          color: #607d8b;
+                                          border-radius: 0 0 8px 8px; }
 
-                                          .loader {
-                                            position: absolute !important;
-                                            top: 30%;
-                                            left: 50%;
-                                            display: block;
-                                            z-index: 1000; }
+                                          .page-content {
+                                            color: #607d8b; }
 
-                                            .grayout {
-                                              pointer-events: none;
-                                              opacity: 0.6; }
+                                            .loader {
+                                              position: absolute !important;
+                                              top: 30%;
+                                              left: 50%;
+                                              display: block;
+                                              z-index: 1000; }
 
-                                              .mdl-layout--fixed-header {
-                                                color: white;
-                                                margin-bottom: 20px; }
+                                              .grayout {
+                                                pointer-events: none;
+                                                opacity: 0.6; }
 
-                                                .mdl-layout-title {
-                                                  padding-right: 40px; }
+                                                .mdl-layout--fixed-header {
+                                                  color: white;
+                                                  margin-bottom: 20px; }
 
-                                                  .mdl-layout__header-row {
-                                                    padding: 0 20px 0 20px !important; }
+                                                  .mdl-layout-title {
+                                                    padding-right: 40px; }
 
-                                                    .mdl-mini-footer {
-                                                      font-size: 12px !important;
-                                                      padding: 8px 16px !important; }
+                                                    .mdl-layout__header-row {
+                                                      padding: 0 20px 0 20px !important; }
 
-                                                      .mdl-mini-footer__link-list {
-                                                        font-size: 12px !important; }
+                                                      .mdl-mini-footer {
+                                                        font-size: 12px !important;
+                                                        padding: 8px 16px !important; }
 
-                                                        .mdl-logo {
-                                                          margin-right: 40px !important; }
+                                                        .mdl-mini-footer__link-list {
+                                                          font-size: 12px !important; }
 
-                                                          .error {
-                                                            color: #FF6565; }
+                                                          .mdl-logo {
+                                                            margin-right: 40px !important; }
+
+                                                            .error {
+                                                              color: #FF6565; }

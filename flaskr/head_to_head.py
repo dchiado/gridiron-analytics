@@ -10,13 +10,13 @@ from flaskr.utils import (
     current_streak,
     longest_streak
 )
-from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+from flaskr.globals import FIRST_SEASON
 from decimal import Decimal
 
 
 def options():
     year = latest_season()
-    teams = load_data(year, LEAGUE_ID, 'mNav')["teams"]
+    teams = load_data(year, 'mNav')["teams"]
     team_options = []
     for team in teams:
         team_options.append({
@@ -59,15 +59,15 @@ def results(team_id_1, team_id_2):
     }
 
     end_year = latest_season()
-    current_info = load_data(end_year, LEAGUE_ID, 'mNav')
+    current_info = load_data(end_year, 'mNav')
     winners = []
 
     for year in range(FIRST_SEASON, end_year + 1):
-        weeks = number_of_weeks(year, LEAGUE_ID, True)
+        weeks = number_of_weeks(year, True)
         if weeks == 0:
             continue
 
-        matchups = load_matchups(year, LEAGUE_ID)
+        matchups = load_matchups(year)
 
         for matchup in matchups:
             if matchup["matchupPeriodId"] > weeks:

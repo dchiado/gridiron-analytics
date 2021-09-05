@@ -5,7 +5,6 @@ from flaskr.utils import (
     check_start_year,
     check_end_year
 )
-from flaskr.globals import LEAGUE_ID
 
 
 def by_year(start_year, end_year, playoffs):
@@ -14,11 +13,11 @@ def by_year(start_year, end_year, playoffs):
     end_year = check_end_year(end_year)
 
     for year in range(int(start_year), int(end_year) + 1):
-        weeks = number_of_weeks(year, LEAGUE_ID, playoffs)
+        weeks = number_of_weeks(year, playoffs)
         if weeks == 0:
             continue
 
-        matchups = load_matchups(year, LEAGUE_ID)
+        matchups = load_matchups(year)
 
         all_scores = []
         blowout_count = 0

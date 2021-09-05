@@ -7,19 +7,19 @@ from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 from itertools import groupby
 
 
-def load_data(year, league_id, uri, headers=None):
+def load_data(year, uri, headers=None):
     if year > 2019:
         url = "http://fantasy.espn.com/apis/v3/games/ffl/seasons/" + \
-            str(year) + "/segments/0/leagues/" + str(league_id) + \
+            str(year) + "/segments/0/leagues/" + str(LEAGUE_ID) + \
             "?&view=" + uri
         return requests.get(url, headers=headers).json()
     else:
         url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
-            str(league_id) + "?seasonId=" + str(year) + "&view=" + uri
+            str(LEAGUE_ID) + "?seasonId=" + str(year) + "&view=" + uri
         return requests.get(url, headers=headers).json()[0]
 
 
-def player_info(year, league_id):
+def player_info(year):
     filters = {
         "players": {
             "limit": 1500,
@@ -31,15 +31,15 @@ def player_info(year, league_id):
         }
     }
     headers = {'x-fantasy-filter': json.dumps(filters)}
-    return load_data(year, league_id, 'kona_player_info', headers)["players"]
+    return load_data(year, 'kona_player_info', headers)["players"]
 
 
-def load_matchups(year, league_id):
-    return load_data(year, league_id, 'mMatchupScore')["schedule"]
+def load_matchups(year):
+    return load_data(year, 'mMatchupScore')["schedule"]
 
 
-def number_of_weeks(year, league_id, playoffs):
-    season = load_data(year, league_id, 'mSettings')
+def number_of_weeks(year, playoffs):
+    season = load_data(year, 'mSettings')
 
     current_week = season["status"]["latestScoringPeriod"]
     total_weeks = season["status"]["finalScoringPeriod"]
@@ -93,7 +93,7 @@ def print_to_file(content, file):
 
 def latest_season():
     current = date.today().year
-    res = load_data(current, LEAGUE_ID, 'mStatus')
+    res = load_data(current, 'mStatus')
     if not res["draftDetail"]["drafted"]:
         return current - 1
     else:

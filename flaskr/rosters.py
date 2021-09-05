@@ -8,9 +8,9 @@ league_id = os.getenv('LEAGUE_ID')
 year = 2020
 next_year_rounds = 16
 
-rosters = load_data(year, league_id, 'mRoster')
-draft = load_data(year, league_id, 'mDraftDetail')
-teams = load_data(year, league_id, 'mTeam')
+rosters = load_data(year, 'mRoster')
+draft = load_data(year, 'mDraftDetail')
+teams = load_data(year, 'mTeam')
 
 all_rosters = []
 

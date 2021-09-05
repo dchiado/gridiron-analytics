@@ -8,7 +8,6 @@ from flaskr.utils import (
     load_data,
     team_name
 )
-from flaskr.globals import LEAGUE_ID
 
 
 def results(start_year, end_year, playoffs, count, blowouts):
@@ -17,12 +16,12 @@ def results(start_year, end_year, playoffs, count, blowouts):
     end_year = check_end_year(end_year)
 
     for year in range(int(start_year), int(end_year) + 1):
-        weeks = number_of_weeks(year, LEAGUE_ID, playoffs)
+        weeks = number_of_weeks(year, playoffs)
         if weeks == 0:
             continue
 
-        season = load_data(year, LEAGUE_ID, 'mNav')
-        matchups = load_matchups(year, LEAGUE_ID)
+        season = load_data(year, 'mNav')
+        matchups = load_matchups(year)
 
         for idx, matchup in enumerate(matchups):
             matchup_id = f'{year}_{idx}'

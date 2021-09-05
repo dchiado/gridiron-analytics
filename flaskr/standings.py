@@ -1,5 +1,5 @@
 from flaskr.utils import load_data, latest_season, win_pct
-from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+from flaskr.globals import FIRST_SEASON
 
 
 def list():
@@ -11,7 +11,7 @@ def list():
     end_year = latest_season()
 
     for year in range(int(start_year), int(end_year) + 1):
-        team_details = load_data(year, LEAGUE_ID, 'mTeam')
+        team_details = load_data(year, 'mTeam')
         if team_details["status"]["currentMatchupPeriod"] == 1:
             continue
 

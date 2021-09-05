@@ -7,7 +7,7 @@ from flaskr.utils import (
     player_info,
     team_logo
 )
-from flaskr.globals import LEAGUE_ID, FIRST_SEASON
+from flaskr.globals import FIRST_SEASON
 
 
 def top_drafted():
@@ -15,13 +15,13 @@ def top_drafted():
     start_year = FIRST_SEASON
     end_year = latest_season()
 
-    mTeam = load_data(int(end_year), LEAGUE_ID, 'mTeam')
+    mTeam = load_data(int(end_year), 'mTeam')
     active_team_ids = active_teams(mTeam)
     teams = mTeam["teams"]
 
     for year in range(int(start_year), int(end_year) + 1):
-        players = player_info(year, LEAGUE_ID)
-        draft_detail = load_data(year, LEAGUE_ID, 'mDraftDetail')
+        players = player_info(year)
+        draft_detail = load_data(year, 'mDraftDetail')
         picks = draft_detail["draftDetail"]["picks"]
 
         for pick in picks:
