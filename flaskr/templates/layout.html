@@ -2,6 +2,15 @@
 <html>
   <head>
       <title>Gridiron Almanac</title>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -16,8 +25,8 @@
           <nav class="mdl-navigation mdl-layout--large-screen-only">
             <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
             <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
-            <a class="mdl-navigation__link" href="{{ url_for('bests_and_worsts_form') }}" onclick="loading();">Bests and Worsts</a>
-            <a class="mdl-navigation__link" href="{{ url_for('favorite_picks') }}" onclick="loading();">Draft Picks</a>
+            <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head-to-head</a>
+            <a class="mdl-navigation__link" href="{{ url_for('data_forms') }}" onclick="loading();">Additional Data</a>
           </nav>
         </div>
       </header>
@@ -25,8 +34,8 @@
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
           <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
-          <a class="mdl-navigation__link" href="{{ url_for('bests_and_worsts_form') }}" onclick="loading();">Bests and Worsts</a>
-          <a class="mdl-navigation__link" href="{{ url_for('favorite_picks') }}" onclick="loading();">Draft Picks</a>
+          <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head to Head</a>
+          <a class="mdl-navigation__link" href="{{ url_for('data_forms') }}" onclick="loading();">Additional Data</a>
         </nav>
       </div>    
       <main id="content" class="mdl-layout__content">
@@ -37,6 +46,14 @@
           </div>
         </div>
       </main>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <div class="mdl-logo">Gridiron Almanac</div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="/suggestions">Feature Suggestions</a></li>
+          </ul>
+        </div>
+      </footer>        
     </div>
     <script type="text/javascript">
       function loading(){

@@ -17,11 +17,12 @@ def results(start_year, end_year, playoffs, count, blowouts):
     end_year = check_end_year(end_year)
 
     for year in range(int(start_year), int(end_year) + 1):
-        season = load_data(year, LEAGUE_ID, 'mNav')
-        matchups = load_matchups(year, LEAGUE_ID)
         weeks = number_of_weeks(year, LEAGUE_ID, playoffs)
         if weeks == 0:
             continue
+
+        season = load_data(year, LEAGUE_ID, 'mNav')
+        matchups = load_matchups(year, LEAGUE_ID)
 
         for idx, matchup in enumerate(matchups):
             matchup_id = f'{year}_{idx}'

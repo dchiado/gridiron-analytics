@@ -1,0 +1,53 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="h2h-container">
+                <div class="h2h-column"> <!-- top section - team logos/names -->
+                    <div class="h2h-team-info left-team">
+                        <img src="{{ result[0]['logo'] }}" height="120" referrerpolicy="no-referrer">
+                        <div>{{ result[0]["name"] }}</div>
+                        <div class="section-header"></div>
+                        <div>{{ result[0]["reg_wins"] }}</div>
+                        <div>{{ result[0]["reg_ties"] }}</div>
+                        <div>{{ result[0]["reg_points"] }}</div>
+                        <div class="section-header"></div>
+                        <div>{{ result[0]["playoff_wins"] }}</div>
+                        <div>{{ result[0]["playoff_points"] }}</div>
+                    </div>
+                </div>
+                <div class="h2h-column"> <!-- top section - team logos/names -->
+                    <div class="h2h-team-info center-info">
+                        <div></div>
+                        <div>Team</div>
+                        <div class="section-header">Regular Season</div>
+                        <div>Wins</div>
+                        <div>Ties</div>
+                        <div>Points</div>
+                        <div class="section-header">Playoffs</div>
+                        <div>Wins</div>
+                        <div>Points</div>
+                    </div>
+                </div>
+                <div class="h2h-column"> <!-- top section - team logos/names -->
+                    <div class="h2h-team-info">
+                        <img src="{{ result[1]['logo'] }}" height="120" referrerpolicy="no-referrer">
+                        <div>{{ result[1]["name"] }}</div>
+                        <div class="section-header"></div>
+                        <div>{{ result[1]["reg_wins"] }}</div>
+                        <div>{{ result[1]["reg_ties"] }}</div>
+                        <div>{{ result[1]["reg_points"] }}</div>
+                        <div class="section-header"></div>
+                        <div>{{ result[1]["playoff_wins"] }}</div>
+                        <div>{{ result[1]["playoff_points"] }}</div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{%endblock%}

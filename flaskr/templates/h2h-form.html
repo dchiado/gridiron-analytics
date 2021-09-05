@@ -1,0 +1,39 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+        {% endif %}    
+        <div id="content">
+            <form action="/head-to-head" method="post" name="weeks">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select class="mdl-textfield__input" id="team1" name="team1">
+                        <option value="0" selected></option>
+                        {% for team in result %}
+                            <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                    <label class="mdl-textfield__label" for="octane">Select a team</label>
+                </div>
+                <br>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <select class="mdl-textfield__input" id="team2" name="team2">
+                        <option value="0" selected></option>
+                        {% for team in result %}
+                            <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                    <label class="mdl-textfield__label" for="octane">Select another team</label>
+                </div>
+                <p>
+                    <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
+                </p>
+            </form>
+        </div>
+    </body>
+</html>
+{%endblock%}

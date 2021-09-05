@@ -1,10 +1,17 @@
 import io
 import base64
 import os
+from flask.helpers import url_for
 from flask_material import Material
 from flask_scss import Scss
-from flask import Flask, render_template, request
-from flaskr import standings, matchups, scores, blowouts, favorite_players
+from flask import Flask, render_template, request, redirect, flash
+from flaskr import (
+    standings,
+    matchups,
+    scores,
+    blowouts,
+    favorite_players,
+    head_to_head)
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from flask import send_from_directory
@@ -28,10 +35,10 @@ def favicon():
                                mimetype='image/vnd.microsoft.icon')
 
 
-@app.route('/bests-and-worsts')
-def bests_and_worsts_form():
-    app.route('/bests-and-worsts')
-    return render_template("bests-worsts-form.html")
+@app.route('/data-forms')
+def data_forms():
+    app.route('/data-forms')
+    return render_template("data-forms.html")
 
 
 @app.route('/standings', methods=['POST', 'GET'])
@@ -59,7 +66,6 @@ def list_matchups():
 
 @app.route('/individual-seasons', methods=['POST'])
 def list_seasons():
-    print(request.form)
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     count = request.form['count'] or 10
@@ -70,7 +76,6 @@ def list_seasons():
 
 @app.route('/individual-weeks', methods=['POST'])
 def list_weeks():
-    print('request', request.form)
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'weeks-playoffs' in request.form or None
@@ -80,6 +85,25 @@ def list_weeks():
         start_year, end_year, playoffs, count, best
     )
     return render_template("weeks.html", result=resp)
+
+
+@app.route('/head-to-head-form', methods=['POST', 'GET'])
+def h2h_form():
+    resp = head_to_head.options()
+    return render_template('h2h-form.html', result=resp)
+
+
+@app.route('/head-to-head', methods=['POST', 'GET'])
+def h2h_results():
+    error = None
+    team1 = request.form['team1'] or 0
+    team2 = request.form['team2'] or 0
+    if int(team1) == 0 or int(team2) == 0 or int(team1) == int(team2):
+        error = 'Select two different teams'
+        resp = head_to_head.options()
+        return render_template('h2h-form.html', error=error, result=resp)
+    resp = head_to_head.results(int(team1), int(team2))
+    return render_template('h2h-results.html', result=resp)
 
 
 @app.route('/yearly-blowouts', methods=['POST'])
@@ -121,6 +145,12 @@ def list_blowouts():
     return render_template(
         "blowouts.html", result=resp, plot=pngImageB64String
     )
+
+
+@app.route('/suggestions')
+def suggestions():
+    app.route('/suggestions')
+    return render_template("suggestions.html")
 
 
 if __name__ == "__main__":

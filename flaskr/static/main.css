@@ -16,7 +16,8 @@
 
       .container {
         width: 1200px;
-        margin: 0 auto; }
+        margin: 0 auto;
+        padding: 20px; }
 
         div.home {
           margin: 20px 40px 20px 40px;
@@ -138,3 +139,16 @@
 
                                                   .mdl-layout__header-row {
                                                     padding: 0 20px 0 20px !important; }
+
+                                                    .mdl-mini-footer {
+                                                      font-size: 12px !important;
+                                                      padding: 8px 16px !important; }
+
+                                                      .mdl-mini-footer__link-list {
+                                                        font-size: 12px !important; }
+
+                                                        .mdl-logo {
+                                                          margin-right: 40px !important; }
+
+                                                          .error {
+                                                            color: #FF6565; }

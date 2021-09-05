@@ -1,5 +1,7 @@
 import requests
 import json
+import collections
+
 from datetime import date
 from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 
@@ -76,15 +78,21 @@ def team_name(team_id, season_obj):
             return str(team["location"] + " " + team["nickname"])
 
 
+def fantasy_team_logo(team_id, season_obj):
+    for team in season_obj["teams"]:
+        if team["id"] == team_id:
+            return team["logo"]
+
+
 def print_to_file(content, file):
     f = open(file, 'w')
     f.write(repr(content))
     f.close()
 
 
-def latest_season(league_id):
+def latest_season():
     current = date.today().year
-    res = load_data(current, league_id, 'mStatus')
+    res = load_data(current, LEAGUE_ID, 'mStatus')
     if not res["draftDetail"]["drafted"]:
         return current - 1
     else:
@@ -163,8 +171,12 @@ def check_start_year(year):
 
 
 def check_end_year(year):
-    latest = latest_season(LEAGUE_ID)
+    latest = latest_season()
     if year is None or int(year) > latest:
         return latest
     else:
         return int(year)
+
+
+def compare_lists(l1, l2):
+    return collections.Counter(l1) == collections.Counter(l2)

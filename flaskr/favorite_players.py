@@ -13,7 +13,7 @@ from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 def top_drafted():
     all_picks = {}
     start_year = FIRST_SEASON
-    end_year = latest_season(LEAGUE_ID)
+    end_year = latest_season()
 
     mTeam = load_data(int(end_year), LEAGUE_ID, 'mTeam')
     active_team_ids = active_teams(mTeam)

@@ -8,7 +8,7 @@ def list():
         "teams": {}
     }
     start_year = FIRST_SEASON
-    end_year = latest_season(LEAGUE_ID)
+    end_year = latest_season()
 
     for year in range(int(start_year), int(end_year) + 1):
         team_details = load_data(year, LEAGUE_ID, 'mTeam')
