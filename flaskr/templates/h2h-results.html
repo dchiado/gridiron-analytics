@@ -18,6 +18,17 @@
                         <div class="section-header"></div>
                         <div>{{ result[0]["playoff_wins"] }}</div>
                         <div>{{ result[0]["playoff_points"] }}</div>
+                        <div class="section-header"></div>
+                        <div> <!-- current -->
+                            {{ "W" + result[2]["length"]|string()
+                            if result[2]["team"] == result[0]["id"]
+                            else "L" + result[2]["length"]|string()}}
+                        </div>
+                        <div> <!-- longest -->
+                            {{ "W" + result[3]["length"]|string()
+                            if result[3]["team"] == result[0]["id"]
+                            else "L" + result[3]["length"]|string()}}
+                        </div>
                     </div>
                 </div>
                 <div class="h2h-column"> <!-- top section - team logos/names -->
@@ -31,6 +42,9 @@
                         <div class="section-header">Playoffs</div>
                         <div>Wins</div>
                         <div>Points</div>
+                        <div class="section-header">Streaks</div>
+                        <div>Current</div>
+                        <div>Longest</div>
                     </div>
                 </div>
                 <div class="h2h-column"> <!-- top section - team logos/names -->
@@ -44,6 +58,17 @@
                         <div class="section-header"></div>
                         <div>{{ result[1]["playoff_wins"] }}</div>
                         <div>{{ result[1]["playoff_points"] }}</div>
+                        <div class="section-header"></div>
+                        <div> <!-- current -->
+                            {{ "W" + result[2]["length"]|string()
+                            if result[2]["team"] == result[1]["id"]
+                            else "L" + result[2]["length"]|string()}}
+                        </div>
+                        <div> <!-- longest -->
+                            {{ "W" + result[3]["length"]|string()
+                            if result[3]["team"] == result[1]["id"]
+                            else "L" + result[3]["length"]|string()}}
+                        </div>
                    </div>
                 </div>
             </div>

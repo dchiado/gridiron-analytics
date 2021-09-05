@@ -4,6 +4,7 @@ import collections
 
 from datetime import date
 from flaskr.globals import FIRST_SEASON, LEAGUE_ID
+from itertools import groupby
 
 
 def load_data(year, league_id, uri, headers=None):
@@ -180,3 +181,13 @@ def check_end_year(year):
 
 def compare_lists(l1, l2):
     return collections.Counter(l1) == collections.Counter(l2)
+
+
+def current_streak(list):
+    grouped = [[k, sum(1 for i in g)] for k, g in groupby(list)]
+    return grouped[-1]
+
+
+def longest_streak(list):
+    grouped = [[k, sum(1 for i in g)] for k, g in groupby(list)]
+    return sorted(grouped, reverse=True)[0]

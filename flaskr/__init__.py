@@ -1,10 +1,9 @@
 import io
 import base64
 import os
-from flask.helpers import url_for
 from flask_material import Material
 from flask_scss import Scss
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request
 from flaskr import (
     standings,
     matchups,

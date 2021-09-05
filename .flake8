@@ -4,4 +4,5 @@ exclude =
     __pycache__,
     .vscode,
     api,
+    venv,
 max-complexity = 10

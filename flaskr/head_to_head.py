@@ -6,7 +6,9 @@ from flaskr.utils import (
     compare_lists,
     load_data,
     team_name,
-    fantasy_team_logo
+    fantasy_team_logo,
+    current_streak,
+    longest_streak
 )
 from flaskr.globals import LEAGUE_ID, FIRST_SEASON
 from decimal import Decimal
@@ -45,11 +47,20 @@ def results(team_id_1, team_id_2):
             "reg_points": Decimal(0.00),
             "playoff_wins": 0,
             "playoff_points": Decimal(0.00),
-        }
+        },
+        "current_streak": {
+            "team": 0,
+            "length": 0
+        },
+        "longest_streak": {
+            "team": 0,
+            "length": 0
+        },
     }
 
     end_year = latest_season()
     current_info = load_data(end_year, LEAGUE_ID, 'mNav')
+    winners = []
 
     for year in range(FIRST_SEASON, end_year + 1):
         weeks = number_of_weeks(year, LEAGUE_ID, True)
@@ -89,8 +100,10 @@ def results(team_id_1, team_id_2):
                 data[home_id]["reg_points"] += home_pts
 
                 if away_pts > home_pts:
+                    winners.append(away_id)
                     data[away_id]["reg_wins"] += 1
                 elif away_pts < home_pts:
+                    winners.append(home_id)
                     data[home_id]["reg_wins"] += 1
                 elif away_pts == home_pts:
                     data[away_id]["reg_ties"] += 1
@@ -101,8 +114,22 @@ def results(team_id_1, team_id_2):
                 data[home_id]["playoff_points"] += home_pts
 
                 if away_pts > home_pts:
+                    winners.append(away_id)
                     data[away_id]["playoff_wins"] += 1
                 elif away_pts < home_pts:
+                    winners.append(home_id)
                     data[home_id]["playoff_wins"] += 1
 
-    return [data[team_id_1], data[team_id_2]]
+    cstreak = current_streak(winners)
+    lstreak = longest_streak(winners)
+    data["current_streak"]["team"] = cstreak[0]
+    data["current_streak"]["length"] = cstreak[1]
+    data["longest_streak"]["team"] = lstreak[0]
+    data["longest_streak"]["length"] = lstreak[1]
+
+    return [
+        data[team_id_1],
+        data[team_id_2],
+        data["current_streak"],
+        data["longest_streak"]
+        ]
