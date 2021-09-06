@@ -3,150 +3,148 @@
 <html>
     <body>
         <div id="content">
-            <div class="home">                  
-                <div id="forms" class="home">
-                    <div id="week-scores" class="form">
-                        <button type="button" class="collapsible">Best/Worst Weeks</button>
-                        <div class="content">
-                            <form action="/individual-weeks" method="post" name="weeks">
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="best-weeks">
-                                        <input type="radio" id="best-weeks" value="best-weeks" class="mdl-radio__button" name="week-scores-radio" checked>
-                                        <span class="mdl-radio__label">Best Weeks</span>
-                                    </label>    
-                                </p>
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="worst-weeks">
-                                        <input type="radio" id="worst-weeks" value="worst-weeks" class="mdl-radio__button" name="week-scores-radio">
-                                        <span class="mdl-radio__label">Worst Weeks</span>
-                                    </label>    
-                                </p>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
-                                    <label class="mdl-textfield__label" for="startyear">Start Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
-                                    <label class="mdl-textfield__label" for="endyear">End Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
-                                    <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <p>
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="weeks-playoffs">
-                                        <input type="checkbox" id="weeks-playoffs" name="weeks-playoffs" class="mdl-switch__input">
-                                        <span class="mdl-switch__label">Include playoffs?</span>
-                                    </label>
-                                </p>
-                                <p>
-                                    <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
-                                </p>
-                            </form>
-                        </div>      
+            <div id="forms" class="form-container">
+                <div id="week-scores" class="form">
+                    <button type="button" class="collapsible">Best/Worst Weeks</button>
+                    <div class="content">
+                        <form action="/individual-weeks" method="post" name="weeks">
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="best-weeks">
+                                    <input type="radio" id="best-weeks" value="best-weeks" class="mdl-radio__button" name="week-scores-radio" checked>
+                                    <span class="mdl-radio__label">Best Weeks</span>
+                                </label>    
+                            </p>
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="worst-weeks">
+                                    <input type="radio" id="worst-weeks" value="worst-weeks" class="mdl-radio__button" name="week-scores-radio">
+                                    <span class="mdl-radio__label">Worst Weeks</span>
+                                </label>    
+                            </p>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
+                                <label class="mdl-textfield__label" for="startyear">Start Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
+                                <label class="mdl-textfield__label" for="endyear">End Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
+                                <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <p>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="weeks-playoffs">
+                                    <input type="checkbox" id="weeks-playoffs" name="weeks-playoffs" class="mdl-switch__input">
+                                    <span class="mdl-switch__label">Include playoffs?</span>
+                                </label>
+                            </p>
+                            <p>
+                                <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
+                            </p>
+                        </form>
+                    </div>      
+                </div>
+                <br>
+                <div id="season-scores" class="form">
+                    <button type="button" class="collapsible">Best/Worst Seasons</button>
+                    <div class="content">
+                        <form action="/individual-seasons" method="post" name="averageScores">
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="best-seasons">
+                                    <input type="radio" id="best-seasons" value="best-seasons" class="mdl-radio__button" name="seasons-radio" checked>
+                                    <span class="mdl-radio__label">Best Seasons</span>
+                                </label>    
+                            </p>
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="worst-seasons">
+                                    <input type="radio" id="worst-seasons" value="worst-seasons" class="mdl-radio__button" name="seasons-radio">
+                                    <span class="mdl-radio__label">Worst Seasons</span>
+                                </label>    
+                            </p>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
+                                <label class="mdl-textfield__label" for="startyear">Start Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
+                                <label class="mdl-textfield__label" for="endyear">End Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
+                                <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <p>
+                                <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
+                            </p>
+                        </form>    
+                    </div>      
+                </div>
+                <br>
+                <div id="margins" class="form">
+                    <button type="button" class="collapsible">Individual Matchups</button>
+                    <div class="content">
+                        <form action="/matchups" method="post" name="biggestblowouts">
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="blowouts">
+                                    <input type="radio" id="blowouts" value="blowouts" class="mdl-radio__button" name="matchup-radio" checked>
+                                    <span class="mdl-radio__label">Biggest Blowouts</span>
+                                </label>    
+                            </p>
+                            <p>
+                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="close">
+                                    <input type="radio" id="close" value="close" class="mdl-radio__button" name="matchup-radio">
+                                    <span class="mdl-radio__label">Closest Matchups</span>
+                                </label>    
+                            </p>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
+                                <label class="mdl-textfield__label" for="startyear">Start Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
+                                <label class="mdl-textfield__label" for="endyear">End Year</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <br>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
+                                <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
+                                <span class="mdl-textfield__error">Input is not a number!</span>
+                            </div>
+                            <p>
+                                <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="margins-playoffs">
+                                    <input type="checkbox" id="margins-playoffs" name="margins-playoffs" class="mdl-switch__input">
+                                    <span class="mdl-switch__label">Include playoffs?</span>
+                                </label>
+                            </p>
+                            <p>
+                                <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
+                            </p>
+                        </form>
                     </div>
-                    <br>
-                    <div id="season-scores" class="form">
-                        <button type="button" class="collapsible">Best/Worst Seasons</button>
-                        <div class="content">
-                            <form action="/individual-seasons" method="post" name="averageScores">
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="best-seasons">
-                                        <input type="radio" id="best-seasons" value="best-seasons" class="mdl-radio__button" name="seasons-radio" checked>
-                                        <span class="mdl-radio__label">Best Seasons</span>
-                                    </label>    
-                                </p>
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="worst-seasons">
-                                        <input type="radio" id="worst-seasons" value="worst-seasons" class="mdl-radio__button" name="seasons-radio">
-                                        <span class="mdl-radio__label">Worst Seasons</span>
-                                    </label>    
-                                </p>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
-                                    <label class="mdl-textfield__label" for="startyear">Start Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
-                                    <label class="mdl-textfield__label" for="endyear">End Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
-                                    <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <p>
-                                    <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
-                                </p>
-                            </form>    
-                        </div>      
-                    </div>
-                    <br>
-                    <div id="margins" class="form">
-                        <button type="button" class="collapsible">Individual Matchups</button>
-                        <div class="content">
-                            <form action="/matchups" method="post" name="biggestblowouts">
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="blowouts">
-                                        <input type="radio" id="blowouts" value="blowouts" class="mdl-radio__button" name="matchup-radio" checked>
-                                        <span class="mdl-radio__label">Biggest Blowouts</span>
-                                    </label>    
-                                </p>
-                                <p>
-                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="close">
-                                        <input type="radio" id="close" value="close" class="mdl-radio__button" name="matchup-radio">
-                                        <span class="mdl-radio__label">Closest Matchups</span>
-                                    </label>    
-                                </p>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startyear" name="startyear" placeholder="2005">
-                                    <label class="mdl-textfield__label" for="startyear">Start Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endyear" name="endyear" placeholder="2021">
-                                    <label class="mdl-textfield__label" for="endyear">End Year</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <br>
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="count" name="count" placeholder="10">
-                                    <label class="mdl-textfield__label" for="startyear">Number of records to display</label>
-                                    <span class="mdl-textfield__error">Input is not a number!</span>
-                                </div>
-                                <p>
-                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="margins-playoffs">
-                                        <input type="checkbox" id="margins-playoffs" name="margins-playoffs" class="mdl-switch__input">
-                                        <span class="mdl-switch__label">Include playoffs?</span>
-                                    </label>
-                                </p>
-                                <p>
-                                    <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Submit</button>
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                    <br>
-                    <div id="margins" class="form">
-                        <button type="button" class="collapsible">Favorite Draft Picks</button>
-                        <div class="content">
-                            <form action="/favorite-picks" method="post" name="favoritePicks">
-                                <p>Nothing to customize here</p>
-                                <p>
-                                    <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Let's Go Then</button>
-                                </p>
-                            </form>
-                        </div>
+                </div>
+                <br>
+                <div id="margins" class="form">
+                    <button type="button" class="collapsible">Favorite Draft Picks</button>
+                    <div class="content">
+                        <form action="/favorite-picks" method="post" name="favoritePicks">
+                            <p>Nothing to customize here</p>
+                            <p>
+                                <button class="button mdl-button mdl-js-button mdl-button--raised" onclick="loading();">Let's Go Then</button>
+                            </p>
+                        </form>
                     </div>
                 </div>
             </div>

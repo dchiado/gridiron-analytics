@@ -5,6 +5,11 @@
     flex-direction: column;
 }
 
+.draft-container {
+    width: 80%;
+    margin: auto;
+}
+
 .team {
     display: flex;
     flex-direction: row;
@@ -14,7 +19,7 @@
 }
 
 .owner {
-    padding-right: 40px;
+    padding-right: 60px;
 }
 
 .pick {

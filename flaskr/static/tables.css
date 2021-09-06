@@ -5,8 +5,8 @@
   align-items: center; }
 
   .table-wrapper {
-    width: 100%;
-    margin: 20px;
+    max-width: 90%;
+    margin: auto;
     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
     overflow: scroll;
     color: #607d8b; }
@@ -65,7 +65,9 @@
                           justify-content: space-around; }
 
                           .h2h-container {
-                            margin: 0 300px 0 300px;
+                            width: 40%;
+                            min-width: 600px;
+                            margin: auto;
                             display: flex;
                             flex-direction: row;
                             justify-content: space-between; }
@@ -90,16 +92,22 @@
                                       min-height: 32px; }
 
                                       .left-team {
-                                        text-align: right !important; }
+                                        text-align: right !important;
+                                        align-items: flex-end; }
 
-                                        .center-info {
-                                          text-align: center;
-                                          font-weight: 600; }
+                                        .right-team {
+                                          text-align: left !important;
+                                          align-items: flex-start; }
 
-                                          .center-info > div:first-of-type {
-                                            height: 120px; }
+                                          .center-info {
+                                            text-align: center;
+                                            font-weight: 600; }
 
-                                            .section-header {
-                                              border-top: 1px solid #ced7d8;
-                                              padding-top: 10px;
-                                              font-size: 18px; }
+                                            .center-info > div:first-of-type {
+                                              height: 120px; }
+
+                                              .section-header {
+                                                width: 100%;
+                                                border-top: 1px solid #ced7d8;
+                                                padding-top: 10px;
+                                                font-size: 18px; }

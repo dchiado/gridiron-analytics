@@ -15,13 +15,15 @@
       margin-bottom: 10px; }
 
       .container {
-        width: 1200px;
-        margin: 0 auto;
-        padding: 20px; }
+        color: #607d8b;
+        font-size: 14px;
+        width: 100%;
+        padding: 30px; }
 
-        div.home {
-          margin: 20px 40px 20px 40px;
-          padding: 10px 0 10px 0;
+        .form-container {
+          width: 60%;
+          margin: auto;
+          padding: 40px;
           background-color: #ced7d8;
           -webkit-border-radius: 6px;
           -moz-border-radius: 6px;
@@ -61,97 +63,72 @@
                         .form {
                           width: 100%; }
 
-                          .input-text {
-                            display: block;
-                            margin: 0;
-                            padding-left: 6px;
-                            color: inherit;
-                            width: 60px;
-                            font-size: 12px;
-                            font-weight: inherit;
-                            line-height: 24px;
-                            border: none;
-                            border-radius: 0.4rem;
-                            transition: box-shadow var("--transitionDuration"); }
+                          ::placeholder {
+                            color: #B0BEC5;
+                            opacity: 1; }
 
-                            .input-text:focus {
-                              outline: none;
-                              box-shadow: 0.2rem 0.8rem 1.6rem var("--colorPrimary600"); }
+                            .button {
+                              border-radius: 0.3em;
+                              color: #FFFFFF;
+                              transition: all 0.2s; }
 
-                              .input-label {
-                                display: block;
-                                background-color: transparent;
-                                font-size: 12px;
-                                bottom: 50%;
-                                left: 1rem;
-                                padding-bottom: 4px; }
+                              .collapsible {
+                                background-color: #607d8b;
+                                color: #FFFFFF;
+                                cursor: pointer;
+                                padding: 18px;
+                                margin: 0;
+                                width: 100%;
+                                border: none;
+                                border-radius: 8px;
+                                text-align: left;
+                                outline: none;
+                                font-size: 16px; }
 
-                                ::placeholder {
-                                  color: #B0BEC5;
-                                  opacity: 1; }
+                                .collapsible.active {
+                                  border-radius: 8px 8px 0 0; }
 
-                                  .button {
-                                    border-radius: 0.3em;
-                                    color: #FFFFFF;
-                                    transition: all 0.2s; }
+                                  .content {
+                                    padding: 20px 18px;
+                                    display: none;
+                                    overflow: hidden;
+                                    background-color: #FFFFFF;
+                                    color: #607d8b;
+                                    border-radius: 0 0 8px 8px; }
 
-                                    .collapsible {
-                                      background-color: #607d8b;
-                                      color: #FFFFFF;
-                                      cursor: pointer;
-                                      padding: 18px;
-                                      margin: 0;
-                                      width: 100%;
-                                      border: none;
-                                      border-radius: 8px;
-                                      text-align: left;
-                                      outline: none;
-                                      font-size: 16px; }
+                                    .loader {
+                                      position: absolute !important;
+                                      top: 30%;
+                                      left: 50%;
+                                      display: block;
+                                      z-index: 1000; }
 
-                                      .collapsible.active {
-                                        border-radius: 8px 8px 0 0; }
+                                      .grayout {
+                                        pointer-events: none;
+                                        opacity: 0.6; }
 
-                                        .content {
-                                          padding: 20px 18px;
-                                          display: none;
-                                          overflow: hidden;
-                                          background-color: #FFFFFF;
-                                          color: #607d8b;
-                                          border-radius: 0 0 8px 8px; }
+                                        .mdl-layout--fixed-header {
+                                          color: white;
+                                          margin-bottom: 20px; }
 
-                                          .page-content {
-                                            color: #607d8b; }
+                                          .mdl-layout-title {
+                                            padding-right: 40px; }
 
-                                            .loader {
-                                              position: absolute !important;
-                                              top: 30%;
-                                              left: 50%;
-                                              display: block;
-                                              z-index: 1000; }
+                                            .mdl-layout__header-row {
+                                              padding: 0 20px 0 20px !important; }
 
-                                              .grayout {
-                                                pointer-events: none;
-                                                opacity: 0.6; }
+                                              .mdl-mini-footer {
+                                                font-size: 12px !important;
+                                                padding: 8px 16px !important; }
 
-                                                .mdl-layout--fixed-header {
-                                                  color: white;
-                                                  margin-bottom: 20px; }
+                                                .mdl-mini-footer__link-list {
+                                                  font-size: 12px !important; }
 
-                                                  .mdl-layout-title {
-                                                    padding-right: 40px; }
+                                                  .mdl-logo {
+                                                    margin-right: 40px !important; }
 
-                                                    .mdl-layout__header-row {
-                                                      padding: 0 20px 0 20px !important; }
+                                                    .mdl-switch__label, .mdl-radio__label, .mdl-textfield__input, .mdl-textfield__label {
+                                                      font-size: 14px !important; }
 
-                                                      .mdl-mini-footer {
-                                                        font-size: 12px !important;
-                                                        padding: 8px 16px !important; }
-
-                                                        .mdl-mini-footer__link-list {
-                                                          font-size: 12px !important; }
-
-                                                          .mdl-logo {
-                                                            margin-right: 40px !important; }
-
-                                                            .error {
-                                                              color: #FF6565; }
+                                                      .error {
+                                                        color: #FF6565; }

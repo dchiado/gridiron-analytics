@@ -8,8 +8,8 @@
 }
 
 .table-wrapper {
-  width: 100%;
-  margin: 20px;
+  max-width: 90%;
+  margin: auto;
   box-shadow: 0px 35px 50px $box-shadow;
   overflow: scroll;
   color: $primary-gray;
@@ -81,7 +81,9 @@
 }
 
 .h2h-container {
-  margin: 0 300px 0 300px;
+  width: 40%;
+  min-width: 600px;
+  margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -113,6 +115,12 @@
 
 .left-team {
   text-align: right !important;
+  align-items: flex-end;
+}
+
+.right-team {
+  text-align: left !important;
+  align-items: flex-start;
 }
 
 .center-info {
@@ -125,6 +133,7 @@
 }
 
 .section-header {
+  width: 100%;
   border-top: 1px solid $background-gray;
   padding-top: 10px;
   font-size: 18px;

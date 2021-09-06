@@ -20,14 +20,16 @@ nav {
 }
 
 .container {
-  width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  color: $primary-gray;
+  font-size: 14px;
+  width: 100%;
+  padding: 30px;
 }
 
-div.home {
-  margin: 20px 40px 20px 40px;
-  padding: 10px 0 10px 0;
+.form-container {
+  width: 60%;
+  margin: auto;
+  padding: 40px;
   background-color: $background-gray;
   -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
@@ -76,34 +78,6 @@ h3 {
   width: 100%;
 }
 
-.input-text {
-  display: block;
-  margin: 0;
-  padding-left: 6px;
-  color: inherit;
-  width: 60px;
-  font-size: 12px;
-  font-weight: inherit;
-  line-height: 24px;
-  border: none;
-  border-radius: 0.4rem;
-  transition: box-shadow var(--transitionDuration);
-}
-
-.input-text:focus {
-  outline: none;
-  box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
-}
-
-.input-label {
-  display: block;
-  background-color: transparent;
-  font-size: 12px;
-  bottom: 50%;
-  left: 1rem;
-  padding-bottom: 4px;
-}
-
 ::placeholder {
   color: $placeholder-gray;
   opacity: 1;
@@ -140,10 +114,6 @@ h3 {
   background-color: $white;
   color: $primary-gray;
   border-radius: 0 0 8px 8px;
-}
-
-.page-content {
-  color: $primary-gray;
 }
 
 .loader {
@@ -183,6 +153,10 @@ h3 {
 
 .mdl-logo {
   margin-right: 40px !important;
+}
+
+.mdl-switch__label, .mdl-radio__label, .mdl-textfield__input, .mdl-textfield__label {
+  font-size: 14px !important;
 }
 
 .error {

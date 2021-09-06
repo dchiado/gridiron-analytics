@@ -34,16 +34,14 @@
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
           <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
-          <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head to Head</a>
+          <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head-to-head</a>
           <a class="mdl-navigation__link" href="{{ url_for('data_forms') }}" onclick="loading();">Additional Data</a>
         </nav>
       </div>    
       <main id="content" class="mdl-layout__content">
-        <div class="page-content">      
-          <div class="container">
-            {%block content%}
-            {%endblock%}
-          </div>
+        <div class="container">
+          {%block content%}
+          {%endblock%}
         </div>
       </main>
       <footer class="mdl-mini-footer">
