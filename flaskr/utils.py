@@ -64,15 +64,6 @@ def is_bye_week(matchup):
         return True
 
 
-def start_year(only_current_scoring_rules, only_current_teams):
-    if only_current_scoring_rules:
-        return 2016
-    elif only_current_teams:
-        return 2014
-    else:
-        return 2005
-
-
 def team_name(team_id, season_obj):
     for team in season_obj["teams"]:
         if team["id"] == team_id:
@@ -190,4 +181,4 @@ def current_streak(list):
 
 def longest_streak(list):
     grouped = [[k, sum(1 for i in g)] for k, g in groupby(list)]
-    return sorted(grouped, reverse=True)[0]
+    return sorted(grouped, key=lambda x: x[1], reverse=True)[0]
