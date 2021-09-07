@@ -10,7 +10,9 @@ from flaskr import (
     scores,
     blowouts,
     favorite_players,
-    head_to_head)
+    head_to_head,
+    league_info
+    )
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from flask import send_from_directory
@@ -24,7 +26,8 @@ app.debug = True
 @app.route('/')
 def home():
     app.route('/')
-    return render_template("home.html")
+    resp = league_info.summary()
+    return render_template("home.html", result=resp)
 
 
 @app.route('/favicon.ico')
