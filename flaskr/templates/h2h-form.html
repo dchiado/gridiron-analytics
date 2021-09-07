@@ -14,7 +14,7 @@
                     <select class="mdl-textfield__input" id="team1" name="team1">
                         <option value="0" selected></option>
                         {% for team in result %}
-                            <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                            <option value="{{ team['owner_id'] }}">{{ team['name'] }}</option>
                         {% endfor %}
                     </select>
                     <label class="mdl-textfield__label" for="octane">Select a team</label>
@@ -24,7 +24,7 @@
                     <select class="mdl-textfield__input" id="team2" name="team2">
                         <option value="0" selected></option>
                         {% for team in result %}
-                            <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                            <option value="{{ team['owner_id'] }}">{{ team['name'] }}</option>
                         {% endfor %}
                     </select>
                     <label class="mdl-textfield__label" for="octane">Select another team</label>

@@ -95,13 +95,13 @@ def h2h_form():
 @app.route('/head-to-head', methods=['POST', 'GET'])
 def h2h_results():
     error = None
-    team1 = request.form['team1'] or 0
-    team2 = request.form['team2'] or 0
-    if int(team1) == 0 or int(team2) == 0 or int(team1) == int(team2):
+    team1 = request.form['team1']
+    team2 = request.form['team2']
+    if team1 == '0' or team2 == '0' or team1 == team2:
         error = 'Select two different teams'
         resp = head_to_head.options()
         return render_template('h2h-form.html', error=error, result=resp)
-    resp = head_to_head.results(int(team1), int(team2))
+    resp = head_to_head.results(team1, team2)
     return render_template('h2h-results.html', result=resp)
 
 
