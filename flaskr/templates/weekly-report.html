@@ -1,0 +1,96 @@
+{%extends "layout.html"%}
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="report-container">
+                <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                    <div class="mdl-tabs__tab-bar">
+                        <a href="#recap" class="mdl-tabs__tab is-active">{{ "Week " ~ result["week"] ~ " Recap" }}</a>
+                        <a href="#preview" class="mdl-tabs__tab">{{ "Week " ~ result["next_week"] ~ " Preview" }}</a>
+                        <a href="#power-rankings" class="mdl-tabs__tab">Power Rankings</a>
+                    </div>
+                  
+                    <div class="mdl-tabs__panel is-active" id="recap">
+                        {% if "error" in result["results"] %}
+                        <p>
+                            <br>
+                            No matchups yet - come back when the week is over
+                        </p>
+                        {%endif%}
+                        {% if "error" not in result["results"] %}
+                        <h4>Results</h4>
+                        <div class="results-table">
+                            {% for matchup in result["results"] %}
+                                <div class="results-row">
+                                    <div class="right-align">{{ matchup["winner"] }}</div>
+                                    <div class="right-align">{{ matchup["w_score"] }}</div>
+                                    <div class="center-align">DEF</div>
+                                    <div class="left-align">{{ matchup["l_score"] }}</div>
+                                    <div class="left-align">{{ matchup["loser"] }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <p class="top-border">
+                            <h4>&#x1F3C6; Highest Score</h4>
+                            {{ result["superlatives"]["high"]["team"] ~ " with a cool " ~
+                            result["superlatives"]["high"]["score"] }}
+                        </p>
+                        <p class="top-border">
+                            <h4>&#x1F4A9; Lowest Score</h4>
+                            {{ result["superlatives"]["low"]["team"] ~ " with a forgettable " ~
+                            result["superlatives"]["low"]["score"] }}
+                        </p>
+                        <p class="top-border">
+                            <h4>&#x1F90F; Closest Win</h4>
+                            {% if result["superlatives"]["closest"]["tie"] == True %}
+                                {{ result["superlatives"]["closest"]["winner"] ~ " tied " ~
+                                result["superlatives"]["closest"]["loser"] }}
+                            {% else %}
+                                {{ result["superlatives"]["closest"]["winner"] ~ " eeked it out over " ~
+                                result["superlatives"]["closest"]["loser"] ~ " by " ~
+                                result["superlatives"]["closest"]["difference"] }}
+                            {% endif %}
+                        </p>
+                        <p class="top-border">
+                            <h4>&#x1F512; Biggest Win</h4>
+                            {{ result["superlatives"]["blowout"]["winner"] ~ " clobbered " ~
+                            result["superlatives"]["blowout"]["loser"] ~ " by " ~
+                            result["superlatives"]["blowout"]["difference"] }}
+                        </p>
+                        <p class="top-border">
+                            <h4>&#x2618; Luckiest Win</h4>
+                            {{ result["superlatives"]["luckiest"]["team"] ~ " got the win as the #" ~
+                            result["superlatives"]["luckiest"]["place"] ~ " highest scoring team with " ~
+                            result["superlatives"]["luckiest"]["score"] }}
+                        </p>
+                        <p class="top-border">
+                            <h4>&#x1F612; Unluckiest Loss</h4>
+                            {{ result["superlatives"]["unluckiest"]["team"] ~ " took an L as the #" ~
+                            result["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
+                            result["superlatives"]["unluckiest"]["score"] }}
+                        </p>
+                        {%endif%}
+                    </div>
+                    <div class="mdl-tabs__panel" id="preview">
+                        <h4>Preview</h4>
+                        <div class="results-table">
+                            {% for matchup in result["preview"] %}
+                                <div class="results-row">
+                                    <div class="right-align">{{ matchup["home"] }}</div>
+                                    <div class="center-align">vs.</div>
+                                    <div class="left-align">{{ matchup["away"] }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mdl-tabs__panel" id="power-rankings"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+{%endblock%}

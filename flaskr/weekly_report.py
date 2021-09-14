@@ -1,85 +1,99 @@
-from flaskr.utils import load_data, latest_season, load_matchups, team_name, team_mapping
+from flaskr.utils import load_data, load_matchups, team_mapping, latest_season
+from decimal import Decimal
 
 
+# team with the highest score that week
 def highest_score(matchups):
     high = {}
     for m in matchups:
         for t in ["home", "away"]:
-            if ("totalPoints" not in high
-                    or m[t]["totalPoints"] > high["totalPoints"]):
-                high = m[t]
+            if ("score" not in high
+                    or m[t]["totalPoints"] > high["score"]):
+                high = {
+                    "team": m[t]["teamName"],
+                    "score": Decimal(str(m[t]["totalPoints"]))
+                }
     return high
 
 
+# team with the lowest score that week
 def lowest_score(matchups):
     low = {}
     for m in matchups:
         for t in ["home", "away"]:
-            if ("totalPoints" not in low
-                    or m[t]["totalPoints"] < low["totalPoints"]):
-                low = m[t]
+            if ("score" not in low
+                    or m[t]["totalPoints"] < low["score"]):
+                low = {
+                    "team": m[t]["teamName"],
+                    "score": Decimal(str(m[t]["totalPoints"]))
+                }
     return low
 
 
+# closest matchup of the week
 def closest_win(matchups):
     closest = {}
     for m in matchups:
-        diff = abs(m["home"]["totalPoints"] - m["away"]["totalPoints"])
+        diff = (Decimal(str(m["home"]["totalPoints"])) -
+                Decimal(str(m["away"]["totalPoints"])))
         tie = int(diff) == 0
-        if "difference" not in closest or diff < closest["difference"]:
+        if "difference" not in closest or abs(diff) < closest["difference"]:
             if m["winner"] == "HOME":
-                winner = m["home"]["teamId"]
-                loser = m["away"]["teamId"]
+                winner = m["home"]["teamName"]
+                loser = m["away"]["teamName"]
             elif m["winner"] == "AWAY":
-                winner = m["away"]["teamId"]
-                loser = m["home"]["teamId"]
+                winner = m["away"]["teamName"]
+                loser = m["home"]["teamName"]
 
             closest = {
                 "tie": tie,
-                "difference": diff,
+                "difference": abs(diff),
                 "winner": winner,
                 "loser": loser
             }
     return closest
 
 
+# biggest blowout of the week
 def biggest_win(matchups):
     biggest = {}
     for m in matchups:
-        diff = abs(m["home"]["totalPoints"] - m["away"]["totalPoints"])
-        if "difference" not in biggest or diff > biggest["difference"]:
+        diff = (Decimal(str(m["home"]["totalPoints"])) -
+                Decimal(str(m["away"]["totalPoints"])))
+        if "difference" not in biggest or abs(diff) > biggest["difference"]:
             if m["winner"] == "HOME":
-                winner = m["home"]["teamId"]
-                loser = m["away"]["teamId"]
+                winner = m["home"]["teamName"]
+                loser = m["away"]["teamName"]
             elif m["winner"] == "AWAY":
-                winner = m["away"]["teamId"]
-                loser = m["home"]["teamId"]
+                winner = m["away"]["teamName"]
+                loser = m["home"]["teamName"]
 
             biggest = {
-                "difference": diff,
+                "difference": abs(diff),
                 "winner": winner,
                 "loser": loser
             }
     return biggest
 
 
-def luckiest_win(matchups):  # lowest score that won
+# lowest scoring team that won
+def luckiest_win(matchups):
     all_scores = []
     luckiest = {}
     for m in matchups:
-        all_scores.append(m["away"]["totalPoints"])
-        all_scores.append(m["home"]["totalPoints"])
+        all_scores.append(Decimal(str(m["away"]["totalPoints"])))
+        all_scores.append(Decimal(str(m["home"]["totalPoints"])))
         if m["winner"] == "HOME":
-            win_score = m["home"]["totalPoints"]
-            winner = m["home"]["teamId"]
+            win_score = Decimal(str(m["home"]["totalPoints"]))
+            winner = m["home"]["teamName"]
         elif m["winner"] == "AWAY":
-            win_score = m["away"]["totalPoints"]
-            winner = m["away"]["teamId"]
+            win_score = Decimal(str(m["away"]["totalPoints"]))
+            winner = m["away"]["teamName"]
 
-        if "win_score" not in luckiest or win_score < luckiest["win_score"]:
+        if "score" not in luckiest or win_score < luckiest["score"]:
             luckiest = {
                 "score": win_score,
-                "winner": winner,
+                "team": winner,
             }
 
     luckiest["place"] = (
@@ -88,7 +102,8 @@ def luckiest_win(matchups):  # lowest score that won
     return luckiest
 
 
-def unluckiest_loss(matchups):  # highest score that lost
+# highest scoring team that lost
+def unluckiest_loss(matchups):
     all_scores = []
     unluckiest = {}
     for m in matchups:
@@ -96,15 +111,15 @@ def unluckiest_loss(matchups):  # highest score that lost
         all_scores.append(m["home"]["totalPoints"])
         if m["winner"] == "HOME":
             loss_score = m["away"]["totalPoints"]
-            loser = m["away"]["teamId"]
+            loser = m["away"]["teamName"]
         elif m["winner"] == "AWAY":
             loss_score = m["home"]["totalPoints"]
-            loser = m["home"]["teamId"]
+            loser = m["home"]["teamName"]
 
         if "score" not in unluckiest or loss_score > unluckiest["score"]:
             unluckiest = {
                 "score": loss_score,
-                "loser": loser,
+                "team": loser,
             }
 
     unluckiest["place"] = (
@@ -113,38 +128,94 @@ def unluckiest_loss(matchups):  # highest score that lost
     return unluckiest
 
 
+def generate_results(matchups):
+    results = []
+    for matchup in matchups:
+        if matchup["winner"] == "HOME":
+            results.append({
+                "winner": matchup["home"]["teamName"],
+                "w_score": Decimal(str(matchup["home"]["totalPoints"])),
+                "loser": matchup["away"]["teamName"],
+                "l_score": Decimal(str(matchup["away"]["totalPoints"]))
+                # TODO include team logo in results object
+            })
+        elif matchup["winner"] == "AWAY":
+            results.append({
+                "winner": matchup["away"]["teamName"],
+                "w_score": Decimal(str(matchup["away"]["totalPoints"])),
+                "loser": matchup["home"]["teamName"],
+                "l_score": Decimal(str(matchup["home"]["totalPoints"]))
+            })
+        elif matchup["away"]["totalPoints"] == matchup["home"]["totalPoints"]:
+            results.append({
+                "tie": True,
+                "winner": matchup["home"]["teamName"],
+                "w_score": Decimal(str(matchup["home"]["totalPoints"])),
+                "loser": matchup["away"]["teamName"],
+                "l_score": Decimal(str(matchup["away"]["totalPoints"]))
+            })
+    return results
+
+
+def generate_preview(matchups):
+    preview = []
+    for matchup in matchups:
+        preview.append({
+            "home": matchup["home"]["teamName"],
+            "away": matchup["away"]["teamName"],
+            # TODO include current record here
+            # also h2h all time / this year
+        })
+    return preview
+
+
 def summary():
-    # year = latest_season()
-    year = 2020
+    year = latest_season()
     team_names = team_mapping(year)
     details = load_data(year, 'mNav')
-    week = details["status"]["currentMatchupPeriod"]
-    week = 9
-    if week == 1:
-        print('come back later')
-        return
-
     all_matchups = load_matchups(year)
-    # print(all_matchups)
-    week_matchups = [m for m in all_matchups if m["matchupPeriodId"] == week]
+    for matchup in all_matchups:
+        matchup["away"]["teamName"] = team_names[matchup["away"]["teamId"]]
+        matchup["home"]["teamName"] = team_names[matchup["home"]["teamId"]]
 
-    high_score = highest_score(week_matchups)
-    high_team = team_names[high_score["teamId"]]
-    low_score = lowest_score(week_matchups)
-    low_team = team_names[low_score["teamId"]]
+    week = details["status"]["currentMatchupPeriod"] - 1
+    response = {
+        "week": week,
+        "next_week": week + 1
+    }
 
-    print('high', high_team, high_score["totalPoints"])
-    print('low', low_team, low_score["totalPoints"])
+    if week < 1:
+        response["results"] = {"error": "NoMatchups"}
+    else:
+        week_matchups = [
+            m for m in all_matchups if m["matchupPeriodId"] == week
+            ]
 
-    closest = closest_win(week_matchups)
-    print('closest', closest)
-    biggest = biggest_win(week_matchups)
-    print('biggest', biggest)
+        results = generate_results(week_matchups)
 
-    luckiest = luckiest_win(week_matchups)
-    print('luckiest', luckiest)
-    unluckiest = unluckiest_loss(week_matchups)
-    print('unluckiest', unluckiest)
+        high_score = highest_score(week_matchups)
+        low_score = lowest_score(week_matchups)
 
-# You had who and still lost -- Josh Allen got 37.1 from Will Fuller V but it wasn’t enough
+        closest = closest_win(week_matchups)
+        biggest = biggest_win(week_matchups)
 
+        luckiest = luckiest_win(week_matchups)
+        unluckiest = unluckiest_loss(week_matchups)
+
+        response["results"] = results
+        response["superlatives"] = {
+            "high": high_score,
+            "low": low_score,
+            "closest": closest,
+            "blowout": biggest,
+            "luckiest": luckiest,
+            "unluckiest": unluckiest
+        }
+
+    next_week_matchups = [
+        m for m in all_matchups if m["matchupPeriodId"] == week + 1
+        ]
+    preview = generate_preview(next_week_matchups)
+    response["preview"] = preview
+
+    return response
