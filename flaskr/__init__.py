@@ -11,7 +11,8 @@ from flaskr import (
     blowouts,
     favorite_players,
     head_to_head,
-    league_info
+    league_info,
+    weekly_report
     )
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -104,8 +105,14 @@ def h2h_results():
         error = 'Select two different teams'
         resp = head_to_head.options()
         return render_template('h2h-form.html', error=error, result=resp)
-    resp = head_to_head.results(team1, team2)
+    resp = head_to_head.all_time(team1, team2)
     return render_template('h2h-results.html', result=resp)
+
+
+@app.route('/weekly-report', methods=['POST', 'GET'])
+def show_report():
+    resp = weekly_report.summary()
+    return render_template('weekly-report.html', result=resp)
 
 
 @app.route('/yearly-blowouts', methods=['POST'])

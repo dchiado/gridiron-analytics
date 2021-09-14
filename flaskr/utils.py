@@ -70,6 +70,14 @@ def team_name(team_id, season_obj):
             return str(team["location"] + " " + team["nickname"])
 
 
+def team_mapping(year):
+    mTeam = load_data(year, 'mTeam')
+    m = {}
+    for team in mTeam["teams"]:
+        m[team["id"]] = str(team["location"] + " " + team["nickname"])
+    return m
+
+
 def fantasy_team_logo(team_id, season_obj):
     for team in season_obj["teams"]:
         if team["id"] == team_id:

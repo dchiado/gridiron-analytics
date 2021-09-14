@@ -26,7 +26,7 @@ def options():
     return team_options
 
 
-def results(owner_id_1, owner_id_2):
+def all_time(owner_id_1, owner_id_2):
     # Need to use owner id because some ids stayed
     # the same through multiple owners
     data = {

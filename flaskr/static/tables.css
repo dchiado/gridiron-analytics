@@ -111,3 +111,38 @@
                                                 border-top: 1px solid #ced7d8;
                                                 padding-top: 10px;
                                                 font-size: 18px; }
+
+                                                .top-border {
+                                                  border-top: 1px solid #ced7d8; }
+
+                                                  .report-container {
+                                                    width: 60%;
+                                                    margin: auto; }
+
+                                                    .results-table {
+                                                      width: 80%;
+                                                      margin: auto; }
+
+                                                      .results-row {
+                                                        display: flex;
+                                                        flex-direction: row;
+                                                        justify-content: center; }
+
+                                                        .results-row > div {
+                                                          width: 60px;
+                                                          margin: 10px; }
+
+                                                          .results-row > div:last-child {
+                                                            width: 190px; }
+
+                                                            .results-row > div:first-child {
+                                                              width: 190px; }
+
+                                                              .right-align {
+                                                                text-align: right; }
+
+                                                                .center-align {
+                                                                  text-align: center; }
+
+                                                                  .left-align {
+                                                                    text-align: left; }
