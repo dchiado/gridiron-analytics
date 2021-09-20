@@ -12,6 +12,7 @@ from flaskr import (
     favorite_players,
     head_to_head,
     league_info,
+    power_rankings,
     weekly_report
     )
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -111,8 +112,9 @@ def h2h_results():
 
 @app.route('/weekly-report', methods=['POST', 'GET'])
 def show_report():
-    resp = weekly_report.summary()
-    return render_template('weekly-report.html', result=resp)
+    report = weekly_report.summary()
+    pr = power_rankings.current()
+    return render_template('weekly-report.html', report=report, prs=pr)
 
 
 @app.route('/yearly-blowouts', methods=['POST'])

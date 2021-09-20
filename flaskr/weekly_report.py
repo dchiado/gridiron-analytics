@@ -1,4 +1,4 @@
-from flaskr.utils import load_data, load_matchups, team_mapping, latest_season
+from flaskr.utils import is_bye_week, load_data, load_matchups, team_mapping, latest_season
 from decimal import Decimal
 
 
@@ -175,6 +175,8 @@ def summary():
     details = load_data(year, 'mNav')
     all_matchups = load_matchups(year)
     for matchup in all_matchups:
+        if is_bye_week(matchup):
+            break
         matchup["away"]["teamName"] = team_names[matchup["away"]["teamId"]]
         matchup["home"]["teamName"] = team_names[matchup["home"]["teamId"]]
 
