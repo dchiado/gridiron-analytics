@@ -53,7 +53,9 @@
                     opacity: 1; }
 
                     .simple-table {
-                      margin-left: 40px; }
+                      margin-left: 40px;
+                      font-size: 12px;
+                      opacity: 0.8; }
 
                       .simple-table td, .simple-table th {
                         text-align: left;
@@ -141,10 +143,10 @@
                                                               margin: 10px; }
 
                                                               .results-row > div:last-child {
-                                                                width: 190px; }
+                                                                width: 240px; }
 
                                                                 .results-row > div:first-child {
-                                                                  width: 190px; }
+                                                                  width: 240px; }
 
                                                                   .right-align {
                                                                     text-align: right; }

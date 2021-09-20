@@ -79,9 +79,9 @@
           <div class="results-table">
             {% for matchup in report["preview"] %}
               <div class="results-row">
-                <div class="right-align">{{ matchup["home"] }}</div>
+                <div class="right-align">{{ matchup["home"] + " (" + matchup["home_record"] + ")"}}</div>
                 <div class="center-align">vs.</div>
-                <div class="left-align">{{ matchup["away"] }}</div>
+                <div class="left-align">{{ matchup["away"] + " (" + matchup["away_record"] + ")" }}</div>
               </div>
             {% endfor %}
           </div>

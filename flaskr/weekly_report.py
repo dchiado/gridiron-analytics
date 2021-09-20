@@ -1,4 +1,5 @@
 from flaskr.utils import is_bye_week, load_data, load_matchups, team_mapping, latest_season
+from flaskr import head_to_head
 from decimal import Decimal
 
 
@@ -157,22 +158,32 @@ def generate_results(matchups):
     return results
 
 
-def generate_preview(matchups):
+def generate_preview(matchups, teams):
     preview = []
     for matchup in matchups:
-        preview.append({
-            "home": matchup["home"]["teamName"],
-            "away": matchup["away"]["teamName"],
-            # TODO include current record here
-            # also h2h all time / this year
-        })
+        m = {}
+        ids = []
+        for t in ["home", "away"]:
+            team = next(tm for tm in teams if tm["id"] == matchup[t]["teamId"])
+            rec = team["record"]["overall"]
+            record = str(rec["wins"]) + '-' + str(rec["losses"])
+            m[t] = matchup[t]["teamName"]
+            m[t + "_record"] = record
+            ids.append(team["owners"][0])
+
+        # this would include h2h record but until i get async calls
+        # working it just takes to long to load the report page
+        # rec = head_to_head.record(ids[0], ids[1])
+        preview.append(m)
+
     return preview
 
 
 def summary():
     year = latest_season()
     team_names = team_mapping(year)
-    details = load_data(year, 'mNav')
+    details = load_data(year, 'mTeam')
+    teams = details["teams"]
     all_matchups = load_matchups(year)
     for matchup in all_matchups:
         if is_bye_week(matchup):
@@ -217,7 +228,7 @@ def summary():
     next_week_matchups = [
         m for m in all_matchups if m["matchupPeriodId"] == week + 1
         ]
-    preview = generate_preview(next_week_matchups)
+    preview = generate_preview(next_week_matchups, teams)
     response["preview"] = preview
 
     return response

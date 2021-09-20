@@ -151,3 +151,67 @@ def all_time(owner_id_1, owner_id_2):
         data["current_streak"],
         data["longest_streak"]
         ]
+
+
+def record(owner_id_1, owner_id_2):
+    # Need to use owner id because some ids stayed
+    # the same through multiple owners
+    data = {
+        owner_id_1: {
+            "owner_id": owner_id_1,
+            "wins": 0,
+        },
+        owner_id_2: {
+            "owner_id": owner_id_2,
+            "wins": 0,
+        },
+    }
+
+    end_year = latest_season()
+    current_info = load_data(end_year, 'mNav')
+
+    for year in range(FIRST_SEASON, end_year + 1):
+        weeks = number_of_weeks(year, True)
+        if weeks == 0:
+            continue
+
+        matchups = load_matchups(year)
+        team_owner_mapping = load_data(year, 'mNav')["teams"]
+
+        for matchup in matchups:
+            if matchup["matchupPeriodId"] > weeks:
+                break
+
+            if is_bye_week(matchup):
+                continue
+
+            away_details = matchup["away"]
+            away_team_id = away_details["teamId"]
+            away_owner_id = next(
+                item for item in team_owner_mapping
+                if item["id"] == away_team_id
+                )["owners"][0]
+
+            home_details = matchup["home"]
+            home_team_id = home_details["teamId"]
+            home_owner_id = next(
+                item for item in team_owner_mapping
+                if item["id"] == home_team_id
+                )["owners"][0]
+
+            right_teams = compare_lists(
+                [owner_id_1, owner_id_2],
+                [away_owner_id, home_owner_id])
+            if not right_teams:
+                continue
+
+            # matchup be right
+            if matchup["playoffTierType"] == "NONE" or matchup["playoffTierType"] == "WINNERS_BRACKET":
+                if matchup["winner"] == "AWAY":
+                    data[away_owner_id]["wins"] += 1
+                elif matchup["winner"] == "HOME":
+                    data[home_owner_id]["wins"] += 1
+    return [
+        data[owner_id_1],
+        data[owner_id_2],
+        ]
