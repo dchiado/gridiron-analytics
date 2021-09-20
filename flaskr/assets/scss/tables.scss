@@ -67,6 +67,8 @@
 
 .simple-table {
   margin-left: 40px;
+  font-size: 12px;
+  opacity: .8;
 }
 
 .simple-table td, .simple-table th {
@@ -175,11 +177,11 @@
 }
 
 .results-row > div:last-child {
-  width: 190px;
+  width: 240px;
 }
 
 .results-row > div:first-child {
-  width: 190px;
+  width: 240px;
 }
 
 .right-align {
