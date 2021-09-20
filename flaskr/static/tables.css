@@ -6,6 +6,7 @@
 
   .table-wrapper {
     max-width: 90%;
+    padding-top: 10px;
     margin: auto;
     box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
     overflow: scroll;
@@ -51,98 +52,105 @@
                     background: #f8f8f8;
                     opacity: 1; }
 
-                    .sticky-col {
-                      position: -webkit-sticky;
-                      position: sticky;
-                      left: 0; }
+                    .simple-table {
+                      margin-left: 40px; }
 
-                      .tabs .tab a {
-                        color: #f47a60; }
+                      .simple-table td, .simple-table th {
+                        text-align: left;
+                        padding-right: 30px; }
 
-                        .chart {
-                          display: flex;
-                          flex-direction: row;
-                          justify-content: space-around; }
+                        .sticky-col {
+                          position: -webkit-sticky;
+                          position: sticky;
+                          left: 0; }
 
-                          .h2h-container {
-                            width: 40%;
-                            min-width: 600px;
-                            margin: auto;
-                            display: flex;
-                            flex-direction: row;
-                            justify-content: space-between; }
+                          .tabs .tab a {
+                            color: #f47a60; }
 
-                            .h2h-column {
+                            .chart {
                               display: flex;
-                              flex-direction: column;
-                              justify-content: space-between;
-                              width: 33%; }
+                              flex-direction: row;
+                              justify-content: space-around; }
 
-                              .h2h-column:nth-child(2) {
-                                width: 34%; }
+                              .h2h-container {
+                                width: 40%;
+                                min-width: 600px;
+                                margin: auto;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: space-between; }
 
-                                .h2h-team-info {
+                                .h2h-column {
                                   display: flex;
-                                  flex-direction: column; }
+                                  flex-direction: column;
+                                  justify-content: space-between;
+                                  width: 33%; }
 
-                                  .h2h-team-info > div:first-of-type {
-                                    padding-top: 15px; }
+                                  .h2h-column:nth-child(2) {
+                                    width: 34%; }
 
-                                    .h2h-team-info > * {
-                                      min-height: 32px; }
+                                    .h2h-team-info {
+                                      display: flex;
+                                      flex-direction: column; }
 
-                                      .left-team {
-                                        text-align: right !important;
-                                        align-items: flex-end; }
+                                      .h2h-team-info > div:first-of-type {
+                                        padding-top: 15px; }
 
-                                        .right-team {
-                                          text-align: left !important;
-                                          align-items: flex-start; }
+                                        .h2h-team-info > * {
+                                          min-height: 32px; }
 
-                                          .center-info {
-                                            text-align: center;
-                                            font-weight: 600; }
+                                          .left-team {
+                                            text-align: right !important;
+                                            align-items: flex-end; }
 
-                                            .center-info > div:first-of-type {
-                                              height: 120px; }
+                                            .right-team {
+                                              text-align: left !important;
+                                              align-items: flex-start; }
 
-                                              .section-header {
-                                                width: 100%;
-                                                border-top: 1px solid #ced7d8;
-                                                padding-top: 10px;
-                                                font-size: 18px; }
+                                              .center-info {
+                                                text-align: center;
+                                                font-weight: 600; }
 
-                                                .top-border {
-                                                  border-top: 1px solid #ced7d8; }
+                                                .center-info > div:first-of-type {
+                                                  height: 120px; }
 
-                                                  .report-container {
-                                                    width: 60%;
-                                                    margin: auto; }
+                                                  .section-header {
+                                                    width: 100%;
+                                                    border-top: 1px solid #ced7d8;
+                                                    padding-top: 10px;
+                                                    font-size: 18px; }
 
-                                                    .results-table {
-                                                      width: 80%;
-                                                      margin: auto; }
+                                                    .top-border {
+                                                      border-top: 1px solid #ced7d8; }
 
-                                                      .results-row {
-                                                        display: flex;
-                                                        flex-direction: row;
-                                                        justify-content: center; }
+                                                      .report-container {
+                                                        width: 60%;
+                                                        margin: auto; }
 
-                                                        .results-row > div {
-                                                          width: 60px;
-                                                          margin: 10px; }
+                                                        .results-table {
+                                                          width: 80%;
+                                                          margin: auto; }
 
-                                                          .results-row > div:last-child {
-                                                            width: 190px; }
+                                                          .results-row {
+                                                            display: flex;
+                                                            flex-direction: row;
+                                                            justify-content: center; }
 
-                                                            .results-row > div:first-child {
-                                                              width: 190px; }
+                                                            .results-row > div {
+                                                              width: 60px;
+                                                              margin: 10px; }
 
-                                                              .right-align {
-                                                                text-align: right; }
+                                                              .results-row > div:last-child {
+                                                                width: 190px; }
 
-                                                                .center-align {
-                                                                  text-align: center; }
+                                                                .results-row > div:first-child {
+                                                                  width: 190px; }
 
-                                                                  .left-align {
-                                                                    text-align: left; }
+                                                                  .right-align {
+                                                                    text-align: right; }
+
+                                                                    .center-align {
+                                                                      text-align: center; }
+
+                                                                      .left-align {
+                                                                        text-align: left; }

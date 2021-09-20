@@ -1,96 +1,171 @@
 {%extends "layout.html"%}
 {% block content %}
 <html>
-    <head>
-        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
-    </head>
-    <body>
-        <div class="container">
-            <div class="report-container">
-                <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-                    <div class="mdl-tabs__tab-bar">
-                        <a href="#recap" class="mdl-tabs__tab is-active">{{ "Week " ~ result["week"] ~ " Recap" }}</a>
-                        <a href="#preview" class="mdl-tabs__tab">{{ "Week " ~ result["next_week"] ~ " Preview" }}</a>
-                        <a href="#power-rankings" class="mdl-tabs__tab">Power Rankings</a>
-                    </div>
-                  
-                    <div class="mdl-tabs__panel is-active" id="recap">
-                        {% if "error" in result["results"] %}
-                        <p>
-                            <br>
-                            No matchups yet - come back when the week is over
-                        </p>
-                        {%endif%}
-                        {% if "error" not in result["results"] %}
-                        <h4>Results</h4>
-                        <div class="results-table">
-                            {% for matchup in result["results"] %}
-                                <div class="results-row">
-                                    <div class="right-align">{{ matchup["winner"] }}</div>
-                                    <div class="right-align">{{ matchup["w_score"] }}</div>
-                                    <div class="center-align">DEF</div>
-                                    <div class="left-align">{{ matchup["l_score"] }}</div>
-                                    <div class="left-align">{{ matchup["loser"] }}</div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <p class="top-border">
-                            <h4>&#x1F3C6; Highest Score</h4>
-                            {{ result["superlatives"]["high"]["team"] ~ " with a cool " ~
-                            result["superlatives"]["high"]["score"] }}
-                        </p>
-                        <p class="top-border">
-                            <h4>&#x1F4A9; Lowest Score</h4>
-                            {{ result["superlatives"]["low"]["team"] ~ " with a forgettable " ~
-                            result["superlatives"]["low"]["score"] }}
-                        </p>
-                        <p class="top-border">
-                            <h4>&#x1F90F; Closest Win</h4>
-                            {% if result["superlatives"]["closest"]["tie"] == True %}
-                                {{ result["superlatives"]["closest"]["winner"] ~ " tied " ~
-                                result["superlatives"]["closest"]["loser"] }}
-                            {% else %}
-                                {{ result["superlatives"]["closest"]["winner"] ~ " eeked it out over " ~
-                                result["superlatives"]["closest"]["loser"] ~ " by " ~
-                                result["superlatives"]["closest"]["difference"] }}
-                            {% endif %}
-                        </p>
-                        <p class="top-border">
-                            <h4>&#x1F512; Biggest Win</h4>
-                            {{ result["superlatives"]["blowout"]["winner"] ~ " clobbered " ~
-                            result["superlatives"]["blowout"]["loser"] ~ " by " ~
-                            result["superlatives"]["blowout"]["difference"] }}
-                        </p>
-                        <p class="top-border">
-                            <h4>&#x2618; Luckiest Win</h4>
-                            {{ result["superlatives"]["luckiest"]["team"] ~ " got the win as the #" ~
-                            result["superlatives"]["luckiest"]["place"] ~ " highest scoring team with " ~
-                            result["superlatives"]["luckiest"]["score"] }}
-                        </p>
-                        <p class="top-border">
-                            <h4>&#x1F612; Unluckiest Loss</h4>
-                            {{ result["superlatives"]["unluckiest"]["team"] ~ " took an L as the #" ~
-                            result["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
-                            result["superlatives"]["unluckiest"]["score"] }}
-                        </p>
-                        {%endif%}
-                    </div>
-                    <div class="mdl-tabs__panel" id="preview">
-                        <h4>Preview</h4>
-                        <div class="results-table">
-                            {% for matchup in result["preview"] %}
-                                <div class="results-row">
-                                    <div class="right-align">{{ matchup["home"] }}</div>
-                                    <div class="center-align">vs.</div>
-                                    <div class="left-align">{{ matchup["away"] }}</div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="mdl-tabs__panel" id="power-rankings"></div>
-                </div>
-            </div>
+  <head>
+    <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+  </head>
+  <body>
+  <div class="container">
+    <div class="report-container">
+      <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        <div class="mdl-tabs__tab-bar">
+          <a href="#recap" class="mdl-tabs__tab is-active">{{ "Week " ~ report["week"] ~ " Recap" }}</a>
+          <a href="#preview" class="mdl-tabs__tab">{{ "Week " ~ report["next_week"] ~ " Preview" }}</a>
+          <a href="#power-rankings" class="mdl-tabs__tab">Power Rankings</a>
         </div>
-    </body>
+        <div class="mdl-tabs__panel is-active" id="recap">
+          {% if "error" in report["results"] %}
+          <p>
+            <br>
+            No matchups yet - come back when the week is over
+          </p>
+          {%endif%}
+          {% if "error" not in report["results"] %}
+          <h4>Results</h4>
+          <div class="results-table">
+            {% for matchup in report["results"] %}
+              <div class="results-row">
+                <div class="right-align">{{ matchup["winner"] }}</div>
+                <div class="right-align">{{ matchup["w_score"] }}</div>
+                <div class="center-align">DEF</div>
+                <div class="left-align">{{ matchup["l_score"] }}</div>
+                <div class="left-align">{{ matchup["loser"] }}</div>
+              </div>
+            {% endfor %}
+          </div>
+          <p class="top-border">
+            <h4>&#x1F3C6; Highest Score</h4>
+            {{ report["superlatives"]["high"]["team"] ~ " with a cool " ~
+            report["superlatives"]["high"]["score"] }}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F4A9; Lowest Score</h4>
+            {{ report["superlatives"]["low"]["team"] ~ " with a forgettable " ~
+            report["superlatives"]["low"]["score"] }}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F90F; Closest Win</h4>
+            {% if report["superlatives"]["closest"]["tie"] == True %}
+              {{ report["superlatives"]["closest"]["winner"] ~ " tied " ~
+              report["superlatives"]["closest"]["loser"] }}
+            {% else %}
+              {{ report["superlatives"]["closest"]["winner"] ~ " eeked it out over " ~
+              report["superlatives"]["closest"]["loser"] ~ " by " ~
+              report["superlatives"]["closest"]["difference"] }}
+            {% endif %}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F512; Biggest Win</h4>
+            {{ report["superlatives"]["blowout"]["winner"] ~ " clobbered " ~
+            report["superlatives"]["blowout"]["loser"] ~ " by " ~
+            report["superlatives"]["blowout"]["difference"] }}
+          </p>
+          <p class="top-border">
+            <h4>&#x2618; Luckiest Win</h4>
+            {{ report["superlatives"]["luckiest"]["team"] ~ " got the win as the #" ~
+            report["superlatives"]["luckiest"]["place"] ~ " highest scoring team with " ~
+            report["superlatives"]["luckiest"]["score"] }}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F612; Unluckiest Loss</h4>
+            {{ report["superlatives"]["unluckiest"]["team"] ~ " took an L as the #" ~
+            report["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
+            report["superlatives"]["unluckiest"]["score"] }}
+          </p>
+          {%endif%}
+        </div>
+        <div class="mdl-tabs__panel" id="preview">
+          <h4>Preview</h4>
+          <div class="results-table">
+            {% for matchup in report["preview"] %}
+              <div class="results-row">
+                <div class="right-align">{{ matchup["home"] }}</div>
+                <div class="center-align">vs.</div>
+                <div class="left-align">{{ matchup["away"] }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mdl-tabs__panel" id="power-rankings">
+          <h4>{{ "Week " ~ report["week"] ~ " Power Rankings" }}</h4>
+          <div class="table-wrapper">
+            <table class="fl-table">
+              <thead>
+                <tr>
+                  <th class="sticky-col">Team</th>
+                  <th>PR Score</th>
+                  <th>Wins</th>
+                  <th>Overall Wins</th>
+                  {% if report["week"] >= 7 %}
+                  <th>Last 5 Wins</th>
+                  {% endif %}
+                  <th>Points</th>
+                  {% if report["week"] >= 3 %}
+                  <th>Consistency</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for val in prs.values() %}
+                <tr>
+                  <th class="sticky-col"> {{ val["name"] }} </th>
+                  <td> {{ val["power_ranking_score"] }} </td>
+                  <td> {{ val["wins"] }} </td>
+                  <td> {{ val["overall_wins"] }} </td>
+                  {% if report["week"] >= 7 %}
+                  <td> {{ val["l5"] }} </td>
+                  {% endif %}
+                  <td> {{ val["tot_pts"] }} </td>
+                  {% if report["week"] >= 3 %}
+                  <td> {{ val["consistency"] }} </td>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <br><br>
+          <h4>Legend</h4>
+          <table class="simple-table">
+              <thead>
+                <tr>
+                  <th>Stat</th>
+                  <th>Weight Value</th>
+                  <th>What it Means</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Wins</td>
+                  <td>3</td>
+                  <td>Wins on the seasons</td>
+                </tr>
+                <tr>
+                  <td>Overall Wins</td>
+                  <td>1</td>
+                  <td>Wins if everyone played everyone each week</td>
+                </tr>
+                <tr>
+                  <td>Last 5 Wins</td>
+                  <td>1 (starting week 8)</td>
+                  <td>Wins in the last 5 weeks</td>
+                </tr>
+                <tr>
+                  <td>Points</td>
+                  <td>2</td>
+                  <td>Total points scored</td>
+                </tr>
+                <tr>
+                  <td>Consistency</td>
+                  <td>1 (starting week 3)</td>
+                  <td>Standard deviation of scores on the year</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
 {%endblock%}
