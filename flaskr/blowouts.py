@@ -5,50 +5,52 @@ from flaskr.utils import (
     check_start_year,
     check_end_year
 )
+import aiohttp
 
 
-def by_year(start_year, end_year, playoffs):
-    all_records = {}
-    start_year = check_start_year(start_year)
-    end_year = check_end_year(end_year)
+async def by_year(start_year, end_year, playoffs):
+    async with aiohttp.ClientSession() as session:
+        all_records = {}
+        start_year = check_start_year(start_year)
+        end_year = await check_end_year(end_year, session)
 
-    for year in range(int(start_year), int(end_year) + 1):
-        weeks = number_of_weeks(year, playoffs)
-        if weeks == 0:
-            continue
+        for year in range(int(start_year), int(end_year) + 1):
+            weeks = await number_of_weeks(year, playoffs, session)
+            if weeks == 0:
+                continue
 
-        matchups = load_matchups(year)
+            matchups = await load_matchups(year, session)
 
-        all_scores = []
-        blowout_count = 0
-        for matchup in matchups:
-            if matchup["matchupPeriodId"] > weeks:
-                break
+            all_scores = []
+            blowout_count = 0
+            for matchup in matchups:
+                if matchup["matchupPeriodId"] > weeks:
+                    break
 
-            if is_bye_week(matchup):
-                break
+                if is_bye_week(matchup):
+                    break
 
-            away_dict = matchup["away"]["pointsByScoringPeriod"]
-            home_dict = matchup["home"]["pointsByScoringPeriod"]
-            away_score = next(iter(away_dict.values()))
-            home_score = next(iter(home_dict.values()))
-            all_scores.append(away_score)
-            all_scores.append(home_score)
+                away_dict = matchup["away"]["pointsByScoringPeriod"]
+                home_dict = matchup["home"]["pointsByScoringPeriod"]
+                away_score = next(iter(away_dict.values()))
+                home_score = next(iter(home_dict.values()))
+                all_scores.append(away_score)
+                all_scores.append(home_score)
 
-            difference = 0
-            if away_score > home_score:
-                difference = away_score - home_score
-            else:
-                difference = home_score - away_score
+                difference = 0
+                if away_score > home_score:
+                    difference = away_score - home_score
+                else:
+                    difference = home_score - away_score
 
-            if difference > 50.0:
-                blowout_count += 1
+                if difference > 50.0:
+                    blowout_count += 1
 
-        average_score = sum(all_scores) / len(all_scores)
+            average_score = sum(all_scores) / len(all_scores)
 
-        all_records[year] = {
-            "blowout_count": blowout_count,
-            "average_score": average_score
-        }
+            all_records[year] = {
+                "blowout_count": blowout_count,
+                "average_score": average_score
+            }
 
-    return all_records
+        return all_records

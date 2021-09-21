@@ -1,4 +1,11 @@
-from flaskr.utils import is_bye_week, load_data, load_matchups, team_mapping, latest_season
+import aiohttp
+from flaskr.utils import (
+    is_bye_week,
+    latest_season,
+    load_data,
+    load_matchups,
+    team_mapping
+)
 from flaskr import head_to_head
 from decimal import Decimal
 
@@ -179,56 +186,58 @@ def generate_preview(matchups, teams):
     return preview
 
 
-def summary():
-    year = latest_season()
-    team_names = team_mapping(year)
-    details = load_data(year, 'mTeam')
-    teams = details["teams"]
-    all_matchups = load_matchups(year)
-    for matchup in all_matchups:
-        if is_bye_week(matchup):
-            break
-        matchup["away"]["teamName"] = team_names[matchup["away"]["teamId"]]
-        matchup["home"]["teamName"] = team_names[matchup["home"]["teamId"]]
+async def summary():
+    async with aiohttp.ClientSession() as session:
+        year = await latest_season(session)
+        team_names = await team_mapping(year, session)
+        details = await load_data(year, 'mTeam', session)
+        teams = details["teams"]
 
-    week = details["status"]["currentMatchupPeriod"] - 1
-    response = {
-        "week": week,
-        "next_week": week + 1
-    }
+        all_matchups = await load_matchups(year, session)
+        for matchup in all_matchups:
+            if is_bye_week(matchup):
+                break
+            matchup["away"]["teamName"] = team_names[matchup["away"]["teamId"]]
+            matchup["home"]["teamName"] = team_names[matchup["home"]["teamId"]]
 
-    if week < 1:
-        response["results"] = {"error": "NoMatchups"}
-    else:
-        week_matchups = [
-            m for m in all_matchups if m["matchupPeriodId"] == week
-            ]
-
-        results = generate_results(week_matchups)
-
-        high_score = highest_score(week_matchups)
-        low_score = lowest_score(week_matchups)
-
-        closest = closest_win(week_matchups)
-        biggest = biggest_win(week_matchups)
-
-        luckiest = luckiest_win(week_matchups)
-        unluckiest = unluckiest_loss(week_matchups)
-
-        response["results"] = results
-        response["superlatives"] = {
-            "high": high_score,
-            "low": low_score,
-            "closest": closest,
-            "blowout": biggest,
-            "luckiest": luckiest,
-            "unluckiest": unluckiest
+        week = details["status"]["currentMatchupPeriod"] - 1
+        response = {
+            "week": week,
+            "next_week": week + 1
         }
 
-    next_week_matchups = [
-        m for m in all_matchups if m["matchupPeriodId"] == week + 1
-        ]
-    preview = generate_preview(next_week_matchups, teams)
-    response["preview"] = preview
+        if week < 1:
+            response["results"] = {"error": "NoMatchups"}
+        else:
+            week_matchups = [
+                m for m in all_matchups if m["matchupPeriodId"] == week
+                ]
 
-    return response
+            results = generate_results(week_matchups)
+
+            high_score = highest_score(week_matchups)
+            low_score = lowest_score(week_matchups)
+
+            closest = closest_win(week_matchups)
+            biggest = biggest_win(week_matchups)
+
+            luckiest = luckiest_win(week_matchups)
+            unluckiest = unluckiest_loss(week_matchups)
+
+            response["results"] = results
+            response["superlatives"] = {
+                "high": high_score,
+                "low": low_score,
+                "closest": closest,
+                "blowout": biggest,
+                "luckiest": luckiest,
+                "unluckiest": unluckiest
+            }
+
+        next_week_matchups = [
+            m for m in all_matchups if m["matchupPeriodId"] == week + 1
+            ]
+        preview = generate_preview(next_week_matchups, teams)
+        response["preview"] = preview
+
+        return response

@@ -1,4 +1,5 @@
 import collections
+import aiohttp
 from flaskr.utils import (
     active_teams,
     headshot,
@@ -10,86 +11,89 @@ from flaskr.utils import (
 from flaskr.globals import FIRST_SEASON
 
 
-def top_drafted():
-    all_picks = {}
-    start_year = FIRST_SEASON
-    end_year = latest_season()
+async def top_drafted():
+    async with aiohttp.ClientSession() as session:
+        all_picks = {}
+        start_year = FIRST_SEASON
+        end_year = await latest_season(session)
 
-    mTeam = load_data(int(end_year), 'mTeam')
-    active_team_ids = active_teams(mTeam)
-    teams = mTeam["teams"]
+        mTeam = await load_data(int(end_year), 'mTeam', session)
+        active_team_ids = active_teams(mTeam)
+        teams = mTeam["teams"]
 
-    for year in range(int(start_year), int(end_year) + 1):
-        players = player_info(year)
-        draft_detail = load_data(year, 'mDraftDetail')
-        picks = draft_detail["draftDetail"]["picks"]
+        for year in range(int(start_year), int(end_year) + 1):
+            players = await player_info(year, session)
+            draft_detail = await load_data(year, 'mDraftDetail', session)
+            picks = draft_detail["draftDetail"]["picks"]
 
-        for pick in picks:
-            team_id = pick["teamId"]
-            if team_id not in active_team_ids:
-                continue
+            for pick in picks:
+                team_id = pick["teamId"]
+                if team_id not in active_team_ids:
+                    continue
 
-            player = None
-            player_id = pick["playerId"]
+                player = None
+                player_id = pick["playerId"]
 
-            for p in players:
-                if p["id"] == player_id:
-                    player = p
-                    break
-            if not player:
-                continue
+                for p in players:
+                    if p["id"] == player_id:
+                        player = p
+                        break
+                if not player:
+                    continue
 
-            player_name = player["player"]["fullName"]
-            if player_id > 0:
-                player_image = headshot(player_id)
-            else:
-                player_image = team_logo(player_name)
-
-            team = next(t for t in teams if t["id"] == pick["teamId"])
-            team_nickname = team["location"] + " " + team["nickname"]
-
-            new_player_dict = {
-                "player_name": player_name,
-                "image": player_image,
-                "picked": 1,
-                "years": [year]
-            }
-
-            if team_id in all_picks:
-                all_picks[team_id]["team_name"] = team_nickname
-                all_picks[team_id]["logo"] = team.get("logo")
-                if player_id in all_picks[team_id]["players"]:
-                    player_dict = all_picks[team_id]["players"][player_id]
-                    player_dict["picked"] += 1
-                    player_dict["years"].append(year)
+                player_name = player["player"]["fullName"]
+                if player_id > 0:
+                    player_image = headshot(player_id)
                 else:
-                    all_picks[team_id]["players"][player_id] = new_player_dict
-            else:
-                all_picks[team_id] = {
-                    "team_name": team_nickname,
-                    "logo": team.get("logo"),
-                    "players": {
-                        player_id: new_player_dict
-                    }
+                    player_image = team_logo(player_name)
+
+                team = next(t for t in teams if t["id"] == pick["teamId"])
+                team_nickname = team["location"] + " " + team["nickname"]
+
+                new_player_dict = {
+                    "player_name": player_name,
+                    "image": player_image,
+                    "picked": 1,
+                    "years": [year]
                 }
 
-    teams_favorites = []
-    for team in all_picks.values():
-        sorted_picks = collections.OrderedDict(
-            sorted(
-                team["players"].items(),
-                key=lambda t: t[1]["picked"],
-                reverse=True
+                if team_id in all_picks:
+                    all_picks[team_id]["team_name"] = team_nickname
+                    all_picks[team_id]["logo"] = team.get("logo")
+                    if player_id in all_picks[team_id]["players"]:
+                        player_dict = all_picks[team_id]["players"][player_id]
+                        player_dict["picked"] += 1
+                        player_dict["years"].append(year)
+                    else:
+                        all_picks[team_id]["players"][player_id] = (
+                            new_player_dict
+                        )
+                else:
+                    all_picks[team_id] = {
+                        "team_name": team_nickname,
+                        "logo": team.get("logo"),
+                        "players": {
+                            player_id: new_player_dict
+                        }
+                    }
+
+        teams_favorites = []
+        for team in all_picks.values():
+            sorted_picks = collections.OrderedDict(
+                sorted(
+                    team["players"].items(),
+                    key=lambda t: t[1]["picked"],
+                    reverse=True
+                )
             )
-        )
 
-        top_picks = {}
-        for idx, x in enumerate(list(sorted_picks)[0:3]):
-            top_picks[idx+1] = sorted_picks[x]
-        teams_favorites.append({
-            "team_name": team["team_name"],
-            "logo": team["logo"],
-            "favorite_picks": top_picks
-        })
+            top_picks = {}
+            for idx, x in enumerate(list(sorted_picks)[0:3]):
+                top_picks[idx+1] = sorted_picks[x]
+            teams_favorites.append({
+                "team_name": team["team_name"],
+                "logo": team["logo"],
+                "favorite_picks": top_picks
+            })
 
-    return teams_favorites
+        return teams_favorites

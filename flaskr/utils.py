@@ -18,11 +18,11 @@ async def load_data(year, uri, session, headers=None):
         url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
             str(LEAGUE_ID) + "?seasonId=" + str(year) + "&view=" + uri
         resp = await session.request(method='GET', url=url, headers=headers)
-        resp_json = await resp.json()[0]
-        return resp_json
+        resp_json = await resp.json()
+        return resp_json[0]
 
 
-def player_info(year):
+async def player_info(year, session):
     filters = {
         "players": {
             "limit": 1500,
@@ -34,15 +34,17 @@ def player_info(year):
         }
     }
     headers = {'x-fantasy-filter': json.dumps(filters)}
-    return load_data(year, 'kona_player_info', headers)["players"]
+    resp = await load_data(year, 'kona_player_info', session, headers)
+    return resp["players"]
 
 
-def load_matchups(year):
-    return load_data(year, 'mMatchupScore')["schedule"]
+async def load_matchups(year, session):
+    resp = await load_data(year, 'mMatchupScore', session)
+    return resp["schedule"]
 
 
-def number_of_weeks(year, playoffs):
-    season = load_data(year, 'mSettings')
+async def number_of_weeks(year, playoffs, session):
+    season = await load_data(year, 'mSettings', session)
 
     current_week = season["status"]["latestScoringPeriod"]
     total_weeks = season["status"]["finalScoringPeriod"]
@@ -73,8 +75,8 @@ def team_name(team_id, season_obj):
             return str(team["location"] + " " + team["nickname"])
 
 
-def team_mapping(year):
-    mTeam = load_data(year, 'mTeam')
+async def team_mapping(year, session):
+    mTeam = await load_data(year, 'mTeam', session)
     m = {}
     for team in mTeam["teams"]:
         m[team["id"]] = str(team["location"] + " " + team["nickname"])
@@ -93,10 +95,10 @@ def print_to_file(content, file):
     f.close()
 
 
-def latest_season():
+async def latest_season(session):
     current = date.today().year
-    res = load_data(current, 'mStatus')
-    if not res["draftDetail"]["drafted"]:
+    resp = await load_data(current, 'mStatus', session)
+    if not resp["draftDetail"]["drafted"]:
         return current - 1
     else:
         return current
@@ -173,8 +175,8 @@ def check_start_year(year):
         return int(year)
 
 
-def check_end_year(year):
-    latest = latest_season()
+async def check_end_year(year, session):
+    latest = await latest_season(session)
     if year is None or int(year) > latest:
         return latest
     else:
