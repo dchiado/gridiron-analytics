@@ -23,17 +23,24 @@ nav {
   color: $primary-gray;
   font-size: 14px;
   width: 100%;
-  padding: 30px;
+  padding: 30px 0 30px 0;
 }
 
-.form-container {
-  width: 60%;
-  margin: auto;
-  padding: 40px;
+.content {
+  padding: 0 40px;
+}
+
+.h2h-forms {
   background-color: $background-gray;
   -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
           border-radius: 6px;
+}
+
+.form-container {
+  width: 80%;
+  margin: auto;
+  padding: 40px;
 }
 
 h2 {
@@ -119,7 +126,7 @@ h4 {
   border-radius: 8px 8px 0 0;
 }
 
-.content {
+.form-content {
   padding: 20px 18px;
   display: none;
   overflow: hidden;
@@ -169,6 +176,11 @@ h4 {
 
 .mdl-switch__label, .mdl-radio__label, .mdl-textfield__input, .mdl-textfield__label {
   font-size: 14px !important;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  padding: 24px !important;
+  font-size: 20px;
 }
 
 .error {
