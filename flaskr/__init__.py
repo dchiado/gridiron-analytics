@@ -26,9 +26,9 @@ app.debug = True
 
 
 @app.route('/')
-def home():
+async def home():
     app.route('/')
-    resp = league_info.summary()
+    resp = await league_info.summary()
     return render_template("home.html", result=resp)
 
 
@@ -46,83 +46,87 @@ def data_forms():
 
 
 @app.route('/standings', methods=['POST', 'GET'])
-def all_time_standings():
-    resp = standings.list()
+async def all_time_standings():
+    resp = await standings.list()
     return render_template("standings.html", result=resp)
 
 
 @app.route('/favorite-picks', methods=['POST', 'GET'])
-def favorite_picks():
-    resp = favorite_players.top_drafted()
+async def favorite_picks():
+    resp = await favorite_players.top_drafted()
     return render_template("favorites.html", result=resp)
 
 
 @app.route('/matchups', methods=['POST'])
-def list_matchups():
+async def list_matchups():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'margins-playoffs' in request.form or None
     blowouts = request.form["matchup-radio"] == 'blowouts'
     count = request.form['count'] or 10
-    resp = matchups.results(start_year, end_year, playoffs, count, blowouts)
+    resp = await matchups.results(
+        start_year, end_year, playoffs, count, blowouts
+    )
     return render_template("matchups.html", result=resp)
 
 
 @app.route('/individual-seasons', methods=['POST'])
-def list_seasons():
+async def list_seasons():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     count = request.form['count'] or 10
     best = request.form['seasons-radio'] == 'best-seasons'
-    resp = scores.best_and_worst_seasons(start_year, end_year, count, best)
+    resp = await scores.best_and_worst_seasons(
+        start_year, end_year, count, best
+    )
     return render_template('seasons.html', result=resp)
 
 
 @app.route('/individual-weeks', methods=['POST'])
-def list_weeks():
+async def list_weeks():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'weeks-playoffs' in request.form or None
     count = request.form['count'] or 10
     best = request.form["week-scores-radio"] == 'best-weeks'
-    resp = scores.best_and_worst_weeks(
+    resp = await scores.best_and_worst_weeks(
         start_year, end_year, playoffs, count, best
     )
     return render_template("weeks.html", result=resp)
 
 
 @app.route('/head-to-head-form', methods=['POST', 'GET'])
-def h2h_form():
-    resp = head_to_head.options()
+async def h2h_form():
+    resp = await head_to_head.options()
     return render_template('h2h-form.html', result=resp)
 
 
 @app.route('/head-to-head', methods=['POST', 'GET'])
-def h2h_results():
+async def h2h_results():
     error = None
     team1 = request.form['team1']
     team2 = request.form['team2']
     if team1 == '0' or team2 == '0' or team1 == team2:
         error = 'Select two different teams'
-        resp = head_to_head.options()
+        resp = await head_to_head.options()
         return render_template('h2h-form.html', error=error, result=resp)
-    resp = head_to_head.all_time(team1, team2)
+    resp = await head_to_head.all_time(team1, team2)
     return render_template('h2h-results.html', result=resp)
 
 
 @app.route('/weekly-report', methods=['POST', 'GET'])
-def show_report():
-    report = weekly_report.summary()
-    pr = power_rankings.current()
+async def show_report():
+    report = await weekly_report.summary()
+    pr = await power_rankings.current()
     return render_template('weekly-report.html', report=report, prs=pr)
 
 
 @app.route('/yearly-blowouts', methods=['POST'])
-def list_blowouts():
+async def list_blowouts():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None
     playoffs = 'blowouts-playoffs' in request.form or None
-    resp = blowouts.by_year(start_year, end_year, playoffs)
+    resp = await blowouts.by_year(start_year, end_year, playoffs)
 
     plot_blowouts = [
         sub["blowout_count"] for sub in resp.values()
