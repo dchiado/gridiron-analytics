@@ -101,11 +101,7 @@ async def current():
             tm["consistency"] = round(statistics.pstdev(tm["scores"]), 2)
             all_consistency.append(tm["consistency"])
 
-            if 'overall_wins' not in tm:
-                tm["overall_wins"] = 0
-            for idx, s in enumerate(tm["scores"]):
-                week_overall_wins = sorted(all_week_pts[idx + 1]).index(s)
-                tm["overall_wins"] += week_overall_wins
+            update_overall_wins(tm, all_week_pts)
             all_overall_wins.append(tm["overall_wins"])
 
         # go through again and get the rank of relevant
