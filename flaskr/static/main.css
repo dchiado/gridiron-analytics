@@ -18,127 +18,136 @@
         color: #607d8b;
         font-size: 14px;
         width: 100%;
-        padding: 30px; }
+        padding: 30px 0 30px 0; }
 
-        .form-container {
-          width: 60%;
-          margin: auto;
-          padding: 40px;
-          background-color: #ced7d8;
-          -webkit-border-radius: 6px;
-          -moz-border-radius: 6px;
-          border-radius: 6px; }
+        .content {
+          padding: 0 40px; }
 
-          h2 {
-            font-size: 3em;
-            margin-top: 40px;
-            text-align: center;
-            letter-spacing: -2px; }
+          .h2h-forms {
+            background-color: #ced7d8;
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px; }
 
-            h3 {
-              font-size: 1.7em;
-              font-weight: 100;
-              margin-top: 30px;
-              text-align: center;
-              letter-spacing: -1px;
-              color: #ced7d8; }
+            .form-container {
+              width: 80%;
+              margin: auto;
+              padding: 40px; }
 
-              h4 {
-                font-weight: 100;
-                margin-top: 30px;
-                text-align: left;
-                letter-spacing: -1px;
-                color: #B0BEC5; }
+              h2 {
+                font-size: 3em;
+                margin-top: 40px;
+                text-align: center;
+                letter-spacing: -2px; }
 
-                .league-info {
-                  text-align: left; }
+                h3 {
+                  font-size: 1.7em;
+                  font-weight: 100;
+                  margin-top: 30px;
+                  text-align: center;
+                  letter-spacing: -1px;
+                  color: #ced7d8; }
 
-                  .menu {
-                    float: right;
-                    margin-top: 8px; }
+                  h4 {
+                    font-weight: 100;
+                    margin-top: 30px;
+                    text-align: left;
+                    letter-spacing: -1px;
+                    color: #B0BEC5; }
 
-                    .menu li {
-                      display: inline; }
+                    .league-info {
+                      text-align: left; }
 
-                      .menu li + li {
-                        margin-left: 35px; }
+                      .menu {
+                        float: right;
+                        margin-top: 8px; }
 
-                        .menu li a {
-                          text-decoration: none; }
+                        .menu li {
+                          display: inline; }
 
-                          .nav-title {
-                            margin-right: 25px;
-                            font-weight: 500; }
+                          .menu li + li {
+                            margin-left: 35px; }
 
-                            .form {
-                              width: 100%; }
+                            .menu li a {
+                              text-decoration: none; }
 
-                              ::placeholder {
-                                color: #B0BEC5;
-                                opacity: 1; }
+                              .nav-title {
+                                margin-right: 25px;
+                                font-weight: 500; }
 
-                                .button {
-                                  border-radius: 0.3em;
-                                  color: #FFFFFF;
-                                  transition: all 0.2s; }
+                                .form {
+                                  width: 100%; }
 
-                                  .collapsible {
-                                    background-color: #607d8b;
-                                    color: #FFFFFF;
-                                    cursor: pointer;
-                                    padding: 18px;
-                                    margin: 0;
-                                    width: 100%;
-                                    border: none;
-                                    border-radius: 8px;
-                                    text-align: left;
-                                    outline: none;
-                                    font-size: 16px; }
+                                  ::placeholder {
+                                    color: #B0BEC5;
+                                    opacity: 1; }
 
-                                    .collapsible.active {
-                                      border-radius: 8px 8px 0 0; }
+                                    .button {
+                                      border-radius: 0.3em;
+                                      color: #FFFFFF;
+                                      transition: all 0.2s; }
 
-                                      .content {
-                                        padding: 20px 18px;
-                                        display: none;
-                                        overflow: hidden;
-                                        background-color: #FFFFFF;
-                                        color: #607d8b;
-                                        border-radius: 0 0 8px 8px; }
+                                      .collapsible {
+                                        background-color: #607d8b;
+                                        color: #FFFFFF;
+                                        cursor: pointer;
+                                        padding: 18px;
+                                        margin: 0;
+                                        width: 100%;
+                                        border: none;
+                                        border-radius: 8px;
+                                        text-align: left;
+                                        outline: none;
+                                        font-size: 16px; }
 
-                                        .loader {
-                                          position: absolute !important;
-                                          top: 30%;
-                                          left: 50%;
-                                          display: block;
-                                          z-index: 1000; }
+                                        .collapsible.active {
+                                          border-radius: 8px 8px 0 0; }
 
-                                          .grayout {
-                                            pointer-events: none;
-                                            opacity: 0.6; }
+                                          .form-content {
+                                            padding: 20px 18px;
+                                            display: none;
+                                            overflow: hidden;
+                                            background-color: #FFFFFF;
+                                            color: #607d8b;
+                                            border-radius: 0 0 8px 8px; }
 
-                                            .mdl-layout--fixed-header {
-                                              color: white;
-                                              margin-bottom: 20px; }
+                                            .loader {
+                                              position: absolute !important;
+                                              top: 30%;
+                                              left: 50%;
+                                              display: block;
+                                              z-index: 1000; }
 
-                                              .mdl-layout-title {
-                                                padding-right: 40px; }
+                                              .grayout {
+                                                pointer-events: none;
+                                                opacity: 0.6; }
 
-                                                .mdl-layout__header-row {
-                                                  padding: 0 20px 0 20px !important; }
+                                                .mdl-layout--fixed-header {
+                                                  color: white;
+                                                  margin-bottom: 20px; }
 
-                                                  .mdl-mini-footer {
-                                                    font-size: 12px !important;
-                                                    padding: 8px 16px !important; }
+                                                  .mdl-layout-title {
+                                                    padding-right: 40px; }
 
-                                                    .mdl-mini-footer__link-list {
-                                                      font-size: 12px !important; }
+                                                    .mdl-layout__header-row {
+                                                      padding: 0 20px 0 20px !important; }
 
-                                                      .mdl-logo {
-                                                        margin-right: 40px !important; }
+                                                      .mdl-mini-footer {
+                                                        font-size: 12px !important;
+                                                        padding: 8px 16px !important; }
 
-                                                        .mdl-switch__label, .mdl-radio__label, .mdl-textfield__input, .mdl-textfield__label {
-                                                          font-size: 14px !important; }
+                                                        .mdl-mini-footer__link-list {
+                                                          font-size: 12px !important; }
 
-                                                          .error {
-                                                            color: #FF6565; }
+                                                          .mdl-logo {
+                                                            margin-right: 40px !important; }
+
+                                                            .mdl-switch__label, .mdl-radio__label, .mdl-textfield__input, .mdl-textfield__label {
+                                                              font-size: 14px !important; }
+
+                                                              .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+                                                                padding: 24px !important;
+                                                                font-size: 20px; }
+
+                                                                .error {
+                                                                  color: #FF6565; }

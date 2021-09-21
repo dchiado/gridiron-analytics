@@ -5,23 +5,25 @@
           <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
      </head>
      <body>
-          <p>Welcome to the most amazing app ever. Use the nav bar to go to different pages and do different things.</p>
-          <p>
-               <h5 class="league-info">
-                    <strong>{{ result["name"] }}</strong>
-               </h5>
-               Number of Teams:
-               {{ result["teams"] }}
-               <br>
-               Established:
-               {{ result["established"] }}
-               <br>
-               Current Season:
-               {{ result["year"] }}
-               <br>
-               Current Week:
-               {{ result["week"] }}
-          </p>
+          <div class="content">
+               <p>Welcome to the most amazing app ever. Use the nav bar to go to different pages and do different things.</p>
+               <p>
+                    <h5 class="league-info">
+                         <strong>{{ result["name"] }}</strong>
+                    </h5>
+                    Number of Teams:
+                    {{ result["teams"] }}
+                    <br>
+                    Established:
+                    {{ result["established"] }}
+                    <br>
+                    Current Season:
+                    {{ result["year"] }}
+                    <br>
+                    Current Week:
+                    {{ result["week"] }}
+               </p>
+          </div>
      </body>
 </html>       
 {%endblock%}
