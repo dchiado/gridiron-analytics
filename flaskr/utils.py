@@ -1,4 +1,3 @@
-import requests
 import json
 import collections
 
@@ -7,16 +6,20 @@ from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 from itertools import groupby
 
 
-def load_data(year, uri, headers=None):
+async def load_data(year, uri, session, headers=None):
     if year > 2019:
         url = "http://fantasy.espn.com/apis/v3/games/ffl/seasons/" + \
             str(year) + "/segments/0/leagues/" + str(LEAGUE_ID) + \
             "?&view=" + uri
-        return requests.get(url, headers=headers).json()
+        resp = await session.request(method='GET', url=url, headers=headers)
+        resp_json = await resp.json()
+        return resp_json
     else:
         url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
             str(LEAGUE_ID) + "?seasonId=" + str(year) + "&view=" + uri
-        return requests.get(url, headers=headers).json()[0]
+        resp = await session.request(method='GET', url=url, headers=headers)
+        resp_json = await resp.json()[0]
+        return resp_json
 
 
 def player_info(year):
