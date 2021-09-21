@@ -18,8 +18,9 @@
 
 .fl-table {
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
+  line-height: 22px !important;
   border: none;
   border-collapse: collapse;
   width: 100%;
@@ -36,7 +37,6 @@
 
 .fl-table td {
   border-right: 1px solid $accent-gray;
-  font-size: 12px;
 }
 
 .fl-table thead th {

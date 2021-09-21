@@ -14,8 +14,9 @@
 
     .fl-table {
       border-radius: 5px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: normal;
+      line-height: 22px !important;
       border: none;
       border-collapse: collapse;
       width: 100%;
@@ -29,8 +30,7 @@
         min-width: 70px; }
 
         .fl-table td {
-          border-right: 1px solid #f8f8f8;
-          font-size: 12px; }
+          border-right: 1px solid #f8f8f8; }
 
           .fl-table thead th {
             color: #FFFFFF;
@@ -54,7 +54,7 @@
 
                     .simple-table {
                       margin-left: 40px;
-                      font-size: 12px;
+                      font-size: 14px;
                       opacity: 0.8; }
 
                       .simple-table td, .simple-table th {
