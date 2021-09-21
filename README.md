@@ -4,30 +4,39 @@ The app uses python scripts to retrieve and organize the data and is built on [f
 
 ## Prerequisites
 1. Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
-2. Install all dependencies:
+1. Set up your virtual environment. If you name it something other than `env`, make sure to gitignore that dir.
+```
+python3 -m venv env
+```
+1. Activate your virtual environment.
+```
+source env/bin/activate
+```
+1. Install all dependencies:
 ```
 pip install -r requirements.txt
 ```
-
-## Linting
-flake8 is used for linting and code style. Configuration for the linter is stored in `.flake8`. To run the linter just run `flake8` from the project root. 
-
-## Use
-- Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`). Add the id to the LEAGUE_ID variable in `flaskr/globals.py` if not already there.
-- Export flask environment variables
+1. Export flask environment variables
 ```
 export FLASK_APP=flaskr
 export FLASK_ENV=development
 ```
+
+## Use
+- Obtain your league ID from the URL of any page in your league (`https://fantasy.espn.com/...leagueId=166975`). Add the id to the LEAGUE_ID variable in `flaskr/globals.py` if not already there.
 - Run the app with:
 ```
 flask run
 ```
 - The web app will be available at `http://127.0.0.1:5000`
 
-Alternatively, you can run the scripts from the command line like:
+## Linting
+flake8 is used for linting and code style. Configuration for the linter is stored in `.flake8`. To run the linter just run `flake8` from the project root. 
+
+## Testing
+The `pytest` module is used for testing. All tests are stored under the `tests/` dir in the project root. To run the tests just run:
 ```
-python3 -c 'from flaskr import matchups; print(matchups.results(2009, 2011, False, 5, True))'
+python -m pytest
 ```
 
 ## ESPN API

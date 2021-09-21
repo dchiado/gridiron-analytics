@@ -1,7 +1,6 @@
 import io
 import base64
 import os
-from flask_material import Material
 from flask_scss import Scss
 from flask import Flask, render_template, request
 from flaskr import (
@@ -20,7 +19,6 @@ from matplotlib.figure import Figure
 from flask import send_from_directory
 
 app = Flask(__name__)
-Material(app)
 Scss(app, static_dir='flaskr/static', asset_dir='flaskr/assets')
 app.debug = True
 
