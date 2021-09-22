@@ -1,9 +1,12 @@
 import aiohttp
+import operator
 from flaskr.utils import (
     is_bye_week,
     latest_season,
     load_data,
     load_matchups,
+    load_transactions,
+    player_info,
     team_mapping
 )
 from flaskr import head_to_head
@@ -186,10 +189,60 @@ def generate_preview(matchups, teams):
     return preview
 
 
+def winning_bids(transactions):
+    return [t for t in transactions if t["type"] == "WAIVER" and t["status"] == "EXECUTED"]
+
+
+def biggest_faab_bid(transactions, team_names, player_names):
+    w_bids = winning_bids(transactions)
+    bid = sorted(w_bids, key=lambda x: x["bidAmount"], reverse=True)[0]
+    bid["teamName"] = team_names[bid["teamId"]]
+    bid["playerName"] = next(
+        p["player"]["fullName"] for p in player_names if p["id"] == bid["items"][0]["playerId"]
+    )
+    return bid
+
+
+def best_worst_bids(transactions, team_names, player_names,overpay=False):
+    # check > if overpay=True, else check <
+    if overpay:
+        compare = operator.gt
+    else:
+        compare = operator.lt
+
+    w_bids = winning_bids(transactions)
+    bid = {}
+
+    for w in w_bids:
+        l_bids = [
+            t for t in transactions if t["type"] == "WAIVER" and
+            t["status"] == "FAILED_INVALIDPLAYERSOURCE" and
+            t["items"][0]["playerId"] == w["items"][0]["playerId"]
+        ]
+        if len(l_bids) > 0:
+            next_highest = sorted(l_bids, key=lambda x: x["bidAmount"], reverse=True)[0]
+            diff = w["bidAmount"] - next_highest["bidAmount"]
+            if 'diff' not in bid or compare(diff, bid["diff"]):
+                bid = {
+                    "diff": diff,
+                    "winning_bid": w,
+                    "losing_bid": next_highest
+                }
+
+    bid["teamName"] = team_names[bid["winning_bid"]["teamId"]]
+    bid["playerName"] = next(
+        p["player"]["fullName"] for p in player_names if
+            p["id"] == bid["winning_bid"]["items"][0]["playerId"]
+    )
+
+    return bid
+
+
 async def summary():
     async with aiohttp.ClientSession() as session:
         year = await latest_season(session)
         team_names = await team_mapping(year, session)
+        player_names = await player_info(year, session)
         details = await load_data(year, 'mTeam', session)
         teams = details["teams"]
 
@@ -224,6 +277,11 @@ async def summary():
             luckiest = luckiest_win(week_matchups)
             unluckiest = unluckiest_loss(week_matchups)
 
+            week_transactions = await load_transactions(year, session, week=week)
+            high_bid = biggest_faab_bid(week_transactions, team_names, player_names)
+            overpay_bid = best_worst_bids(week_transactions, team_names, player_names, overpay=True)
+            efficient_bid = best_worst_bids(week_transactions, team_names, player_names, overpay=False)
+
             response["results"] = results
             response["superlatives"] = {
                 "high": high_score,
@@ -231,7 +289,10 @@ async def summary():
                 "closest": closest,
                 "blowout": biggest,
                 "luckiest": luckiest,
-                "unluckiest": unluckiest
+                "unluckiest": unluckiest,
+                "high_bid": high_bid,
+                "overpay_bid": overpay_bid,
+                "efficient_bid": efficient_bid
             }
 
         next_week_matchups = [

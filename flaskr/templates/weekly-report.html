@@ -72,6 +72,26 @@
             report["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
             report["superlatives"]["unluckiest"]["score"] }}
           </p>
+          <p class="top-border">
+            <h4>&#x1F4B0; Mr. Moneybags with the High Bid of the Week</h4>
+            {{ report["superlatives"]["high_bid"]["teamName"] ~ " paid $" ~
+            report["superlatives"]["high_bid"]["bidAmount"] ~ " for " ~
+            report["superlatives"]["high_bid"]["playerName"] }}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F4B8; Overpay of the Week</h4>
+            {{ report["superlatives"]["overpay_bid"]["teamName"] ~ " paid $" ~
+            report["superlatives"]["overpay_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
+            report["superlatives"]["overpay_bid"]["playerName"] ~ ", $" ~
+            report["superlatives"]["overpay_bid"]["diff"] ~ " more than the next highest bid" }}
+          </p>
+          <p class="top-border">
+            <h4>&#x1F60E; Most Efficient Bid of the Week</h4>
+            {{ report["superlatives"]["efficient_bid"]["teamName"] ~ " paid $" ~
+            report["superlatives"]["efficient_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
+            report["superlatives"]["efficient_bid"]["playerName"] ~ ", just $" ~
+            report["superlatives"]["efficient_bid"]["diff"] ~ " more than the next highest bid" }}
+          </p>
           {%endif%}
         </div>
         <div class="mdl-tabs__panel" id="preview">

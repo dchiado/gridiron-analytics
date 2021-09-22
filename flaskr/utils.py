@@ -6,17 +6,24 @@ from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 from itertools import groupby
 
 
-async def load_data(year, uri, session, headers=None):
+async def load_data(year, uri, session, scoringPeriodId=None, headers=None):
     if year > 2019:
-        url = "http://fantasy.espn.com/apis/v3/games/ffl/seasons/" + \
-            str(year) + "/segments/0/leagues/" + str(LEAGUE_ID) + \
-            "?&view=" + uri
+        url = (
+          "http://fantasy.espn.com/apis/v3/games/ffl/seasons/" + str(year) +
+          "/segments/0/leagues/" + str(LEAGUE_ID) +
+          "?&view=" + uri +
+          ("&scoringPeriodId=" + str(scoringPeriodId) if scoringPeriodId is not None else '')
+        )
         resp = await session.request(method='GET', url=url, headers=headers)
         resp_json = await resp.json()
         return resp_json
     else:
-        url = "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + \
-            str(LEAGUE_ID) + "?seasonId=" + str(year) + "&view=" + uri
+        url = (
+          "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + str(LEAGUE_ID) +
+          "?seasonId=" + str(year) +
+          "&view=" + uri +
+          ("&scoringPeriodId=" + str(scoringPeriodId) if scoringPeriodId is not None else '')
+        )
         resp = await session.request(method='GET', url=url, headers=headers)
         resp_json = await resp.json()
         return resp_json[0]
@@ -34,13 +41,18 @@ async def player_info(year, session):
         }
     }
     headers = {'x-fantasy-filter': json.dumps(filters)}
-    resp = await load_data(year, 'kona_player_info', session, headers)
+    resp = await load_data(year, 'kona_player_info', session, headers=headers)
     return resp["players"]
 
 
 async def load_matchups(year, session):
     resp = await load_data(year, 'mMatchupScore', session)
     return resp["schedule"]
+
+
+async def load_transactions(year, session, week=None):
+    resp = await load_data(year, 'mTransactions2', session, week)
+    return resp["transactions"]
 
 
 async def number_of_weeks(year, playoffs, session):
