@@ -1,18 +1,21 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
     <head>
+        <title>Best or Worst Weeks</title>
         <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
     </head>
     <body>
+        <h4 class="table-header">Best or Worst Weeks</h4>
         <div class="table-wrapper">
-            <table class="fl-table">
+            <table class="fl-table" aria-describedby="weeks-table">
                 <thead>
                     <tr>
-                        <th>Year</th>
-                        <th>Week</th>
-                        <th>Team Name</th>
-                        <th>Score</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Week</th>
+                        <th scope="col">Team Name</th>
+                        <th scope="col">Score</th>
                     </tr>
                 </thead>
                 <tbody>

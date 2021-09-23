@@ -131,4 +131,4 @@ async def current():
         # return sorted teams object
         return collections.OrderedDict(
             sorted(teams.items(), key=lambda x: x[1]['power_ranking_score'])
-            )
+        )

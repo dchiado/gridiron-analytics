@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
     <head>
+        <title>Blowouts Table</title>
         <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
     </head>
     <body>
+        <h4 class="table-header">Yearly Blowouts</h4>
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
@@ -14,12 +17,12 @@
             </div>
             <div id="table-tab" class="wrapper">
                 <div class="table-wrapper">
-                    <table class="fl-table">
+                    <table class="fl-table" aria-describedby="blowouts-table">
                         <thead>
                             <tr>
-                                <th>Year</th>
-                                <th>Blowout Count</th>
-                                <th>Average Score</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Blowout Count</th>
+                                <th scope="col">Average Score</th>
                             </tr>
                         </thead>
                         <tbody>

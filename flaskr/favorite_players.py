@@ -11,15 +11,39 @@ from flaskr.utils import (
 from flaskr.globals import FIRST_SEASON
 
 
+def get_favorites(all_picks):
+    teams_favorites = []
+
+    for team in all_picks.values():
+        sorted_picks = collections.OrderedDict(
+            sorted(
+                team["players"].items(),
+                key=lambda t: t[1]["picked"],
+                reverse=True
+            )
+        )
+
+        top_picks = {}
+        for idx, x in enumerate(list(sorted_picks)[0:3]):
+            top_picks[idx + 1] = sorted_picks[x]
+        teams_favorites.append({
+            "team_name": team["team_name"],
+            "logo": team["logo"],
+            "favorite_picks": top_picks
+        })
+
+    return teams_favorites
+
+
 async def top_drafted():
     async with aiohttp.ClientSession() as session:
         all_picks = {}
         start_year = FIRST_SEASON
         end_year = await latest_season(session)
 
-        mTeam = await load_data(int(end_year), 'mTeam', session)
-        active_team_ids = active_teams(mTeam)
-        teams = mTeam["teams"]
+        mteam = await load_data(int(end_year), 'mTeam', session)
+        active_team_ids = active_teams(mteam)
+        teams = mteam["teams"]
 
         for year in range(int(start_year), int(end_year) + 1):
             players = await player_info(year, session)
@@ -77,23 +101,5 @@ async def top_drafted():
                         }
                     }
 
-        teams_favorites = []
-        for team in all_picks.values():
-            sorted_picks = collections.OrderedDict(
-                sorted(
-                    team["players"].items(),
-                    key=lambda t: t[1]["picked"],
-                    reverse=True
-                )
-            )
-
-            top_picks = {}
-            for idx, x in enumerate(list(sorted_picks)[0:3]):
-                top_picks[idx+1] = sorted_picks[x]
-            teams_favorites.append({
-                "team_name": team["team_name"],
-                "logo": team["logo"],
-                "favorite_picks": top_picks
-            })
-
-        return teams_favorites
+        favorites = get_favorites(all_picks)
+        return favorites

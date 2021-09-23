@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
       <title>Gridiron Almanac</title>
       {% with messages = get_flashed_messages() %}
@@ -22,7 +22,7 @@
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
           <div class="mdl-layout-spacer"></div>
-          <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <nav class="mdl-navigation mdl-layout--large-screen-only" aria-label="Nav Bar Links">
             <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
             <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
             <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head-to-head</a>
@@ -32,7 +32,7 @@
         </div>
       </header>
       <div class="mdl-layout__drawer mdl-layout--small-screen-only">
-        <nav class="mdl-navigation">
+        <nav class="mdl-navigation" aria-label="Nav Bar Links">
           <a class="mdl-navigation__link" href="{{ url_for('home') }}">Home</a>
           <a class="mdl-navigation__link" href="{{ url_for('all_time_standings') }}" onclick="loading();">All-time Standings</a>
           <a class="mdl-navigation__link" href="{{ url_for('h2h_form') }}" onclick="loading();">Head-to-head</a>

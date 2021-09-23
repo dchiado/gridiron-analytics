@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
   <head>
+    <title>Weekly Report</title>
     <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
   </head>
   <body>
@@ -109,26 +111,26 @@
         <div class="mdl-tabs__panel" id="power-rankings">
           <h4>{{ "Week " ~ report["week"] ~ " Power Rankings" }}</h4>
           <div class="table-wrapper">
-            <table class="fl-table">
+            <table class="fl-table" aria-describedby="power-rankings-table">
               <thead>
                 <tr>
-                  <th class="sticky-col">Team</th>
-                  <th>PR Score</th>
-                  <th>Wins</th>
-                  <th>Overall Wins</th>
+                  <th class="sticky-col" scope="col">Team</th>
+                  <th scope="col">PR Score</th>
+                  <th scope="col">Wins</th>
+                  <th scope="col">Overall Wins</th>
                   {% if report["week"] >= 7 %}
-                  <th>Last 5 Wins</th>
+                  <th scope="col">Last 5 Wins</th>
                   {% endif %}
-                  <th>Points</th>
+                  <th scope="col">Points</th>
                   {% if report["week"] >= 3 %}
-                  <th>Consistency</th>
+                  <th scope="col">Consistency</th>
                   {% endif %}
                 </tr>
               </thead>
               <tbody>
                 {% for val in prs.values() %}
                 <tr>
-                  <th class="sticky-col"> {{ val["name"] }} </th>
+                  <th class="sticky-col" scope="col"> {{ val["name"] }} </th>
                   <td> {{ val["power_ranking_score"] }} </td>
                   <td> {{ val["wins"] }} </td>
                   <td> {{ val["overall_wins"] }} </td>
@@ -146,12 +148,12 @@
           </div>
           <br><br>
           <h4>Legend</h4>
-          <table class="simple-table">
+          <table class="simple-table" aria-describedby="pr-legend">
               <thead>
                 <tr>
-                  <th>Stat</th>
-                  <th>Weight Value</th>
-                  <th>What it Means</th>
+                  <th scope="col">Stat</th>
+                  <th scope="col">Weight Value</th>
+                  <th scope="col">What it Means</th>
                 </tr>
               </thead>
               <tbody>

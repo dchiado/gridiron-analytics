@@ -1,25 +1,29 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
+    <head>
+        <title>Feature Suggestions</title>
+    </head>
     <body>
         <div id="content" class="form-container">
             <form
             action="https://formspree.io/f/mzbyyanw"
             method="POST"
             >
-            <p>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <input class="mdl-textfield__input" type="email" name="_replyto">
-                    <label class="mdl-textfield__label" for="_replyto">Your email</label>
-                </div>
-            </p>
-            <p>
-                <div class="mdl-textfield mdl-js-textfield">
-                    <textarea class="mdl-textfield__input" name="message" type="text" rows="3"></textarea>
-                    <label class="mdl-textfield__label" for="message">Your message</label>
-                </div>
-            </p>
-            <button class="button mdl-button mdl-js-button mdl-button--raised" type="submit">Send It</button>
+                <p>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="email" name="_replyto">
+                        <label class="mdl-textfield__label" for="_replyto">Your email</label>
+                    </div>
+                </p>
+                <p>
+                    <div class="mdl-textfield mdl-js-textfield">
+                        <textarea class="mdl-textfield__input" name="message" type="text" rows="3"></textarea>
+                        <label class="mdl-textfield__label" for="message">Your message</label>
+                    </div>
+                </p>
+                <button class="button mdl-button mdl-js-button mdl-button--raised" type="submit">Send It</button>
             </form>
         </div>
     </body>

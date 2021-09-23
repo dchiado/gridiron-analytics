@@ -6,23 +6,24 @@ from flaskr.globals import FIRST_SEASON, LEAGUE_ID
 from itertools import groupby
 
 
-async def load_data(year, uri, session, scoringPeriodId=None, headers=None):
+async def load_data(year, uri, session, week=None, headers=None):
     if year > 2019:
         url = (
           "http://fantasy.espn.com/apis/v3/games/ffl/seasons/" + str(year) +
           "/segments/0/leagues/" + str(LEAGUE_ID) +
           "?&view=" + uri +
-          ("&scoringPeriodId=" + str(scoringPeriodId) if scoringPeriodId is not None else '')
+          ("&scoringPeriodId=" + str(week) if week is not None else '')
         )
         resp = await session.request(method='GET', url=url, headers=headers)
         resp_json = await resp.json()
         return resp_json
     else:
         url = (
-          "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" + str(LEAGUE_ID) +
+          "https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/" +
+          str(LEAGUE_ID) +
           "?seasonId=" + str(year) +
           "&view=" + uri +
-          ("&scoringPeriodId=" + str(scoringPeriodId) if scoringPeriodId is not None else '')
+          ("&scoringPeriodId=" + str(week) if week is not None else '')
         )
         resp = await session.request(method='GET', url=url, headers=headers)
         resp_json = await resp.json()
@@ -168,11 +169,11 @@ def team_abbreviation(team):
     return abbreviations[team]
 
 
-def active_teams(mTeam):
-    active_teams = []
-    for team in mTeam["teams"]:
-        active_teams.append(team["id"])
-    return active_teams
+def active_teams(mteam):
+    teams = []
+    for team in mteam["teams"]:
+        teams.append(team["id"])
+    return teams
 
 
 def win_pct(win, loss):

@@ -85,6 +85,30 @@ async def lowest_weeks(start_year, end_year, playoffs):
     return best_and_worst_weeks(start_year, end_year, playoffs, False)
 
 
+def add_team_points(matchup, team_id):
+    if is_bye_week(matchup):
+        return 0
+
+    if matchup["away"]["teamId"] == team_id:
+        return matchup["away"]["totalPoints"]
+    elif matchup["home"]["teamId"] == team_id:
+        return matchup["home"]["totalPoints"]
+    else:
+        return 0
+
+
+def calculate_season_average(year, season, all_seasons, league_average):
+    team_average = season["average"]
+    pct_diff_from_league = (
+            (team_average - league_average) / league_average * 100
+    )
+    season["league_average"] = league_average
+    season["pct_diff"] = round(pct_diff_from_league, 2)
+
+    team_id = f'{year} {season["team_name"]}'
+    all_seasons[team_id] = season
+
+
 async def best_and_worst_seasons(start_year, end_year, count, best):
     async with aiohttp.ClientSession() as session:
         all_seasons_all_time = {}
@@ -114,14 +138,7 @@ async def best_and_worst_seasons(start_year, end_year, count, best):
                     if matchup["matchupPeriodId"] > weeks:
                         break
 
-                    if is_bye_week(matchup):
-                        continue
-
-                    if matchup["away"]["teamId"] == current_team_id:
-                        total_points += matchup["away"]["totalPoints"]
-
-                    if matchup["home"]["teamId"] == current_team_id:
-                        total_points += matchup["home"]["totalPoints"]
+                    total_points += add_team_points(matchup, current_team_id)
 
                 average_team_score = total_points / weeks
                 all_seasons_this_year.append({
@@ -137,15 +154,10 @@ async def best_and_worst_seasons(start_year, end_year, count, best):
             )
 
             for season in all_seasons_this_year:
-                team_average = season["average"]
-                pct_diff_from_league = (
-                    (team_average - league_average) / league_average * 100
-                )
-                season["league_average"] = league_average
-                season["pct_diff"] = round(pct_diff_from_league, 2)
-
-                id = f'{year} {season["team_name"]}'
-                all_seasons_all_time[id] = season
+                calculate_season_average(year,
+                                         season,
+                                         all_seasons_all_time,
+                                         league_average)
 
         sorted_top_seasons = collections.OrderedDict(
             sorted(

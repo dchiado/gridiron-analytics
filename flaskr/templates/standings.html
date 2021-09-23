@@ -1,30 +1,33 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
     <head>
+        <title>All-Time Standings Table</title>
         <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
     </head>
     <body>
+        <h4 class="table-header">All-Time Standings</h4>
         <div class="table-wrapper">
-            <table class="fl-table">
+            <table class="fl-table" aria-describedby="standings-table">
                 <thead>
                     <tr>
-                        <th class="sticky-col">Owner</th>
+                        <th class="sticky-col" scope="col">Owner</th>
                         {% for value in result["seasons"] %}
-                        <th>{{ value }}</th>
+                        <th scope="col">{{ value }}</th>
                         {% endfor %}
-                        <th>Wins</th>
-                        <th>Losses</th>
-                        <th>Ties</th>
-                        <th>Win Pct</th>
-                        <th>Points For</th>
-                        <th>Points Against</th>
+                        <th scope="col">Wins</th>
+                        <th scope="col">Losses</th>
+                        <th scope="col">Ties</th>
+                        <th scope="col">Win Pct</th>
+                        <th scope="col">Points For</th>
+                        <th scope="col">Points Against</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for key, value in result["teams"].items() %}
                     <tr>
-                        <th class="sticky-col"> {{ key }} </th>
+                        <th class="sticky-col" scope="col"> {{ key }} </th>
                         {% for season in result["seasons"] %}
                             <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
                         {% endfor %}

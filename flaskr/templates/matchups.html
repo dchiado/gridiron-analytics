@@ -1,25 +1,28 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
     <head>
+        <title>Matchups Table</title>
         <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
     </head>
     <body>
+        <h4 class="table-header">Matchups by Win Margin</h4>
         <div class="table-wrapper">
-            <table class="fl-table">
+            <table class="fl-table" aria-describedby="matchups-table">
                 <thead>
                     <tr>
-                        <th>Place</th>
-                        <th>Year</th>
-                        <th>Difference</th>
-                        <th>Winner</th>
-                        <th>Loser</th>
+                        <th scope="col">Place</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Difference</th>
+                        <th scope="col">Winner</th>
+                        <th scope="col">Loser</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for key, value in result.items() %}
                     <tr>
-                            <th> {{ key }} </th>
+                            <th scope="col"> {{ key }} </th>
                             <td> {{ value["year"] }} </td>
                             <td> {{ value["difference"] }} </td>
                             <td> {{ value["winner"] }} </td>

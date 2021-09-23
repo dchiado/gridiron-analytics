@@ -1,19 +1,22 @@
+<!DOCTYPE html>
 {%extends "layout.html"%}
 {% block content %}
-<html>
+<html lang="en">
     <head>
+        <title>Season Results Table</title>
         <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
     </head>
     <body>
+        <h4 class="table-header">Season Results</h4>
         <div class="table-wrapper">
-            <table class="fl-table">
+            <table class="fl-table" aria-describedby="seasons-table">
                 <thead>
                     <tr>
-                        <th>Year</th>
-                        <th>Team</th>
-                        <th>Average</th>
-                        <th>League Average</th>
-                        <th>Percent Diff</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Average</th>
+                        <th scope="col">League Average</th>
+                        <th scope="col">Percent Diff</th>
                     </tr>
                 </thead>
                 <tbody>
