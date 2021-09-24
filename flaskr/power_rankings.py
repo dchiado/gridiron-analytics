@@ -11,6 +11,7 @@ import aiohttp
 
 
 def calculate_pr_score(team_obj, week):
+    """Calculate power ranking score based on weights."""
     weights = {
         "wins": 3,
         "overall_wins": 1,
@@ -29,6 +30,7 @@ def calculate_pr_score(team_obj, week):
 
 
 def update_overall_wins(tm, all_week_pts):
+    """Calculate overall wins in the week and add to overall."""
     if 'overall_wins' not in tm:
         tm["overall_wins"] = 0
     for idx, s in enumerate(tm["scores"]):
@@ -37,6 +39,33 @@ def update_overall_wins(tm, all_week_pts):
 
 
 async def current():
+    """Calculate current power rankings.
+
+    The return object is actually an OrderedDict of the teams object
+    defined below. The "games" list has True for a win, False for a loss.
+
+    Returns:
+        teams (object) -- OrderedDict of power ranking details
+        {
+            11: {
+                "name": "Josh Allen",
+                "scores": [158.9, 150.16],
+                "games": [True, True],
+                "wins": 2,
+                "l5": 2,
+                "tot_pts": 309.06,
+                "consistency": 4.37,
+                "overall_wins": 20,
+                "wins_rank": 1,
+                "l5_rank": 1,
+                "tot_pts_rank": 1,
+                "consistency_rank": 5,
+                "overall_wins_rank": 1,
+                "power_ranking_score": 1.0
+            },
+            16: {...}
+        }
+    """
     async with aiohttp.ClientSession() as session:
         teams = {}
         year = await latest_season(session)

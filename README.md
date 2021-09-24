@@ -4,19 +4,19 @@ The app uses python scripts to retrieve and organize the data and is built on [f
 
 ## Prerequisites
 1. Python 3 is required, which can be obtained [here](https://www.python.org/downloads).
-1. Set up your virtual environment. If you name it something other than `env`, make sure to gitignore that dir.
+2. Set up your virtual environment. If you name it something other than `env`, make sure to gitignore that dir.
 ```
 python3 -m venv env
 ```
-1. Activate your virtual environment.
+3. Activate your virtual environment.
 ```
 source env/bin/activate
 ```
-1. Install all dependencies:
+4. Install all dependencies:
 ```
 pip install -r requirements.txt
 ```
-1. Export flask environment variables
+5. Export flask environment variables
 ```
 export FLASK_APP=flaskr
 export FLASK_ENV=development
@@ -55,3 +55,7 @@ that directory, such as `mDraftDetail`:
 For older seasons, the endpoint looks like this:
 
 `https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/{league_id}?seasonId={year}&view={endpoint}`
+
+## UI Components
+Material Design Lite is used for building frontend component. Components, examples, and other
+documentation can be found [here](https://getmdl.io/components/index.html). 

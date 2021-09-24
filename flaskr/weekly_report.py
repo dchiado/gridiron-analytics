@@ -15,6 +15,7 @@ from decimal import Decimal
 
 # team with the highest score that week
 def highest_score(matchups):
+    """Find team with highest score among all matchups."""
     high = {}
     for m in matchups:
         for t in ["home", "away"]:
@@ -29,6 +30,7 @@ def highest_score(matchups):
 
 # team with the lowest score that week
 def lowest_score(matchups):
+    """Find team with lowest score among all matchups."""
     low = {}
     for m in matchups:
         for t in ["home", "away"]:
@@ -43,6 +45,7 @@ def lowest_score(matchups):
 
 # closest matchup of the week
 def closest_win(matchups):
+    """Find team with closest win among all matchups."""
     closest = {}
     for m in matchups:
         diff = (Decimal(str(m["home"]["totalPoints"])) -
@@ -67,6 +70,7 @@ def closest_win(matchups):
 
 # biggest blowout of the week
 def biggest_win(matchups):
+    """Find team with biggest win among all matchups."""
     biggest = {}
     for m in matchups:
         diff = (Decimal(str(m["home"]["totalPoints"])) -
@@ -89,6 +93,7 @@ def biggest_win(matchups):
 
 # lowest scoring team that won
 def luckiest_win(matchups):
+    """Find team with lowest score but still won among all matchups."""
     all_scores = []
     luckiest = {}
     for m in matchups:
@@ -115,6 +120,7 @@ def luckiest_win(matchups):
 
 # highest scoring team that lost
 def unluckiest_loss(matchups):
+    """Find team with highest score but still lost among all matchups."""
     all_scores = []
     unluckiest = {}
     for m in matchups:
@@ -140,6 +146,23 @@ def unluckiest_loss(matchups):
 
 
 def generate_results(matchups):
+    """Assemble results list given all matchups.
+
+    Arguments:
+        matchups (object) -- multiple matches from mMatchupScore api
+
+    Returns:
+        results (list) -- list of summarized matchups
+        [
+            {
+                "winner": "Fantasy Football Team",
+                "w_score": 155.62,
+                "loser": "Gruden Says",
+                "l_score": 144.14
+            },
+            {...}
+        ]
+    """
     results = []
     for matchup in matchups:
         if matchup["winner"] == "HOME":
@@ -169,6 +192,24 @@ def generate_results(matchups):
 
 
 def generate_preview(matchups, teams):
+    """Assemble preview list given all next week matchups.
+
+    Arguments:
+        matchups (object) -- multiple matches from mMatchupScore api
+        teams (object) -- multiple teams from mTeams api
+
+    Returns:
+        preview (list) -- list of summarized matchups for next week
+        [
+            {
+                "home": "Fantasy Football Team",
+                "home_record": "0-2,
+                "away": "Gruden Says",
+                "away_record": "1-1"
+            },
+            {...}
+        ]
+    """
     preview = []
     for matchup in matchups:
         m = {}
@@ -190,11 +231,13 @@ def generate_preview(matchups, teams):
 
 
 def winning_bids(transactions):
+    """Get FAAB bids that won"""
     return [t for t in transactions if
             t["type"] == "WAIVER" and t["status"] == "EXECUTED"]
 
 
 def biggest_faab_bid(transactions, team_names, player_names):
+    """Get highest FAAB bid"""
     w_bids = winning_bids(transactions)
     bid = sorted(w_bids, key=lambda x: x["bidAmount"], reverse=True)[0]
     bid["teamName"] = team_names[bid["teamId"]]
@@ -206,6 +249,27 @@ def biggest_faab_bid(transactions, team_names, player_names):
 
 
 def best_worst_bids(transactions, team_names, player_names, overpay=False):
+    """Find best (most efficient) or worst (biggest overpay) FAAB bids.
+
+    The winning_bid and losing_bid objects in the response are objects from
+    the mTransactions2 api endpoint.
+
+    Arguments:
+        transactions (object) -- all transactions of the week
+        team_names (object) -- mapping of teamId to teamName
+        player_names (object) -- mapping of playerId to playerName
+        overpay (bool) -- return biggest overpay if True, else the best bid
+
+    Returns:
+        bid (object) -- list of summarized matchups for next week
+        {
+            "teamName": "Fantasy Football Team",
+            "playerName": "Shonn Greene",
+            "diff": 51,
+            "winning_bid": {...},
+            "losing_bid": {...}
+        }
+    """
     # check > if overpay=True, else check <
     if overpay:
         compare = operator.gt
@@ -243,6 +307,47 @@ def best_worst_bids(transactions, team_names, player_names, overpay=False):
 
 
 async def summary():
+    """Assemble summary of weekly report and next week preview.
+
+    Returns:
+        response (object) -- list of weekly recap, superlatives, and preview
+        {
+            "week": 2,
+            "next_week": 3,
+            "results": [
+                {
+                    "winner": "Gridiron Shotgunner",
+                    "w_score": 127.88,
+                    "loser": "Gordon and The Mighty Ducks",
+                    "l_score": 118.34
+                },
+                {...}
+            ],
+            "superlatives": {
+                "high": {
+                    "team": "IC Light",
+                    "score": 166.86
+                },
+                "low": {...},
+                "closest": {...},
+                "blowout": {...},
+                "luckiest": {...},
+                "unluckiest": {...},
+                "high_bid": {...},
+                "overpay_bid": {...},
+                "efficient_bid": {...}
+            },
+            "preview": [
+                {
+                    "home": ". Giggity",
+                    "home_record": "0-2",
+                    "away": "Gordon and The Mighty Ducks",
+                    "away_record": "1-1"
+                },
+                {...}
+            ]
+        }
+    """
     async with aiohttp.ClientSession() as session:
         year = await latest_season(session)
         team_names = await team_mapping(year, session)

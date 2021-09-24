@@ -12,6 +12,14 @@ from flaskr.globals import FIRST_SEASON
 
 
 def get_favorites(all_picks):
+    """Assemble top 3 draft picks for each owner.
+
+    Arguments:
+        all_picks (object) -- all draft picks to be considered
+
+    Returns:
+        teams_favorites (list) -- list of objects for each team and top 3 picks
+    """
     teams_favorites = []
 
     for team in all_picks.values():
@@ -36,6 +44,12 @@ def get_favorites(all_picks):
 
 
 async def top_drafted():
+    """Analyze all historical drafts and calculate favorite picks by owner.
+
+    Returns:
+        favorites (list) -- array of objects for each team and
+        their top 3 picks (assembled in get_favorites function)
+    """
     async with aiohttp.ClientSession() as session:
         all_picks = {}
         start_year = FIRST_SEASON

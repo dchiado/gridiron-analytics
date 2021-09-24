@@ -9,6 +9,23 @@ import aiohttp
 
 
 async def by_year(start_year, end_year, playoffs):
+    """Calculate number of blowouts (>50 pt wins) by year.
+
+    Arguments:
+        start_year (str or None) -- the first year to check
+        end_year (str or None) -- the last year to check
+        playoffs (bool) -- whether or not to include playoffs
+
+    Returns:
+        all_records (object) -- blowouts and avg score by year
+        {
+            2008: {
+                "blowout_count": 10,
+                "average_score": 85.62
+            },
+            2009: {...}
+        }
+    """
     async with aiohttp.ClientSession() as session:
         all_records = {}
         start_year = check_start_year(start_year)
@@ -53,4 +70,5 @@ async def by_year(start_year, end_year, playoffs):
                 "average_score": average_score
             }
 
+        print(all_records)
         return all_records

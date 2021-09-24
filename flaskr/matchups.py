@@ -12,6 +12,27 @@ from flaskr.utils import (
 
 
 async def results(start_year, end_year, playoffs, count, blowouts):
+    """Calculate the biggest or smallest wins in league history.
+
+    Arguments:
+        start_year (str or None) -- the first year to check
+        end_year (str or None) -- the last year to check
+        playoffs (bool) -- whether or not to include playoffs
+        count (int) -- how many records to include
+        blowouts (bool) -- if True, return biggest wins, else return smallest
+
+    Returns:
+        resp (object) -- blowouts and avg score by year
+        {
+            1: {
+                "year": 2018,
+                "difference": 112.46,
+                "winner": "Little Lebowski Urban Achievers",
+                "loser": 'Laces Out!'
+            },
+            2: {...}
+        }
+    """
     async with aiohttp.ClientSession() as session:
         all_matchups = {}
         start_year = check_start_year(start_year)
