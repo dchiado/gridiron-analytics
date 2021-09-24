@@ -4,14 +4,15 @@ import os
 from flask_scss import Scss
 from flask import Flask, render_template, request
 from flaskr import (
-    standings,
-    matchups,
-    scores,
     blowouts,
     favorite_players,
     head_to_head,
     league_info,
+    matchups,
     power_rankings,
+    rosters,
+    scores,
+    standings,
     weekly_report
     )
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -35,6 +36,12 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
+
+
+@app.route('/keepers')
+async def list_keepers():
+    resp = await rosters.keeper_options()
+    return render_template("keepers.html", result=resp)
 
 
 @app.route('/data-forms')

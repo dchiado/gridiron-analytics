@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{%extends "layout.html"%}
+{% block content %}
+<html lang="en">
+    <head>
+        <title>Potential Keeper Options</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='tables.css')}}">
+    </head>
+    <body>
+        <h4 class="table-header">Potential Keeper Options</h4><br><br>
+        {% for team in result %}
+        <h4 class="table-header">{{ team["team_name"] }}</h4>
+        <div class="table-wrapper">
+            <table class="fl-table" aria-describedby="standings-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Player</th>
+                        <th scope="col">Acquired</th>
+                        <th scope="col">Keeper Round</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in team["players"] %}
+                    <tr>
+                        <td> {{ player["name"] }} </td>
+                        <td> {{ player["acq_type"] }} </td>
+                        <td> {{ player["keeper_round"] }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </body>
+</html>
+{%endblock%}
