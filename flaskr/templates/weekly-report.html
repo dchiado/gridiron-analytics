@@ -36,17 +36,17 @@
             {% endfor %}
           </div>
           <p class="top-border">
-            <h4>&#x1F3C6; Mr. Big Shot - Highest Score</h4>
+            <h4>&#x1F3C6; Highest Score</h4>
             {{ report["superlatives"]["high"]["team"] ~ " with a cool " ~
             report["superlatives"]["high"]["score"] }}
           </p>
           <p class="top-border">
-            <h4>&#x1F4A9; Mr. Do More - Lowest Score</h4>
+            <h4>&#x1F4A9; Lowest Score</h4>
             {{ report["superlatives"]["low"]["team"] ~ " with a forgettable " ~
             report["superlatives"]["low"]["score"] }}
           </p>
           <p class="top-border">
-            <h4>&#x1F90F; Mr. Smarter not Harder - Closest Win</h4>
+            <h4>&#x1F90F; Closest Win</h4>
             {% if report["superlatives"]["closest"]["tie"] == True %}
               {{ report["superlatives"]["closest"]["winner"] ~ " tied " ~
               report["superlatives"]["closest"]["loser"] }}
@@ -57,38 +57,38 @@
             {% endif %}
           </p>
           <p class="top-border">
-            <h4>&#x1F512; Mr. Leave no Doubt - Biggest Win</h4>
+            <h4>&#x1F512; Biggest Win</h4>
             {{ report["superlatives"]["blowout"]["winner"] ~ " clobbered " ~
             report["superlatives"]["blowout"]["loser"] ~ " by " ~
             report["superlatives"]["blowout"]["difference"] }}
           </p>
           <p class="top-border">
-            <h4>&#x2618; Mr. Reilly O'Reilly - Luckiest Win</h4>
+            <h4>&#x2618; Luckiest Win</h4>
             {{ report["superlatives"]["luckiest"]["team"] ~ " got the win as the #" ~
             report["superlatives"]["luckiest"]["place"] ~ " highest scoring team with " ~
             report["superlatives"]["luckiest"]["score"] }}
           </p>
           <p class="top-border">
-            <h4>&#x1F612; Mr. Throw your Remote - Unluckiest Loss</h4>
+            <h4>&#x1F612; Unluckiest Loss</h4>
             {{ report["superlatives"]["unluckiest"]["team"] ~ " took an L as the #" ~
             report["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
             report["superlatives"]["unluckiest"]["score"] }}
           </p>
           <p class="top-border">
-            <h4>&#x1F4B0; Mr. Moneybags - Highest Bid</h4>
+            <h4>&#x1F4B0; Highest Bid</h4>
             {{ report["superlatives"]["high_bid"]["teamName"] ~ " paid $" ~
             report["superlatives"]["high_bid"]["bidAmount"] ~ " for " ~
             report["superlatives"]["high_bid"]["playerName"] }}
           </p>
           <p class="top-border">
-            <h4>&#x1F4B8; Mr. Get Your Guy - Biggest Overpay</h4>
+            <h4>&#x1F4B8; Biggest Overpay</h4>
             {{ report["superlatives"]["overpay_bid"]["teamName"] ~ " paid $" ~
             report["superlatives"]["overpay_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
             report["superlatives"]["overpay_bid"]["playerName"] ~ ", $" ~
             report["superlatives"]["overpay_bid"]["diff"] ~ " more than the next highest bid" }}
           </p>
           <p class="top-border">
-            <h4>&#x1F60E; Mr. Steal Your Free Agent - Most Efficient Bid</h4>
+            <h4>&#x1F60E; Most Efficient Bid</h4>
             {{ report["superlatives"]["efficient_bid"]["teamName"] ~ " paid $" ~
             report["superlatives"]["efficient_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
             report["superlatives"]["efficient_bid"]["playerName"] ~ ", just $" ~
