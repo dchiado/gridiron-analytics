@@ -12,6 +12,27 @@ from flaskr.utils import (
 
 
 async def best_and_worst_weeks(start_year, end_year, playoffs, count, highest):
+    """Calculate best and worst weeks in league history.
+
+    Arguments:
+        start_year (str or None) -- the first year to check
+        end_year (str or None) -- the last year to check
+        playoffs (bool) -- whether or not to include playoffs
+        count (int) -- how many records to include
+        highest (bool) -- if True, return highest scores, else return lowest
+
+    Returns:
+        resp (object) -- OrderedDict of highest or lowest scores
+        {
+            1: {
+                "year": 2020,
+                "week": 4,
+                "team_name": "Fantasy Football Team",
+                "score": 210.08
+            },
+            2: {...}
+        }
+    """
     async with aiohttp.ClientSession() as session:
         all_scores = {}
         start_year = check_start_year(start_year)
@@ -78,14 +99,17 @@ async def best_and_worst_weeks(start_year, end_year, playoffs, count, highest):
 
 
 async def highest_weeks(start_year, end_year, playoffs):
+    """Call best_and_worst_weeks with highest=True"""
     return best_and_worst_weeks(start_year, end_year, playoffs, True)
 
 
 async def lowest_weeks(start_year, end_year, playoffs):
+    """Call best_and_worst_weeks with highest=False"""
     return best_and_worst_weeks(start_year, end_year, playoffs, False)
 
 
-def add_team_points(matchup, team_id):
+def team_points(matchup, team_id):
+    """Find points scored by the correct team_id"""
     if is_bye_week(matchup):
         return 0
 
@@ -98,6 +122,7 @@ def add_team_points(matchup, team_id):
 
 
 def calculate_season_average(year, season, all_seasons, league_average):
+    """Calculate season scoring average and difference with team"""
     team_average = season["average"]
     pct_diff_from_league = (
             (team_average - league_average) / league_average * 100
@@ -110,6 +135,27 @@ def calculate_season_average(year, season, all_seasons, league_average):
 
 
 async def best_and_worst_seasons(start_year, end_year, count, best):
+    """Calculate best and worst seasons based on % diff from league average.
+
+    Arguments:
+        start_year (str or None) -- the first year to check
+        end_year (str or None) -- the last year to check
+        count (int) -- how many records to include
+        best (bool) -- if True, return best seasons, else return worst
+
+    Returns:
+        resp (object) -- OrderedDict of best or worst seasons
+        {
+            1: {
+                "year": 2011,
+                "team_name": "Fantasy Football Team",
+                "average": 97.92,
+                "league_average": 76.42,
+                "pct_diff": 28.13
+            },
+            2: {...}
+        }
+    """
     async with aiohttp.ClientSession() as session:
         all_seasons_all_time = {}
 
@@ -138,7 +184,7 @@ async def best_and_worst_seasons(start_year, end_year, count, best):
                     if matchup["matchupPeriodId"] > weeks:
                         break
 
-                    total_points += add_team_points(matchup, current_team_id)
+                    total_points += team_points(matchup, current_team_id)
 
                 average_team_score = total_points / weeks
                 all_seasons_this_year.append({

@@ -3,6 +3,7 @@ from flaskr.utils import load_data, latest_season
 
 
 async def summary():
+    """Assemble basic league information."""
     async with aiohttp.ClientSession() as session:
         year = await latest_season(session)
 

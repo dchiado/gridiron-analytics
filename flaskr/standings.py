@@ -4,6 +4,38 @@ from flaskr.globals import FIRST_SEASON
 
 
 async def list():
+    """Calculate league standings by year and overall for all years.
+
+    Returns:
+        all_records (object) -- blowouts and avg score by year
+        {
+            "seasons": [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
+                        2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
+            "teams": {
+                "Joe Blow": {
+                    "seasons": {
+                        2005: {
+                            "record": "8-7-0",
+                            "reg_season_champ": False,
+                            "playoff_champ": False,
+                            "toilet_bowl": False
+                        },
+                        2006: {...}
+                    },
+                    "total": {
+                        "wins": 113,
+                        "losses": 108,
+                        "ties": 1,
+                        "winPct":
+                        "51.13%",
+                        "pointsFor": 22156,
+                        "pointsAgainst": 21522
+                    }
+                },
+                "Pat Davidson": {...}
+            }
+        }
+    """
     async with aiohttp.ClientSession() as session:
         all_records = {
             "seasons": [],

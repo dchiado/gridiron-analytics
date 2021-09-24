@@ -108,7 +108,6 @@ async def h2h_form():
 
 @app.route('/head-to-head', methods=['POST', 'GET'])
 async def h2h_results():
-    error = None
     team1 = request.form['team1']
     team2 = request.form['team2']
     if team1 == '0' or team2 == '0' or team1 == team2:
@@ -126,7 +125,7 @@ async def show_report():
     return render_template('weekly-report.html', report=report, prs=pr)
 
 
-@app.route('/yearly-blowouts', methods=['POST'])
+@app.route('/yearly-blowouts', methods=['POST', 'GET'])
 async def list_blowouts():
     start_year = request.form['startyear'] or None
     end_year = request.form['endyear'] or None

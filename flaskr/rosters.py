@@ -3,6 +3,29 @@ from flaskr.utils import latest_season, load_data
 
 
 async def keeper_options():
+    """Assemble keeper options for each team based on keeper rules.
+
+    Keepers must be acquired before the trade deadline and can be kept two
+    rounds higher than their draft round. This is a Gridiron specific rule
+    and wouldn't apply for other leagues.
+
+    Returns:
+        all_rosters (list) -- all teams and possible keepers with round
+        [
+            {
+                "team_name": "Fantasy Football Team",
+                "players": [
+                    {
+                        "name": "Jonathan Taylor",
+                        "acq_type": "DRAFT",
+                        "keeper_round": 1
+                    },
+                    {...}
+                ]
+            },
+            {...}
+        ]
+    """
     async with aiohttp.ClientSession() as session:
         year = await latest_season(session)
         next_year_rounds = 16

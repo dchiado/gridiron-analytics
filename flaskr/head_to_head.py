@@ -16,6 +16,18 @@ from decimal import Decimal
 
 
 async def options():
+    """Get current team name and owner ID for all active teams.
+
+    Returns:
+        team_options (list) -- team name and owner ID for active teams
+        [
+            {
+                "name": "Fantasy Football Team",
+                "owner_id": "{ABCDEF-123456-ZYXWVUT}"
+            },
+            {...},
+        ]
+    """
     async with aiohttp.ClientSession() as session:
         year = await latest_season(session)
         teams_res = await load_data(year, 'mNav', session)
@@ -30,6 +42,19 @@ async def options():
 
 
 def add_scores(matchup, data, away_oid, home_oid, away_pts, home_pts, winners):
+    """Check the details of a matchup and add scores to data object.
+
+    This is a helper for the all_time function.
+
+    Arguments:
+        matchup (object) -- the matchup object from mMatchupScore api
+        data (object) -- the full data object from all_time function
+        away_oid (str) -- the owner ID of the away team
+        home_oid (str) -- the owner ID of the home team
+        away_pts (float) -- points scored by away team
+        home_pts (float) -- points scored by home team
+        winners (list) -- array of winning teams for each matchup
+    """
     if matchup["playoffTierType"] == "NONE":
         data[away_oid]["reg_points"] += away_pts
         data[home_oid]["reg_points"] += home_pts
@@ -57,15 +82,55 @@ def add_scores(matchup, data, away_oid, home_oid, away_pts, home_pts, winners):
 
 
 async def all_time(owner_id_1, owner_id_2):
-    # Need to use owner id because some ids stayed
-    # the same through multiple owners
+    """Calculate head to head stats all-time between two owners.
 
+    This includes reg season wins, reg season points, ties, playoff wins,
+    playoff points, longest streak, and current streak
+
+    Need to use owner id for this function because some ids stayed the
+    same through multiple owners over the years
+
+    Arguments:
+        owner_id_1 (str) -- the ID of the first owner
+        owner_id_2 (str) -- the ID of the second owner
+
+    Returns:
+        all_records (list) -- blowouts and avg score by year
+        [
+            {
+                "owner_id": "{ABCDEF-123456-GHIJKL}",
+                "name": "Fantasy Football Team",
+                "logo": "https://www.imgur.com/abcdef",
+                "reg_wins": 12,
+                "reg_ties": 0,
+                "reg_points": 1200.24,
+                "playoff_wins": 0,
+                "playoff_points": 86.24,
+            },
+            {
+                "owner_id": "{MNOPQR-789101-STUVWX}",
+                "name": "Gruden Says",
+                "logo": "https://www.espn.com/abcdef",
+                "reg_wins": 9,
+                "reg_ties": 0,
+                "reg_points": 1096.54,
+                "playoff_wins": 1,
+                "playoff_points": 102.80,
+            },
+            {
+                "team": "{MNOPQR-789101-STUVWX}",
+                "length": 3
+            },
+            {
+                "team": "{MNOPQR-789101-STUVWX}",
+                "length": 1
+            }
+        ]
+    """
     async with aiohttp.ClientSession() as session:
         data = {
             owner_id_1: {
                 "owner_id": owner_id_1,
-                "name": "",
-                "logo": "",
                 "reg_wins": 0,
                 "reg_ties": 0,
                 "reg_points": Decimal(0.00),
@@ -74,21 +139,11 @@ async def all_time(owner_id_1, owner_id_2):
             },
             owner_id_2: {
                 "owner_id": owner_id_2,
-                "name": "",
-                "logo": "",
                 "reg_wins": 0,
                 "reg_ties": 0,
                 "reg_points": Decimal(0.00),
                 "playoff_wins": 0,
                 "playoff_points": Decimal(0.00),
-            },
-            "current_streak": {
-                "owner_id": 0,
-                "length": 0
-            },
-            "longest_streak": {
-                "owner_id": 0,
-                "length": 0
             },
         }
 
@@ -164,8 +219,31 @@ async def all_time(owner_id_1, owner_id_2):
 
 
 async def record(owner_id_1, owner_id_2, session):
-    # Need to use owner id because some ids stayed
-    # the same through multiple owners
+    """Calculate head to head record all-time between two owners.
+
+    This function should be called from within an existing aiohttp session
+
+    Need to use owner id for this function because some ids stayed the
+    same through multiple owners over the years
+
+    Arguments:
+        owner_id_1 (str) -- the ID of the first owner
+        owner_id_2 (str) -- the ID of the second owner
+        session (ClientSession()) -- the aiohttp session for async invocation
+
+    Returns:
+        all_records (array) -- blowouts and avg score by year
+        [
+            {
+                "owner_id": "{ABCDEF-123456-GHIJKL}",
+                "wins": 5
+            },
+            {
+                "owner_id": "{MNOPQR-789101-STUVWX}",
+                "wins": 4
+            }
+        ]
+    """
     data = {
         owner_id_1: {
             "owner_id": owner_id_1,
