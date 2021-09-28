@@ -84,8 +84,12 @@
             <h4>&#x1F4B8; Biggest Overpay</h4>
             {{ report["superlatives"]["overpay_bid"]["teamName"] ~ " paid $" ~
             report["superlatives"]["overpay_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
-            report["superlatives"]["overpay_bid"]["playerName"] ~ ", $" ~
-            report["superlatives"]["overpay_bid"]["diff"] ~ " more than the next highest bid" }}
+            report["superlatives"]["overpay_bid"]["playerName"] ~ ", "}}
+            {% if report["superlatives"]["overpay_bid"]["losing_bid"]["teamId"] == None %}
+              nobody else bid on him
+            {% else %}
+              "$" ~ report["superlatives"]["overpay_bid"]["diff"] ~ " more than the next highest bid" }}
+            {% endif %}
           </p>
           <p class="top-border">
             <h4>&#x1F60E; Most Efficient Bid</h4>

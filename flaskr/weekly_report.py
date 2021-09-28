@@ -289,13 +289,16 @@ def best_worst_bids(transactions, team_names, player_names, overpay=False):
             next_highest = sorted(
                 l_bids, key=lambda x: x["bidAmount"], reverse=True
             )[0]
-            diff = w["bidAmount"] - next_highest["bidAmount"]
-            if 'diff' not in bid or compare(diff, bid["diff"]):
-                bid = {
-                    "diff": diff,
-                    "winning_bid": w,
-                    "losing_bid": next_highest
-                }
+        else:
+            next_highest = {"bidAmount": 0, "teamId": None}
+
+        diff = w["bidAmount"] - next_highest["bidAmount"]
+        if 'diff' not in bid or compare(diff, bid["diff"]):
+            bid = {
+                "diff": diff,
+                "winning_bid": w,
+                "losing_bid": next_highest
+            }
 
     bid["teamName"] = team_names[bid["winning_bid"]["teamId"]]
     bid["playerName"] = next(
