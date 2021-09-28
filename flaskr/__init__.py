@@ -9,7 +9,6 @@ from flaskr import (
     head_to_head,
     league_info,
     matchups,
-    power_rankings,
     rosters,
     scores,
     standings,
@@ -121,8 +120,7 @@ async def h2h_results():
 @app.route('/weekly-report', methods=['POST', 'GET'])
 async def show_report():
     report = await weekly_report.summary()
-    pr = await power_rankings.current()
-    return render_template('weekly-report.html', report=report, prs=pr)
+    return render_template('weekly-report.html', report=report)
 
 
 @app.route('/yearly-blowouts', methods=['POST', 'GET'])

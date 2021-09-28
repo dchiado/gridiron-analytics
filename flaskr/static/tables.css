@@ -141,17 +141,21 @@
                                                             .results-row {
                                                               display: flex;
                                                               flex-direction: row;
-                                                              justify-content: center; }
+                                                              justify-content: center;
+                                                              padding-bottom: 10px; }
 
                                                               .results-row > div {
                                                                 width: 60px;
                                                                 margin: 10px; }
 
-                                                                .results-row > div:last-child {
+                                                                .results-row .team-name {
                                                                   width: 240px; }
 
-                                                                  .results-row > div:first-child {
-                                                                    width: 240px; }
+                                                                  .results-row .game-of-week {
+                                                                    width: 240px;
+                                                                    font-weight: 600;
+                                                                    font-size: 16px;
+                                                                    font-style: italic; }
 
                                                                     .right-align {
                                                                       text-align: right; }

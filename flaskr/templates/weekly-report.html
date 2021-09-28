@@ -27,11 +27,13 @@
           <div class="results-table">
             {% for matchup in report["results"] %}
               <div class="results-row">
-                <div class="right-align">{{ matchup["winner"] }}</div>
+                <img src="{{ matchup['w_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 1">
+                <div class="right-align team-name">{{ matchup["winner"] }}</div>
                 <div class="right-align">{{ matchup["w_score"] }}</div>
                 <div class="center-align">DEF</div>
                 <div class="left-align">{{ matchup["l_score"] }}</div>
-                <div class="left-align">{{ matchup["loser"] }}</div>
+                <div class="left-align team-name">{{ matchup["loser"] }}</div>
+                <img src="{{ matchup['l_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 2">
               </div>
             {% endfor %}
           </div>
@@ -105,9 +107,17 @@
           <div class="results-table">
             {% for matchup in report["preview"] %}
               <div class="results-row">
-                <div class="right-align">{{ matchup["home"] + " (" + matchup["home_record"] + ")"}}</div>
+                {% if matchup["game_of_week"] %}
+                  <div class="left-align game-of-week">GAME OF THE WEEK</div>
+                {% endif %}
+                <img src="{{ matchup['home_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 1">
+                <div class="right-align team-name">{{ matchup["home"] + " (" + matchup["home_record"] + ")"}}</div>
                 <div class="center-align">vs.</div>
-                <div class="left-align">{{ matchup["away"] + " (" + matchup["away_record"] + ")" }}</div>
+                <div class="left-align team-name">{{ matchup["away"] + " (" + matchup["away_record"] + ")" }}</div>
+                <img src="{{ matchup['away_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 2">
+                {% if matchup["game_of_week"] %}
+                  <div class="right-align game-of-week">GAME OF THE WEEK</div>
+                {% endif %}
               </div>
             {% endfor %}
           </div>
@@ -132,7 +142,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for val in prs.values() %}
+                {% for val in report["power_rankings"].values() %}
                 <tr>
                   <th class="sticky-col" scope="col"> {{ val["name"] }} </th>
                   <td> {{ val["power_ranking_score"] }} </td>

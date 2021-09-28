@@ -1,6 +1,7 @@
 import aiohttp
 import operator
 from flaskr.utils import (
+    fantasy_team_logo,
     is_bye_week,
     latest_season,
     load_data,
@@ -9,7 +10,7 @@ from flaskr.utils import (
     player_info,
     team_mapping
 )
-# from flaskr import head_to_head
+from flaskr import power_rankings
 from decimal import Decimal
 
 
@@ -145,7 +146,7 @@ def unluckiest_loss(matchups):
     return unluckiest
 
 
-def generate_results(matchups):
+def generate_results(matchups, teams):
     """Assemble results list given all matchups.
 
     Arguments:
@@ -169,34 +170,40 @@ def generate_results(matchups):
             results.append({
                 "winner": matchup["home"]["teamName"],
                 "w_score": Decimal(str(matchup["home"]["totalPoints"])),
+                "w_logo": fantasy_team_logo(matchup["home"]["teamId"], teams),
                 "loser": matchup["away"]["teamName"],
-                "l_score": Decimal(str(matchup["away"]["totalPoints"]))
-                # TODO include team logo in results object
+                "l_score": Decimal(str(matchup["away"]["totalPoints"])),
+                "l_logo": fantasy_team_logo(matchup["away"]["teamId"], teams)
             })
         elif matchup["winner"] == "AWAY":
             results.append({
                 "winner": matchup["away"]["teamName"],
                 "w_score": Decimal(str(matchup["away"]["totalPoints"])),
+                "w_logo": fantasy_team_logo(matchup["away"]["teamId"], teams),
                 "loser": matchup["home"]["teamName"],
-                "l_score": Decimal(str(matchup["home"]["totalPoints"]))
+                "l_score": Decimal(str(matchup["home"]["totalPoints"])),
+                "l_logo": fantasy_team_logo(matchup["home"]["teamId"], teams)
             })
         elif matchup["away"]["totalPoints"] == matchup["home"]["totalPoints"]:
             results.append({
                 "tie": True,
                 "winner": matchup["home"]["teamName"],
                 "w_score": Decimal(str(matchup["home"]["totalPoints"])),
+                "w_logo": fantasy_team_logo(matchup["home"]["teamId"], teams),
                 "loser": matchup["away"]["teamName"],
-                "l_score": Decimal(str(matchup["away"]["totalPoints"]))
+                "l_score": Decimal(str(matchup["away"]["totalPoints"])),
+                "l_logo": fantasy_team_logo(matchup["away"]["teamId"], teams)
             })
     return results
 
 
-def generate_preview(matchups, teams):
+def generate_preview(matchups, teams, prs):
     """Assemble preview list given all next week matchups.
 
     Arguments:
         matchups (object) -- multiple matches from mMatchupScore api
         teams (object) -- multiple teams from mTeams api
+        prs (object) -- current power rankings object
 
     Returns:
         preview (list) -- list of summarized matchups for next week
@@ -215,17 +222,27 @@ def generate_preview(matchups, teams):
         m = {}
         ids = []
         for t in ["home", "away"]:
-            team = next(tm for tm in teams if tm["id"] == matchup[t]["teamId"])
+            team = next(
+                tm for tm in teams["teams"] if tm["id"] == matchup[t]["teamId"]
+            )
             rec = team["record"]["overall"]
             record = str(rec["wins"]) + '-' + str(rec["losses"])
             m[t] = matchup[t]["teamName"]
+            m[t + "_logo"] = fantasy_team_logo(matchup[t]["teamId"], teams)
             m[t + "_record"] = record
+            m[t + "_pr"] = list(prs).index(matchup[t]["teamId"]) + 1
+            m["game_of_week"] = None
             ids.append(team["owners"][0])
 
         # this would include h2h record but until i get async calls
         # working it just takes to long to load the report page
         # rec = head_to_head.record(ids[0], ids[1])
         preview.append(m)
+
+    # matchup with lowest total PRs is game of week
+    sorted(
+        preview, key=lambda x: x["home_pr"] + x["away_pr"]
+    )[0]["game_of_week"] = True
 
     return preview
 
@@ -348,7 +365,8 @@ async def summary():
                     "away_record": "1-1"
                 },
                 {...}
-            ]
+            ],
+            "power_rankings": {...}
         }
     """
     async with aiohttp.ClientSession() as session:
@@ -356,7 +374,6 @@ async def summary():
         team_names = await team_mapping(year, session)
         player_names = await player_info(year, session)
         details = await load_data(year, 'mTeam', session)
-        teams = details["teams"]
 
         all_matchups = await load_matchups(year, session)
         for matchup in all_matchups:
@@ -378,7 +395,7 @@ async def summary():
                 m for m in all_matchups if m["matchupPeriodId"] == week
                 ]
 
-            results = generate_results(week_matchups)
+            results = generate_results(week_matchups, details)
 
             high_score = highest_score(week_matchups)
             low_score = lowest_score(week_matchups)
@@ -415,10 +432,13 @@ async def summary():
                 "efficient_bid": efficient_bid
             }
 
+        prs = await power_rankings.current()
+        response["power_rankings"] = prs
+
         next_week_matchups = [
             m for m in all_matchups if m["matchupPeriodId"] == week + 1
-            ]
-        preview = generate_preview(next_week_matchups, teams)
+        ]
+        preview = generate_preview(next_week_matchups, details, prs)
         response["preview"] = preview
 
         return response

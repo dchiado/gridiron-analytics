@@ -175,6 +175,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding-bottom: 10px;
 }
 
 .results-row > div {
@@ -182,12 +183,15 @@
   margin: 10px;
 }
 
-.results-row > div:last-child {
+.results-row .team-name {
   width: 240px;
 }
 
-.results-row > div:first-child {
+.results-row .game-of-week {
   width: 240px;
+  font-weight: 600;
+  font-size: 16px;
+  font-style: italic;
 }
 
 .right-align {
