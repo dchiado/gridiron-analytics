@@ -145,6 +145,8 @@ async def all_time(owner_id_1, owner_id_2):
                 "playoff_wins": 0,
                 "playoff_points": Decimal(0.00),
             },
+            "current_streak": {},
+            "longest_streak": {}
         }
 
         end_year = await latest_season(session)

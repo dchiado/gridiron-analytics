@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {%extends "layout.html"%}
+{% import 'tables.html' as tables %}
 {% block content %}
 <html lang="en">
   <head>
@@ -162,42 +163,17 @@
           </div>
           <br><br>
           <h4>Legend</h4>
-          <table class="simple-table" aria-describedby="pr-legend">
-              <thead>
-                <tr>
-                  <th scope="col">Stat</th>
-                  <th scope="col">Weight Value</th>
-                  <th scope="col">What it Means</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Wins</td>
-                  <td>3</td>
-                  <td>Wins on the season</td>
-                </tr>
-                <tr>
-                  <td>Overall Wins</td>
-                  <td>1</td>
-                  <td>Wins if everyone played everyone each week</td>
-                </tr>
-                <tr>
-                  <td>Last 5 Wins</td>
-                  <td>1 (starting week 8)</td>
-                  <td>Wins in the last 5 weeks</td>
-                </tr>
-                <tr>
-                  <td>Points</td>
-                  <td>2</td>
-                  <td>Total points scored</td>
-                </tr>
-                <tr>
-                  <td>Consistency</td>
-                  <td>1 (starting week 3)</td>
-                  <td>Standard deviation of scores on the year</td>
-                </tr>
-              </tbody>
-            </table>
+          {{ tables.simple(
+                headers=['Stats', 'Weight Value', 'What it Means'],
+                rows=[
+                  ['Wins', '3', 'Wins on the season'],
+                  ['Overall Wins', '1', 'Wins if everyone played everyone each week'],
+                  ['Last 5 Wins', '1 (starting week 8)', 'Wins in the last 5 weeks'],
+                  ['Points', '2', 'Total points scored'],
+                  ['Consistency', '1 (starting week 3)', 'Standard deviation of scores on the year']
+                ]
+              )
+          }}
           </div>
         </div>
       </div>
