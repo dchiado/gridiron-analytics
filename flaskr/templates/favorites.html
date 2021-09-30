@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%extends "layout.html"%}
+{% extends 'layout.html' %}
 {% block content %}
 <html lang="en">
     <head>
@@ -10,57 +10,60 @@
         <div class="draft-container">
             {% for team in result %}
                 {% if team["favorite_picks"][1]["picked"] > 1 %}
-                <div class="team">
-                    <div class="row owner">
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title mdl-card--expand card-content">
-                                <img src="{{ team['logo'] }}" width="120" referrerpolicy="no-referrer" alt="team logo">
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                {{ team["team_name"] }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pick">
-                        {% if team["favorite_picks"][1]["picked"] > 1 %}
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title mdl-card--expand card-content">
-                                <img src="{{ team['favorite_picks'][1]['image'] }}" width="160" alt="player image 1">
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                {{ team["favorite_picks"][1]["player_name"] }} ({{ team["favorite_picks"][1]["picked"] }})
+                    <div class="team">
+                        <div class="row owner">
+                            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                <div class="mdl-card__title mdl-card--expand card-content">
+                                    <img src="{{ team['logo'] }}" width="120" referrerpolicy="no-referrer" alt="team logo">
+                                </div>
+                                <div class="mdl-card__supporting-text">
+                                    {{ team["team_name"] }}
+                                </div>
                             </div>
                         </div>
-                        {% endif %}
-                    </div>
-                    <div class="row pick">
-                        {% if team["favorite_picks"][2]["picked"] > 1 %}
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title mdl-card--expand card-content">
-                                <img src="{{ team['favorite_picks'][2]['image'] }}" width="160" alt="player image 2">
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                {{ team["favorite_picks"][2]["player_name"] }} ({{ team["favorite_picks"][2]["picked"] }})
-                            </div>
+                        <div class="row pick">
+                            {% set first = team["favorite_picks"][1] %}
+                            {% if first["picked"] > 1 %}
+                                <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                    <div class="mdl-card__title mdl-card--expand card-content">
+                                        <img src="{{ team['favorite_picks'][1]['image'] }}" width="160" alt="player image 1">
+                                    </div>
+                                    <div class="mdl-card__supporting-text">
+                                        {{ first["player_name"] }} ({{ first["picked"] }})
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
-                    </div>
-                    <div class="row pick">
-                        {% if team["favorite_picks"][3]["picked"] > 1 %}
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            <div class="mdl-card__title mdl-card--expand card-content">
-                                <img src="{{ team['favorite_picks'][3]['image'] }}" width="160" alt="player image 3">
-                            </div>
-                            <div class="mdl-card__supporting-text">
-                                {{ team["favorite_picks"][3]["player_name"] }} ({{ team["favorite_picks"][3]["picked"] }})
-                            </div>
+                        <div class="row pick">
+                            {% set second = team["favorite_picks"][2] %}
+                            {% if second["picked"] > 1 %}
+                                <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                    <div class="mdl-card__title mdl-card--expand card-content">
+                                        <img src="{{ team['favorite_picks'][2]['image'] }}" width="160" alt="player image 2">
+                                    </div>
+                                    <div class="mdl-card__supporting-text">
+                                        {{ second["player_name"] }} ({{ second["picked"] }})
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
+                        <div class="row pick">
+                            {% set third = team["favorite_picks"][3] %}
+                            {% if third["picked"] > 1 %}
+                                <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                    <div class="mdl-card__title mdl-card--expand card-content">
+                                        <img src="{{ team['favorite_picks'][3]['image'] }}" width="160" alt="player image 3">
+                                    </div>
+                                    <div class="mdl-card__supporting-text">
+                                        {{ third["player_name"] }} ({{ third["picked"] }})
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             {% endfor %}
         </div>
     </body>
 </html>    
-{%endblock%}
+{% endblock %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%extends "layout.html"%}
+{% extends 'layout.html' %}
 {% import 'tables.html' as tables %}
 {% block content %}
 <html lang="en">
@@ -11,96 +11,92 @@
   <div class="container">
     <div class="report-container">
       <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+        {% set week = report["week"] %}
         <div class="mdl-tabs__tab-bar">
-          <a href="#recap" class="mdl-tabs__tab is-active">{{ "Week " ~ report["week"] ~ " Recap" }}</a>
+          <a href="#recap" class="mdl-tabs__tab is-active">{{ "Week " ~ week ~ " Recap" }}</a>
           <a href="#preview" class="mdl-tabs__tab">{{ "Week " ~ report["next_week"] ~ " Preview" }}</a>
           <a href="#power-rankings" class="mdl-tabs__tab">Power Rankings</a>
         </div>
         <div class="mdl-tabs__panel is-active" id="recap">
           {% if "error" in report["results"] %}
-          <p>
-            <br>
-            No matchups yet - come back when the week is over
-          </p>
+            <p>
+              <br>
+              No matchups yet - come back when the week is over
+            </p>
           {%endif%}
           {% if "error" not in report["results"] %}
-          <h4>Results</h4>
-          <div class="results-table">
-            {% for matchup in report["results"] %}
-              <div class="results-row">
-                <img src="{{ matchup['w_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 1">
-                <div class="right-align team-name">{{ matchup["winner"] }}</div>
-                <div class="right-align">{{ matchup["w_score"] }}</div>
-                <div class="center-align">DEF</div>
-                <div class="left-align">{{ matchup["l_score"] }}</div>
-                <div class="left-align team-name">{{ matchup["loser"] }}</div>
-                <img src="{{ matchup['l_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 2">
-              </div>
-            {% endfor %}
-          </div>
-          <p class="top-border">
-            <h4>&#x1F3C6; Highest Score</h4>
-            {{ report["superlatives"]["high"]["team"] ~ " with a cool " ~
-            report["superlatives"]["high"]["score"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F4A9; Lowest Score</h4>
-            {{ report["superlatives"]["low"]["team"] ~ " with a forgettable " ~
-            report["superlatives"]["low"]["score"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F90F; Closest Win</h4>
-            {% if report["superlatives"]["closest"]["tie"] == True %}
-              {{ report["superlatives"]["closest"]["winner"] ~ " tied " ~
-              report["superlatives"]["closest"]["loser"] }}
-            {% else %}
-              {{ report["superlatives"]["closest"]["winner"] ~ " eeked it out over " ~
-              report["superlatives"]["closest"]["loser"] ~ " by " ~
-              report["superlatives"]["closest"]["difference"] }}
-            {% endif %}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F512; Biggest Win</h4>
-            {{ report["superlatives"]["blowout"]["winner"] ~ " clobbered " ~
-            report["superlatives"]["blowout"]["loser"] ~ " by " ~
-            report["superlatives"]["blowout"]["difference"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x2618; Luckiest Win</h4>
-            {{ report["superlatives"]["luckiest"]["team"] ~ " got the win as the #" ~
-            report["superlatives"]["luckiest"]["place"] ~ " highest scoring team with " ~
-            report["superlatives"]["luckiest"]["score"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F612; Unluckiest Loss</h4>
-            {{ report["superlatives"]["unluckiest"]["team"] ~ " took an L as the #" ~
-            report["superlatives"]["unluckiest"]["place"] ~ " highest scoring team with " ~
-            report["superlatives"]["unluckiest"]["score"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F4B0; Highest Bid</h4>
-            {{ report["superlatives"]["high_bid"]["teamName"] ~ " paid $" ~
-            report["superlatives"]["high_bid"]["bidAmount"] ~ " for " ~
-            report["superlatives"]["high_bid"]["playerName"] }}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F4B8; Biggest Overpay</h4>
-            {{ report["superlatives"]["overpay_bid"]["teamName"] ~ " paid $" ~
-            report["superlatives"]["overpay_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
-            report["superlatives"]["overpay_bid"]["playerName"] ~ ", "}}
-            {% if report["superlatives"]["overpay_bid"]["losing_bid"]["teamId"] == None %}
-              nobody else bid on him
-            {% else %}
-              "$" ~ report["superlatives"]["overpay_bid"]["diff"] ~ " more than the next highest bid" }}
-            {% endif %}
-          </p>
-          <p class="top-border">
-            <h4>&#x1F60E; Most Efficient Bid</h4>
-            {{ report["superlatives"]["efficient_bid"]["teamName"] ~ " paid $" ~
-            report["superlatives"]["efficient_bid"]["winning_bid"]["bidAmount"] ~ " for " ~
-            report["superlatives"]["efficient_bid"]["playerName"] ~ ", just $" ~
-            report["superlatives"]["efficient_bid"]["diff"] ~ " more than the next highest bid" }}
-          </p>
+            <h4>Results</h4>
+            <div class="results-table">
+              {% for matchup in report["results"] %}
+                <div class="results-row">
+                  <img src="{{ matchup['w_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 1">
+                  <div class="right-align team-name">{{ matchup["winner"] }}</div>
+                  <div class="right-align">{{ matchup["w_score"] }}</div>
+                  <div class="center-align">DEF</div>
+                  <div class="left-align">{{ matchup["l_score"] }}</div>
+                  <div class="left-align team-name">{{ matchup["loser"] }}</div>
+                  <img src="{{ matchup['l_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 2">
+                </div>
+              {% endfor %}
+            </div>
+            <p class="top-border">
+              <h4>&#x1F3C6; Highest Score</h4>
+              {% set h_score = report["superlatives"]["high"] %}
+              {{ h_score["team"] ~ " with a cool " ~ h_score["score"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F4A9; Lowest Score</h4>
+              {% set l_score = report["superlatives"]["low"] %}
+              {{ l_score["team"] ~ " with a forgettable " ~ l_score["score"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F90F; Closest Win</h4>
+              {% set closest = report["superlatives"]["closest"] %}
+              {% if closest["tie"] == True %}
+                {{ closest["winner"] ~ " tied " ~ closest["loser"] }}
+              {% else %}
+                {{ closest["winner"] ~ " eeked it out over " ~ closest["loser"] ~ " by " ~ closest["difference"] }}
+              {% endif %}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F512; Biggest Win</h4>
+              {% set blowout = report["superlatives"]["blowout"] %}
+              {{ blowout["winner"] ~ " clobbered " ~ blowout["loser"] ~ " by " ~ blowout["difference"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x2618; Luckiest Win</h4>
+              {% set luckiest = report["superlatives"]["luckiest"] %}
+              {{ luckiest["team"] ~ " got the win as the #" ~
+              luckiest["place"] ~ " highest scoring team with " ~ luckiest["score"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F612; Unluckiest Loss</h4>
+              {% set unluckiest = report["superlatives"]["unluckiest"] %}
+              {{ unluckiest["team"] ~ " took an L as the #" ~
+              unluckiest["place"] ~ " highest scoring team with " ~ unluckiest["score"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F4B0; Highest Bid</h4>
+              {% set high_bid = report["superlatives"]["high_bid"] %}
+              {{ high_bid["teamName"] ~ " paid $" ~ high_bid["bidAmount"] ~ " for " ~ high_bid["playerName"] }}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F4B8; Biggest Overpay</h4>
+              {% set overpay_bid = report["superlatives"]["overpay_bid"] %}
+              {{ overpay_bid["teamName"] ~ " paid $" ~ overpay_bid["winning_bid"]["bidAmount"] ~ " for " ~
+              overpay_bid["playerName"] ~ ", "}}
+              {% if overpay_bid["losing_bid"]["teamId"] == None %}
+                nobody else bid on him
+              {% else %}
+                "$" ~ overpay_bid["diff"] ~ " more than the next highest bid" }}
+              {% endif %}
+            </p>
+            <p class="top-border">
+              <h4>&#x1F60E; Most Efficient Bid</h4>
+              {% set efficient_bid = report["superlatives"]["efficient_bid"] %}
+              {{ efficient_bid["teamName"] ~ " paid $" ~ efficient_bid["winning_bid"]["bidAmount"] ~ " for " ~
+              efficient_bid["playerName"] ~ ", just $" ~ efficient_bid["diff"] ~ " more than the next highest bid" }}
+            </p>
           {%endif%}
         </div>
         <div class="mdl-tabs__panel" id="preview">
@@ -109,7 +105,7 @@
             {% for matchup in report["preview"] %}
               <div class="results-row">
                 {% if matchup["game_of_week"] %}
-                  <div class="left-align game-of-week">GAME OF THE WEEK</div>
+                  <div class="left-align game-of-week">&#9733;&#9733;&#9733;</div>
                 {% endif %}
                 <img src="{{ matchup['home_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 1">
                 <div class="right-align team-name">{{ matchup["home"] + " (" + matchup["home_record"] + ")"}}</div>
@@ -117,14 +113,14 @@
                 <div class="left-align team-name">{{ matchup["away"] + " (" + matchup["away_record"] + ")" }}</div>
                 <img src="{{ matchup['away_logo'] }}" width="40" referrerpolicy="no-referrer" alt="team logo 2">
                 {% if matchup["game_of_week"] %}
-                  <div class="right-align game-of-week">GAME OF THE WEEK</div>
+                  <div class="right-align game-of-week">&#9733;&#9733;&#9733;</div>
                 {% endif %}
               </div>
             {% endfor %}
           </div>
         </div>
         <div class="mdl-tabs__panel" id="power-rankings">
-          <h4>{{ "Week " ~ report["week"] ~ " Power Rankings" }}</h4>
+          <h4>{{ "Week " ~ week ~ " Power Rankings" }}</h4>
           <div class="table-wrapper">
             <table class="fl-table" aria-describedby="power-rankings-table">
               <thead>
@@ -133,12 +129,12 @@
                   <th scope="col">PR Score</th>
                   <th scope="col">Wins</th>
                   <th scope="col">Overall Wins</th>
-                  {% if report["week"] >= 7 %}
-                  <th scope="col">Last 5 Wins</th>
+                  {% if week >= 7 %}
+                    <th scope="col">Last 5 Wins</th>
                   {% endif %}
                   <th scope="col">Points</th>
-                  {% if report["week"] >= 3 %}
-                  <th scope="col">Consistency</th>
+                  {% if week >= 3 %}
+                    <th scope="col">Consistency</th>
                   {% endif %}
                 </tr>
               </thead>
@@ -149,12 +145,12 @@
                   <td> {{ val["power_ranking_score"] }} </td>
                   <td> {{ val["wins"] }} </td>
                   <td> {{ val["overall_wins"] }} </td>
-                  {% if report["week"] >= 7 %}
-                  <td> {{ val["l5"] }} </td>
+                  {% if week >= 7 %}
+                    <td> {{ val["l5"] }} </td>
                   {% endif %}
                   <td> {{ val["tot_pts"] }} </td>
-                  {% if report["week"] >= 3 %}
-                  <td> {{ val["consistency"] }} </td>
+                  {% if week >= 3 %}
+                    <td> {{ val["consistency"] }} </td>
                   {% endif %}
                 </tr>
                 {% endfor %}
@@ -180,4 +176,4 @@
     </div>
   </body>
 </html>
-{%endblock%}
+{% endblock %}
