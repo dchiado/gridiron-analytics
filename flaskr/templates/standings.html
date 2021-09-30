@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%extends "layout.html"%}
+{% extends 'layout.html' %}
 {% block content %}
 <html lang="en">
     <head>
@@ -14,7 +14,7 @@
                     <tr>
                         <th class="sticky-col" scope="col">Owner</th>
                         {% for value in result["seasons"] %}
-                        <th scope="col">{{ value }}</th>
+                            <th scope="col">{{ value }}</th>
                         {% endfor %}
                         <th scope="col">Wins</th>
                         <th scope="col">Losses</th>
@@ -26,22 +26,22 @@
                 </thead>
                 <tbody>
                     {% for key, value in result["teams"].items() %}
-                    <tr>
-                        <th class="sticky-col" scope="col"> {{ key }} </th>
-                        {% for season in result["seasons"] %}
-                            <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
-                        {% endfor %}
-                        <td> {{ value["total"]["wins"] }} </td>
-                        <td> {{ value["total"]["losses"] }} </td>
-                        <td> {{ value["total"]["ties"] }} </td>
-                        <td> {{ value["total"]["winPct"] }} </td>
-                        <td> {{ value["total"]["pointsFor"] }} </td>
-                        <td> {{ value["total"]["pointsAgainst"] }} </td>
-                    </tr>
+                        <tr>
+                            <th class="sticky-col" scope="col"> {{ key }} </th>
+                            {% for season in result["seasons"] %}
+                                <td> {{ value["seasons"][season]["record"] if season in value["seasons"] }} </td>
+                            {% endfor %}
+                            <td> {{ value["total"]["wins"] }} </td>
+                            <td> {{ value["total"]["losses"] }} </td>
+                            <td> {{ value["total"]["ties"] }} </td>
+                            <td> {{ value["total"]["winPct"] }} </td>
+                            <td> {{ value["total"]["pointsFor"] }} </td>
+                            <td> {{ value["total"]["pointsAgainst"] }} </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </body>
 </html>
-{%endblock%}
+{% endblock %}

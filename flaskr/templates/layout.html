@@ -42,8 +42,8 @@
       </div>    
       <main id="content" class="mdl-layout__content">
         <div class="container">
-          {%block content%}
-          {%endblock%}
+          {% block content %}
+          {% endblock %}
         </div>
       </main>
       <footer class="mdl-mini-footer">
@@ -57,7 +57,6 @@
     </div>
     <script type="text/javascript">
       function loading(){
-        console.log('doing it')
         document.getElementById("loading").classList.add("is-active");
         document.getElementById("content").classList.add("grayout");
       }

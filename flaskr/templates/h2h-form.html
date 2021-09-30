@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%extends "layout.html"%}
+{% extends 'layout.html' %}
 {% block content %}
 <html lang="en">
     <head>
@@ -8,7 +8,7 @@
     </head>
     <body>
         {% if error %}
-        <p class=error><strong>Error:</strong> {{ error }}
+            <p class=error><strong>Error:</strong> {{ error }}
         {% endif %}    
         <div id="content" class="form-container">
             <form action="/head-to-head" method="post" name="weeks">
@@ -38,4 +38,4 @@
         </div>
     </body>
 </html>
-{%endblock%}
+{% endblock %}

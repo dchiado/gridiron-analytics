@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{%extends "layout.html"%}
+{% extends 'layout.html' %}
 {% block content %}
 <html lang="en">
     <head>
@@ -9,27 +9,31 @@
     <body>
         <div class="container">
             <div class="h2h-container">
+                {% set team1 = result[0] %}
+                {% set team2 = result[1] %}
+                {% set current_streak = result[2] %}
+                {% set longest_streak = result[3] %}
                 <div class="h2h-column">
                     <div class="h2h-team-info left-team">
-                        <img src="{{ result[0]['logo'] }}" height="120" referrerpolicy="no-referrer" alt="team logo 1">
-                        <div>{{ result[0]["name"] }}</div>
+                        <img src="{{ team1['logo'] }}" height="120" referrerpolicy="no-referrer" alt="team logo 1">
+                        <div>{{ team1["name"] }}</div>
                         <div class="section-header"></div>
-                        <div>{{ result[0]["reg_wins"] }}</div>
-                        <div>{{ result[0]["reg_ties"] }}</div>
-                        <div>{{ result[0]["reg_points"] }}</div>
+                        <div>{{ team1["reg_wins"] }}</div>
+                        <div>{{ team1["reg_ties"] }}</div>
+                        <div>{{ team1["reg_points"] }}</div>
                         <div class="section-header"></div>
-                        <div>{{ result[0]["playoff_wins"] }}</div>
-                        <div>{{ result[0]["playoff_points"] }}</div>
+                        <div>{{ team1["playoff_wins"] }}</div>
+                        <div>{{ team1["playoff_points"] }}</div>
                         <div class="section-header"></div>
                         <div> <!-- current -->
-                            {{ "W" + result[2]["length"]|string()
-                            if result[2]["team"] == result[0]["owner_id"]
-                            else "L" + result[2]["length"]|string()}}
+                            {{ "W" + current_streak["length"]|string()
+                            if current_streak["team"] == team1["owner_id"]
+                            else "L" + current_streak["length"]|string()}}
                         </div>
                         <div> <!-- longest -->
-                            {{ "W" + result[3]["length"]|string()
-                            if result[3]["team"] == result[0]["owner_id"]
-                            else "L" + result[3]["length"]|string()}}
+                            {{ "W" + longest_streak["length"]|string()
+                            if longest_streak["team"] == team1["owner_id"]
+                            else "L" + longest_streak["length"]|string()}}
                         </div>
                     </div>
                 </div>
@@ -52,24 +56,24 @@
                 <div class="h2h-column">
                     <div class="h2h-team-info right-team">
                         <img src="{{ result[1]['logo'] }}" height="120" referrerpolicy="no-referrer" alt="team logo 2">
-                        <div>{{ result[1]["name"] }}</div>
+                        <div>{{ team2["name"] }}</div>
                         <div class="section-header"></div>
-                        <div>{{ result[1]["reg_wins"] }}</div>
-                        <div>{{ result[1]["reg_ties"] }}</div>
-                        <div>{{ result[1]["reg_points"] }}</div>
+                        <div>{{ team2["reg_wins"] }}</div>
+                        <div>{{ team2["reg_ties"] }}</div>
+                        <div>{{ team2["reg_points"] }}</div>
                         <div class="section-header"></div>
-                        <div>{{ result[1]["playoff_wins"] }}</div>
-                        <div>{{ result[1]["playoff_points"] }}</div>
+                        <div>{{ team2["playoff_wins"] }}</div>
+                        <div>{{ team2["playoff_points"] }}</div>
                         <div class="section-header"></div>
                         <div> <!-- current -->
-                            {{ "W" + result[2]["length"]|string()
-                            if result[2]["team"] == result[1]["owner_id"]
-                            else "L" + result[2]["length"]|string()}}
+                            {{ "W" + current_streak["length"]|string()
+                            if current_streak["team"] == team2["owner_id"]
+                            else "L" + current_streak["length"]|string()}}
                         </div>
                         <div> <!-- longest -->
-                            {{ "W" + result[3]["length"]|string()
-                            if result[3]["team"] == result[1]["owner_id"]
-                            else "L" + result[3]["length"]|string()}}
+                            {{ "W" + longest_streak["length"]|string()
+                            if longest_streak["team"] == team2["owner_id"]
+                            else "L" + longest_streak["length"]|string()}}
                         </div>
                    </div>
                 </div>
@@ -77,4 +81,4 @@
         </div>
     </body>
 </html>
-{%endblock%}
+{% endblock %}
