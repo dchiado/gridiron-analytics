@@ -275,9 +275,7 @@ def best_worst_bids(transactions, team_names, player_names, overpay=False):
         transactions (object) -- all transactions of the week
         team_names (object) -- mapping of teamId to teamName
         player_names (object) -- mapping of playerId to playerName
-        overpay (bool) -- return biggest overpay if True, else the best bid blah blah
-        
-        
+        overpay (bool) -- return biggest overpay if True, else the best bid
 
     Returns:
         bid (object) -- list of summarized matchups for next week
