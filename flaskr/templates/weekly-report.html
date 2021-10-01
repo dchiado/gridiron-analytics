@@ -42,12 +42,16 @@
             <p class="top-border">
               <h4>&#x1F3C6; Highest Score</h4>
               {% set h_score = report["superlatives"]["high"] %}
-              {{ h_score["team"] ~ " with a cool " ~ h_score["score"] }}
+              {{ h_score["team"] ~ " with a " }}
+              <span id="high"></span>
+              {{ " " ~ h_score["score"] }}
             </p>
             <p class="top-border">
               <h4>&#x1F4A9; Lowest Score</h4>
               {% set l_score = report["superlatives"]["low"] %}
-              {{ l_score["team"] ~ " with a forgettable " ~ l_score["score"] }}
+              {{ l_score["team"] ~ " with a " }}
+              <span id="low"></span>
+              {{ " " ~ l_score["score"] }}
             </p>
             <p class="top-border">
               <h4>&#x1F90F; Closest Win</h4>
@@ -55,13 +59,17 @@
               {% if closest["tie"] == True %}
                 {{ closest["winner"] ~ " tied " ~ closest["loser"] }}
               {% else %}
-                {{ closest["winner"] ~ " eeked it out over " ~ closest["loser"] ~ " by " ~ closest["difference"] }}
+                {{ closest["winner"] ~ " " }}
+                <span id="close"></span>
+                {{ " " ~ closest["loser"] ~ " by " ~ closest["difference"] }}
               {% endif %}
             </p>
             <p class="top-border">
               <h4>&#x1F512; Biggest Win</h4>
               {% set blowout = report["superlatives"]["blowout"] %}
-              {{ blowout["winner"] ~ " clobbered " ~ blowout["loser"] ~ " by " ~ blowout["difference"] }}
+              {{ blowout["winner"] ~ " " }}
+              <span id="beat"></span>
+              {{ " " ~ blowout["loser"] ~ " by " ~ blowout["difference"] }}
             </p>
             <p class="top-border">
               <h4>&#x2618; Luckiest Win</h4>
@@ -174,6 +182,34 @@
         </div>
       </div>
     </div>
+    <script>
+      var high = ["cool", "smooth", "nice", "pretty pretty pretty good",
+                  "quality", "worthy", "distinguished", "notable"];
+
+      var low = ["lowly", "forgettable", "weak", "feeble", "sickly", "faint",
+                  "dull", "muted", "decrepit", "measly", "pathetic"];
+
+      var close = ["eeked it out over", "just got past", "snuck it out over",
+                  "squeeked past", "slipped past", "tiptoed past"];
+
+      var beat = ["clobbered", "pulverized", "embarrassed", "destroyed",
+                  "annihilated", "schooled", "made easy work of"];
+
+      function randomWords() {
+        var h = high[Math.floor(Math.random() * high.length)];
+        document.getElementById('high').innerHTML = h;
+
+        var l = low[Math.floor(Math.random() * low.length)];
+        document.getElementById('low').innerHTML = l;
+
+        var c = close[Math.floor(Math.random() * close.length)];
+        document.getElementById('close').innerHTML = c;
+
+        var w = beat[Math.floor(Math.random() * beat.length)];
+        document.getElementById('beat').innerHTML = w;
+      }
+      window.onload = randomWords;
+    </script>
   </body>
 </html>
 {% endblock %}
