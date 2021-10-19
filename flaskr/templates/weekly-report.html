@@ -96,7 +96,7 @@
               {% if overpay_bid["losing_bid"]["teamId"] == None %}
                 nobody else bid on him
               {% else %}
-                "$" ~ overpay_bid["diff"] ~ " more than the next highest bid" }}
+                {{ "$" ~ overpay_bid["diff"] ~ " more than the next highest bid" }}
               {% endif %}
             </p>
             <p class="top-border">

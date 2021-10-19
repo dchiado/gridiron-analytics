@@ -300,7 +300,8 @@ def best_worst_bids(transactions, team_names, player_names, overpay=False):
         l_bids = [
             t for t in transactions if t["type"] == "WAIVER" and
             t["status"] == "FAILED_INVALIDPLAYERSOURCE" and
-            t["items"][0]["playerId"] == w["items"][0]["playerId"]
+            t["items"][0]["playerId"] == w["items"][0]["playerId"] and
+            t["teamId"] != w["teamId"]
         ]
         if len(l_bids) > 0:
             next_highest = sorted(
