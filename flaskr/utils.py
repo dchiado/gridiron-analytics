@@ -133,14 +133,34 @@ def print_to_file(content, file):
 
 
 async def latest_season(session):
-    """Find the latest/current fantasy season"""
-    current = date.today().year
-    resp = await load_data(current, 'mStatus', session)
-    if not resp["draftDetail"]["drafted"]:
-        return current - 1
+    """Find the latest completed or currently active fantasy season"""
+    status = await season_status(session)
+    if status["status"] == "preseason":
+        return status["season"] - 1
     else:
-        return current
+        return status["season"]
 
+
+async def season_status(session):
+    """Find the status of the current fantasy season"""
+    this_year = date.today().year
+    resp = await load_data(this_year, 'mStatus', session)
+    current_season = resp["seasonId"]
+    drafted = resp["draftDetail"]["drafted"]
+    finished = resp["status"]["currentMatchupPeriod"] == resp["status"]["finalScoringPeriod"]
+
+    if not drafted:
+        status = "preseason"
+    elif resp["status"]["currentMatchupPeriod"] == 1:
+        status = "drafted"
+    elif finished:
+        status = "postseason"
+    else:
+        status = "active"
+    return {
+        "season": current_season,
+        "status": status
+    }
 
 def headshot(player_id):
     """Create player headshot URL based on player id"""
@@ -192,7 +212,7 @@ def team_abbreviation(team):
         "Texans": "hou",
         "Titans": "ten",
         "Vikings": "min",
-        "Washington": "was"
+        "Commanders": "was"
     }
     return abbreviations[team]
 

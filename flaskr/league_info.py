@@ -1,11 +1,12 @@
 import aiohttp
-from flaskr.utils import load_data, latest_season
+from flaskr.utils import load_data, season_status
 
 
 async def summary():
     """Assemble basic league information."""
     async with aiohttp.ClientSession() as session:
-        year = await latest_season(session)
+        status = await season_status(session)
+        year = status["season"]
 
         details = await load_data(year, 'mNav', session)
 

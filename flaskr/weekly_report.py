@@ -8,6 +8,7 @@ from flaskr.utils import (
     load_matchups,
     load_transactions,
     player_info,
+    season_status,
     team_mapping
 )
 from flaskr import power_rankings
@@ -333,6 +334,7 @@ async def summary():
     Returns:
         response (object) -- list of weekly recap, superlatives, and preview
         {
+            "offseason": False,
             "week": 2,
             "next_week": 3,
             "results": [
@@ -371,7 +373,18 @@ async def summary():
         }
     """
     async with aiohttp.ClientSession() as session:
-        year = await latest_season(session)
+        status = await season_status(session)
+        print(status)
+        if status["status"] == "preseason":
+            year = status["season"] - 1
+            offseason = True
+        else:
+            year = status["season"]
+            if status["status"] == "postseason":
+                offseason = True
+            else:
+                offseason = False
+
         team_names = await team_mapping(year, session)
         player_names = await player_info(year, session)
         details = await load_data(year, 'mTeam', session)
@@ -386,11 +399,18 @@ async def summary():
         week = details["status"]["currentMatchupPeriod"] - 1
         response = {
             "week": week,
-            "next_week": week + 1
+            "next_week": week + 1,
+            "offseason": False
         }
 
-        if week < 1:
-            response["results"] = {"error": "NoMatchups"}
+        if offseason:
+            response["offseason"] = True
+            return response
+        elif week < 1:
+            response["results"] = {
+                "error": "NoMatchups",
+                "message": "No matchups yet - come back when the week is over"
+            }
         else:
             week_matchups = [
                 m for m in all_matchups if m["matchupPeriodId"] == week

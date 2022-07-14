@@ -1,5 +1,5 @@
 import aiohttp
-from flaskr.utils import latest_season, load_data
+from flaskr.utils import latest_season, load_data, season_status
 
 
 async def keeper_options():
