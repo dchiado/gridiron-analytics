@@ -59,3 +59,25 @@ For older seasons, the endpoint looks like this:
 ## UI Components
 Material Design Lite is used for building frontend component. Components, examples, and other
 documentation can be found [here](https://getmdl.io/components/index.html). 
+
+## Deploy to Heroku
+The app is hosted on heroku. To deploy the latest code to heroku, follow the below steps. You will need to be added as a collaborator in heroku for this to work.
+
+1. Install heroku cli
+```
+brew tap heroku/brew && brew install heroku
+```
+2. Auth your cli by running this command and logging in through the browser
+```
+heroku login
+```
+3. Link the git repo with the remote heroku app
+```
+heroku git:remote -a gridiron-almanac
+```
+4. Push the branch up to heroku (change `main` if you are deploying another branch)
+```
+git push heroku main
+```
+
+The app can then be accessed at https://gridiron-almanac.herokuapp.com/
